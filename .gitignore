@@ -38,17 +38,28 @@ captures/
 
 # IntelliJ
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/assetWizardSettings.xml
-.idea/dictionaries
-.idea/libraries
+.gradle
+
+
+
 # Android Studio 3 in .gitignore file.
 .idea/caches
 .idea/modules.xml
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
+.idea/caches
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/dictionaries
+.idea/libraries
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
@@ -57,8 +68,8 @@ captures/
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
-.cxx/
-
+.cxx
+local.properties
 # Google Services (e.g. APIs or Firebase)
 # google-services.json
 
