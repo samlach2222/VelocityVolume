@@ -2,17 +2,16 @@ package com.samlach2222.velocityvolume
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.commit
+import androidx.navigation.findNavController
+import androidx.navigation.ui.*
+import com.google.android.material.navigation.NavigationView
+import android.view.MenuItem
+import com.google.android.material.snackbar.Snackbar
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
 
 class ProfileDrawerActivity : AppCompatActivity() {
@@ -44,8 +43,18 @@ class ProfileDrawerActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setNavigationItemSelectedListener { menuItem ->
+            //it's possible to do more actions on several items, if there is a large amount of items I prefer switch(){case} instead of if()
+            when(menuItem.itemId) {
+                R.id.settings -> navController.navigate(R.id.nav_slideshow) // TODO : Il faut passer les informations vers le Fragment pour savoir ce que l'utilisateur a sélectionné
+            }
+            //This is for maintaining the behavior of the Navigation view
+            NavigationUI.onNavDestinationSelected(menuItem, navController)
+            //This is for closing the drawer after acting on it
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
