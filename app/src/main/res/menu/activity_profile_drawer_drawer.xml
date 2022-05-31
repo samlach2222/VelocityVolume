@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/profile_1"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="Profile 1" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/profile_2"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Profile 2" />
+        <item
+            android:id="@+id/profile_3"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Profile 3" />
     </group>
-    <group android:checkableBehavior="single">
+
+    <group android:checkableBehavior="single" android:id="@+id/group_add_new_profile">
         <item
-            android:id="@+id/test"
+            android:id="@+id/add_new_profile"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="test"
-            app:showAsAction="ifRoom" />
+            android:title="Add Profile" />
+    </group>
+
+    <group android:checkableBehavior="single" android:id="@+id/group_settings">
         <item
-            android:id="@+id/help"
+            android:id="@+id/settings"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="help" />
+            android:title="Settings" />
     </group>
 </menu>
