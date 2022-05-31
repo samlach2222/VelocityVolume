@@ -2,6 +2,8 @@ package com.samlach2222.velocityvolume
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -48,5 +50,11 @@ class ProfileDrawerActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    fun ChangeProfile(item: MenuItem) {
+        //TODO: Implement
+        val profileName: String = item.toString()
+        Toast.makeText(this@ProfileDrawerActivity,profileName, Toast.LENGTH_SHORT).show()
     }
 }
