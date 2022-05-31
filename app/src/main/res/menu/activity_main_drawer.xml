@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/profile1"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/profile1" />
+        <item
+            android:id="@+id/profile2"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/profile2" />
+        <item
+            android:id="@+id/profile3"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/profile3" />
+    </group>
+</menu>
