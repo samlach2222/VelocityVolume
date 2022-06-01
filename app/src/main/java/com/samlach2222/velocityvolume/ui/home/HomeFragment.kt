@@ -27,7 +27,6 @@ import com.samlach2222.velocityvolume.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() , LocationListener {
     private lateinit var locationManager: LocationManager // Creation of GPS manager
     private lateinit var tvGpsLocation: TextView // The TextView where the speed where displayed
-    private lateinit var idProfile: TextView
     private val criteria = Criteria() // Geolocation criteria variable creation
     private var previousLocation: Location? = null // save of the previous location to calculate speed
     private var _binding: FragmentHomeBinding? = null
@@ -61,8 +60,6 @@ class HomeFragment : Fragment() , LocationListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
@@ -81,8 +78,7 @@ class HomeFragment : Fragment() , LocationListener {
 
         // Get ID of Profile
         val bundle = arguments
-        idProfile = requireView().findViewById(R.id.id_profile)
-        idProfile.text = bundle?.getString("id")
+        //idProfile.text = bundle?.getString("id")
         bundle?.getString("id")?.let { setActivityTitle(it) }
 
         val button: Button = view.findViewById(R.id.getLocation) // Get the button "Get Location"

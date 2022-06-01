@@ -2,8 +2,7 @@
     <string name="app_name">VelocityVolume</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Velocity Volume</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -15,4 +14,18 @@
     <string name="profile_3">Profile 3</string>
     <string name="add_profile">Add Profile</string>
     <string name="settings">Settings</string>
+
+    <string name="interval_1">[0 – 20 km/h]</string>
+    <string name="interval_2">[20 – 40 km/h]</string>
+    <string name="interval_3">[40 – 60 km/h]</string>
+    <string name="interval_4">[60 – 100 km/h]</string>
+    <string name="interval_5">[> 100 km/h]</string>
+    <string name="percentage_1">100%</string>
+    <string name="percentage_2">100%</string>
+    <string name="percentage_3">100%</string>
+    <string name="percentage_4">100%</string>
+    <string name="percentage_5">100%</string>
+
+    <string name="window_mode">Window open</string>
+    <string name="get_location">Get location</string>
 </resources>
