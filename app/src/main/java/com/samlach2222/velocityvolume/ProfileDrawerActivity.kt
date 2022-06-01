@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
+import androidx.core.os.bundleOf
 import com.google.android.material.snackbar.Snackbar
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
 
@@ -40,16 +41,23 @@ class ProfileDrawerActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_home, R.id.nav_home
+                R.id.nav_home
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        navView.setNavigationItemSelectedListener { menuItem ->
+        navView.setNavigationItemSelectedListener { menuItem -> run {
             //it's possible to do more actions on several items, if there is a large amount of items I prefer switch(){case} instead of if()
-            when(menuItem.itemId) {
+            when (menuItem.itemId) {
                 R.id.settings -> navController.navigate(R.id.nav_slideshow) // TODO : Il faut passer les informations vers le Fragment pour savoir ce que l'utilisateur a sélectionné
+                R.id.add_new_profile -> AddProfile()
+                else -> {
+                    val bundle = bundleOf("id" to menuItem.toString())
+                    navController.navigate(R.id.nav_home, bundle)
+                }
             }
+        }
+
             //This is for maintaining the behavior of the Navigation view
             NavigationUI.onNavDestinationSelected(menuItem, navController)
             //This is for closing the drawer after acting on it
@@ -61,12 +69,6 @@ class ProfileDrawerActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-    fun ChangeProfile(item: MenuItem) {
-        //TODO: Implement
-        val profileName: String = item.toString()
-        Toast.makeText(this@ProfileDrawerActivity, profileName, Toast.LENGTH_SHORT).show()
     }
 
     fun AddProfile() {
