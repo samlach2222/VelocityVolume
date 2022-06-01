@@ -7,17 +7,17 @@
         <item
             android:id="@+id/profile_1"
             android:icon="@drawable/ic_menu_person"
-            android:title="Profile 1"
+            android:title="@string/profile_1"
             android:onClick="ChangeProfile" />
         <item
             android:id="@+id/profile_2"
             android:icon="@drawable/ic_menu_person"
-            android:title="Profile 2"
+            android:title="@string/profile_2"
             android:onClick="ChangeProfile" />
         <item
             android:id="@+id/profile_3"
             android:icon="@drawable/ic_menu_person"
-            android:title="Profile 3"
+            android:title="@string/profile_3"
             android:onClick="ChangeProfile" />
     </group>
 
@@ -25,13 +25,13 @@
         <item
             android:id="@+id/add_new_profile"
             android:icon="@drawable/ic_menu_person_add"
-            android:title="Add Profile" />
+            android:title="@string/add_profile" />
     </group>
 
     <group android:checkableBehavior="single" android:id="@+id/group_settings">
         <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_menu_settings"
-            android:title="Settings" />
+            android:title="@string/settings" />
     </group>
 </menu>
