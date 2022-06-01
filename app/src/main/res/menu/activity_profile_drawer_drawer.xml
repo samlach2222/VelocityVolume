@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single" android:id="@+id/group_profiles">
+    <group android:checkableBehavior="single" android:id="@+id/group_profiles" android:orderInCategory="100">
         <item
             android:id="@+id/profile_1"
             android:icon="@drawable/ic_menu_person"
@@ -18,14 +18,14 @@
             android:title="@string/profile_3" />
     </group>
 
-    <group android:checkableBehavior="single" android:id="@+id/group_add_new_profile">
+    <group android:checkableBehavior="single" android:id="@+id/group_add_new_profile" android:orderInCategory="101">
         <item
             android:id="@+id/add_new_profile"
             android:icon="@drawable/ic_menu_person_add"
             android:title="@string/add_profile" />
     </group>
 
-    <group android:checkableBehavior="single" android:id="@+id/group_settings">
+    <group android:checkableBehavior="single" android:id="@+id/group_settings" android:orderInCategory="102">
         <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_menu_settings"
