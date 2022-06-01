@@ -1,16 +1,18 @@
 package com.samlach2222.velocityvolume
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.DialogInterface.*
 import android.os.Bundle
-import android.view.Menu
+import android.view.MenuItem
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.commit
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
-import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
 
@@ -65,5 +67,31 @@ class ProfileDrawerActivity : AppCompatActivity() {
         //TODO: Implement
         val profileName: String = item.toString()
         Toast.makeText(this@ProfileDrawerActivity,profileName, Toast.LENGTH_SHORT).show()
+
+    fun AddProfile() {
+        val editTextField = EditText(this@ProfileDrawerActivity)
+
+        fun onDialogButtonsClick() = OnClickListener { dialogInterface: DialogInterface, clickedButton: Int ->
+            when (clickedButton) {
+                // Cancel
+                BUTTON_NEGATIVE ->
+                    dialogInterface.dismiss()
+                // Ok
+                BUTTON_POSITIVE -> {
+                    // TODO : Implement by adding a profile
+                    Toast.makeText(this@ProfileDrawerActivity,editTextField.text.toString(), Toast.LENGTH_SHORT).show()
+
+                    dialogInterface.dismiss()
+                }
+            }
+        }
+
+        val dialog: AlertDialog = AlertDialog.Builder(this@ProfileDrawerActivity)
+            .setTitle("Name of the new profile")
+            .setView(editTextField)
+            .setPositiveButton("OK", onDialogButtonsClick())
+            .setNegativeButton("Cancel", onDialogButtonsClick())
+            .create()
+        dialog.show()
     }
 }
