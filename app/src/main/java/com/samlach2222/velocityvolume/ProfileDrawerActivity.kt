@@ -5,17 +5,14 @@ import android.content.DialogInterface
 import android.content.DialogInterface.*
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.Group
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
-import androidx.core.os.bundleOf
 import com.google.android.material.snackbar.Snackbar
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
 
@@ -23,6 +20,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityProfileDrawerBinding
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +34,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        val drawerLayout: DrawerLayout = binding.drawerLayout
+        drawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
         // Passing each menu ID as a set of Ids because each
@@ -51,7 +49,10 @@ class ProfileDrawerActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem -> run {
             //it's possible to do more actions on several items, if there is a large amount of items I prefer switch(){case} instead of if()
             when (menuItem.itemId) {
-                R.id.settings -> navController.navigate(R.id.nav_slideshow) // TODO : Il faut passer les informations vers le Fragment pour savoir ce que l'utilisateur a sélectionné
+                R.id.settings -> {
+                    LockDrawerLayout(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    navController.navigate(R.id.nav_slideshow) // TODO : Il faut passer les informations vers le Fragment pour savoir ce que l'utilisateur a sélectionné
+                }
                 R.id.add_new_profile -> AddProfile()
                 else -> {
                     val bundle = bundleOf("id" to menuItem.toString())
@@ -106,5 +107,9 @@ class ProfileDrawerActivity : AppCompatActivity() {
             .setNegativeButton("Cancel", onDialogButtonsClick())
             .create()
         dialog.show()
+    }
+
+    fun LockDrawerLayout(lockMode: Int){
+        drawerLayout.setDrawerLockMode(lockMode)
     }
 }

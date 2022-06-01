@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.databinding.FragmentSlideshowBinding
 
 class SlideshowFragment : Fragment() {
@@ -36,6 +38,7 @@ class SlideshowFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        (activity as ProfileDrawerActivity).LockDrawerLayout(DrawerLayout.LOCK_MODE_UNLOCKED)
         super.onDestroyView()
         _binding = null
     }
