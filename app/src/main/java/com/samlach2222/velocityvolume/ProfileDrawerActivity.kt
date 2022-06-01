@@ -66,7 +66,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
     fun ChangeProfile(item: MenuItem) {
         //TODO: Implement
         val profileName: String = item.toString()
-        Toast.makeText(this@ProfileDrawerActivity,profileName, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@ProfileDrawerActivity, profileName, Toast.LENGTH_SHORT).show()
+    }
 
     fun AddProfile() {
         val editTextField = EditText(this@ProfileDrawerActivity)
