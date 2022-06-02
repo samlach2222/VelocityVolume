@@ -15,7 +15,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.VelocityVolume.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.VelocityVolume.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
 
     <style name="Theme.VelocityVolume.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
