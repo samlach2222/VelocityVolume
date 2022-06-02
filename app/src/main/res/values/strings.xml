@@ -28,4 +28,5 @@
 
     <string name="window_mode">Window open</string>
     <string name="get_location">Get location</string>
+    <string name="current_gps_speed">Speed: 0 km/h</string>
 </resources>

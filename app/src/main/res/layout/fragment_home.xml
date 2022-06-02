@@ -230,31 +230,20 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="25dp" />
+            android:layout_height="40dp" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#444" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="15dp" />
-
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch1"
+            android:theme="@style/SwitchTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:minHeight="48dp"
+            android:height="80dp"
             android:text="@string/window_mode"
             android:textColor="#4e005e"
-            android:textSize="20sp"
+            android:textSize="30sp"
             android:textStyle="bold"
-            android:thumbTint="#4e005e"
-            android:trackTint="#cc99ff"
-            tools:checked="true"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            tools:checked="true" />
     </LinearLayout>
 
     <View
@@ -262,7 +251,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
@@ -274,21 +263,30 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
-
-            android:text="Current GPS Location"
+            android:text="@string/current_gps_speed"
             android:textColor="#4e005e"
-            android:textSize="24sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/getLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/fab_margin"
             android:backgroundTint="#4e005e"
-            android:text="@string/get_location"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:textColor="#FFFFFF"
+            app:cornerRadius="26dp"
+            android:layout_gravity=""
+            app:icon="@android:drawable/ic_media_play"
+            app:iconSize="24dp"
+            app:iconTint="#ffffff" />
+    </RelativeLayout>
 
 </LinearLayout>

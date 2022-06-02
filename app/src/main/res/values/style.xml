@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SwitchTheme">
+        <item name="colorAccent">#4e005e</item>
+    </style>
+</resources>
