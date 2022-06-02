@@ -1,11 +1,10 @@
 package com.samlach2222.velocityvolume
 
 import android.app.AlertDialog
-import android.content.DialogInterface
-import android.content.DialogInterface.*
 import android.os.Bundle
 import android.view.Menu
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
@@ -78,14 +77,25 @@ class ProfileDrawerActivity : AppCompatActivity() {
         val editTextField = EditText(this@ProfileDrawerActivity)
         editTextField.isSingleLine = true
 
-        fun onDialogButtonsClick() = OnClickListener { dialogInterface: DialogInterface, clickedButton: Int ->
-            when (clickedButton) {
-                // Cancel
-                BUTTON_NEGATIVE ->
-                    dialogInterface.dismiss()
-                // Ok
-                BUTTON_POSITIVE -> {
-                    val enteredText = editTextField.text.toString()
+        val dialog: AlertDialog = AlertDialog.Builder(this@ProfileDrawerActivity)
+            .setTitle("Name of the new profile")
+            .setMessage("")  // toast or message ?
+            .setView(editTextField)
+            .setPositiveButton("OK", null)
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        dialog.setOnShowListener {
+            val okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            okButton.setOnClickListener {
+                val enteredText = editTextField.text.toString().trim()
+                val enteredTextLowercase = enteredText.lowercase()
+
+                // TODO : Check if a profile with the same name doesn't already exist
+                val profileAlreadyExist: Boolean = enteredTextLowercase == "profile 1"
+                    || enteredTextLowercase == "profile 2" || enteredTextLowercase == "profile 3"
+                if (!profileAlreadyExist) {
+                    dialog.setMessage("")
                     val menu = findViewById<NavigationView>(R.id.nav_view).menu
 
                     val newMenuItem = menu.add(R.id.group_profiles, Menu.NONE, 100, enteredText)
@@ -95,18 +105,15 @@ class ProfileDrawerActivity : AppCompatActivity() {
                     val bundle = bundleOf("id" to newMenuItem.toString())
                     val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
                     navController.navigate(R.id.nav_home, bundle)
-
-                    dialogInterface.dismiss()
+                    dialog.dismiss()
+                } else {
+                    // toast or message ?
+                    dialog.setMessage("A profile named " + editTextField.text.toString() + " already exist")
+                    Toast.makeText(this@ProfileDrawerActivity,"A profile named " + editTextField.text.toString() + " already exist", Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
-        val dialog: AlertDialog = AlertDialog.Builder(this@ProfileDrawerActivity)
-            .setTitle("Name of the new profile")
-            .setView(editTextField)
-            .setPositiveButton("OK", onDialogButtonsClick())
-            .setNegativeButton("Cancel", onDialogButtonsClick())
-            .create()
         dialog.show()
     }
 
