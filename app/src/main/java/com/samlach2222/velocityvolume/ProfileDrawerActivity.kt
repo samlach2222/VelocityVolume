@@ -6,8 +6,10 @@ import android.view.Menu
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
+import androidx.core.view.size
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
@@ -35,7 +37,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home
+                R.id.nav_home, R.id.nav_gallery
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -45,7 +47,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.settings -> {
                     LockDrawerLayout(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                    navController.navigate(R.id.nav_slideshow) // TODO : Il faut passer les informations vers le Fragment pour savoir ce que l'utilisateur a sélectionné
+                    navController.navigate(R.id.nav_slideshow)
                 }
                 R.id.add_new_profile -> AddProfile()
                 else -> {
@@ -60,6 +62,11 @@ class ProfileDrawerActivity : AppCompatActivity() {
             //This is for closing the drawer after acting on it
             drawerLayout.closeDrawer(GravityCompat.START)
             true
+        }
+
+        var test = navView.menu.size
+        if(navView.menu.size == 2) { // if there is no profile created = First launch of app
+            navController.navigate(R.id.nav_gallery)
         }
     }
 
