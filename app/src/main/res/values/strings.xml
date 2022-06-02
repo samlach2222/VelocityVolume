@@ -29,4 +29,5 @@
     <string name="window_mode">Window open</string>
     <string name="get_location">Get location</string>
     <string name="current_gps_speed"> </string>
+    <string name="settingsActionBar">Settings</string>
 </resources>

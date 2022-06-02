@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.samlach2222.velocityvolume.databinding.FragmentHomepageBinding
@@ -23,7 +24,9 @@ class HomePageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val galleryViewModel =
-            ViewModelProvider(this).get(HomePageViewModel::class.java)
+            ViewModelProvider(this)[HomePageViewModel::class.java]
+
+        setActivityTitle("Velocity Volume")
 
         _binding = FragmentHomepageBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -38,5 +41,9 @@ class HomePageFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun Fragment.setActivityTitle(title: String) {
+        (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
 }

@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_volumemanager">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_volumemanager"
         android:name="com.samlach2222.velocityvolume.ui.VolumeManager.VolumeManagerFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_volumemanager" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_homepage"
         android:name="com.samlach2222.velocityvolume.ui.HomePage.HomePageFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_homepage" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_settings"
         android:name="com.samlach2222.velocityvolume.ui.Settings.SettingsFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_settings" />

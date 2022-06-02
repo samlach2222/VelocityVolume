@@ -6,7 +6,6 @@ import android.view.Menu
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.core.view.size
@@ -14,7 +13,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
 
 class ProfileDrawerActivity : AppCompatActivity() {
@@ -37,7 +35,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery
+                R.id.nav_volumemanager, R.id.nav_homepage
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -47,12 +45,12 @@ class ProfileDrawerActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.settings -> {
                     LockDrawerLayout(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                    navController.navigate(R.id.nav_slideshow)
+                    navController.navigate(R.id.nav_settings)
                 }
                 R.id.add_new_profile -> AddProfile()
                 else -> {
                     val bundle = bundleOf("id" to menuItem.toString())
-                    navController.navigate(R.id.nav_home, bundle)
+                    navController.navigate(R.id.nav_volumemanager, bundle)
                 }
             }
         }
@@ -64,9 +62,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
             true
         }
 
-        var test = navView.menu.size
         if(navView.menu.size == 2) { // if there is no profile created = First launch of app
-            navController.navigate(R.id.nav_gallery)
+            navController.navigate(R.id.nav_homepage)
         }
     }
 
@@ -106,7 +103,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
                     //Redirect to the newly created profile
                     val bundle = bundleOf("id" to newMenuItem.toString())
                     val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
-                    navController.navigate(R.id.nav_home, bundle)
+                    navController.navigate(R.id.nav_volumemanager, bundle)
                     dialog.dismiss()
                 } else {
                     // toast or message ?
