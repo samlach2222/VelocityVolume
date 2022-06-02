@@ -76,6 +76,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
 
     fun AddProfile() {
         val editTextField = EditText(this@ProfileDrawerActivity)
+        editTextField.isSingleLine = true
 
         fun onDialogButtonsClick() = OnClickListener { dialogInterface: DialogInterface, clickedButton: Int ->
             when (clickedButton) {
