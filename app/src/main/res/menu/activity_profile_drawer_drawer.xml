@@ -4,18 +4,18 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single" android:id="@+id/group_profiles" android:orderInCategory="100">
-        <item
-            android:id="@+id/profile_1"
-            android:icon="@drawable/ic_menu_person"
-            android:title="@string/profile_1" />
-        <item
-            android:id="@+id/profile_2"
-            android:icon="@drawable/ic_menu_person"
-            android:title="@string/profile_2" />
-        <item
-            android:id="@+id/profile_3"
-            android:icon="@drawable/ic_menu_person"
-            android:title="@string/profile_3" />
+<!--        <item-->
+<!--            android:id="@+id/profile_1"-->
+<!--            android:icon="@drawable/ic_menu_person"-->
+<!--            android:title="@string/profile_1" />-->
+<!--        <item-->
+<!--            android:id="@+id/profile_2"-->
+<!--            android:icon="@drawable/ic_menu_person"-->
+<!--            android:title="@string/profile_2" />-->
+<!--        <item-->
+<!--            android:id="@+id/profile_3"-->
+<!--            android:icon="@drawable/ic_menu_person"-->
+<!--            android:title="@string/profile_3" />-->
     </group>
 
     <group android:checkableBehavior="single" android:id="@+id/group_add_new_profile" android:orderInCategory="101">

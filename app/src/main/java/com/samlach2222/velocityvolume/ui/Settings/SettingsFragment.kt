@@ -1,4 +1,4 @@
-package com.samlach2222.velocityvolume.ui.slideshow
+package com.samlach2222.velocityvolume.ui.Settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.databinding.FragmentSlideshowBinding
 
-class SlideshowFragment : Fragment() {
+class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSlideshowBinding? = null
 
@@ -25,7 +25,7 @@ class SlideshowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+            ViewModelProvider(this).get(SettingsViewModel::class.java)
 
         _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
         val root: View = binding.root

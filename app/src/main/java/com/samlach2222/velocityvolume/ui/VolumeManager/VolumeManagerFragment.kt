@@ -1,4 +1,4 @@
-package com.samlach2222.velocityvolume.ui.home
+package com.samlach2222.velocityvolume.ui.VolumeManager
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -19,12 +19,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentHomeBinding
 
 
-class HomeFragment : Fragment() , LocationListener {
+class VolumeManagerFragment : Fragment() , LocationListener {
     private lateinit var locationManager: LocationManager // Creation of GPS manager
     private lateinit var tvGpsLocation: TextView // The TextView where the speed where displayed
     private val criteria = Criteria() // Geolocation criteria variable creation
