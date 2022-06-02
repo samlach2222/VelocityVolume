@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/interval_1"
-            android:textColor="#4e005e"
+            android:textColor="?attr/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -42,10 +42,10 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:progress="100"
-                android:progressBackgroundTint="#cc99ff"
+                android:progressBackgroundTint="?attr/colorPrimaryVariant"
                 android:progressBackgroundTintMode="src_over"
-                android:progressTint="#4e005e"
-                android:thumbTint="#4e005e" />
+                android:progressTint="?attr/colorPrimary"
+                android:thumbTint="?attr/colorPrimary" />
 
             <TextView
                 android:id="@+id/percentage_1"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="@string/percentage_1"
-                android:textColor="#4e005e"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/interval_2"
-            android:textColor="#4e005e"
+            android:textColor="?attr/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -85,10 +85,10 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:progress="100"
-                android:progressBackgroundTint="#cc99ff"
+                android:progressBackgroundTint="?attr/colorPrimaryVariant"
                 android:progressBackgroundTintMode="src_over"
-                android:progressTint="#4e005e"
-                android:thumbTint="#4e005e" />
+                android:progressTint="?attr/colorPrimary"
+                android:thumbTint="?attr/colorPrimary" />
 
             <TextView
                 android:id="@+id/percentage_2"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="@string/percentage_2"
-                android:textColor="#4e005e"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -110,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/interval_3"
-            android:textColor="#4e005e"
+            android:textColor="?attr/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -127,10 +127,10 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:progress="100"
-                android:progressBackgroundTint="#cc99ff"
+                android:progressBackgroundTint="?attr/colorPrimaryVariant"
                 android:progressBackgroundTintMode="src_over"
-                android:progressTint="#4e005e"
-                android:thumbTint="#4e005e" />
+                android:progressTint="?attr/colorPrimary"
+                android:thumbTint="?attr/colorPrimary" />
 
             <TextView
                 android:id="@+id/percentage_3"
@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="@string/percentage_3"
-                android:textColor="#4e005e"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -152,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/interval_4"
-            android:textColor="#4e005e"
+            android:textColor="?attr/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -169,10 +169,10 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:progress="100"
-                android:progressBackgroundTint="#cc99ff"
+                android:progressBackgroundTint="?attr/colorPrimaryVariant"
                 android:progressBackgroundTintMode="src_over"
-                android:progressTint="#4e005e"
-                android:thumbTint="#4e005e" />
+                android:progressTint="?attr/colorPrimary"
+                android:thumbTint="?attr/colorPrimary" />
 
             <TextView
                 android:id="@+id/percentage_4"
@@ -180,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="@string/percentage_4"
-                android:textColor="#4e005e"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -195,7 +195,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/interval_5"
-            android:textColor="#4e005e"
+            android:textColor="?attr/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -212,10 +212,10 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:progress="100"
-                android:progressBackgroundTint="#cc99ff"
+                android:progressBackgroundTint="?attr/colorPrimaryVariant"
                 android:progressBackgroundTintMode="src_over"
-                android:progressTint="#4e005e"
-                android:thumbTint="#4e005e" />
+                android:progressTint="?attr/colorPrimary"
+                android:thumbTint="?attr/colorPrimary" />
 
             <TextView
                 android:id="@+id/percentage_5"
@@ -223,7 +223,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="@string/percentage_5"
-                android:textColor="#4e005e"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -240,7 +240,7 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:height="80dp"
             android:text="@string/window_mode"
-            android:textColor="#4e005e"
+            android:textColor="?attr/colorPrimary"
             android:textSize="30sp"
             android:textStyle="bold"
             tools:checked="true" />
@@ -255,7 +255,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:background="#cc99ff"
+        android:background="?attr/colorPrimaryVariant"
         android:paddingVertical="20dp"
         android:orientation="horizontal">
 
@@ -266,7 +266,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:text="@string/current_gps_speed"
-            android:textColor="#4e005e"
+            android:textColor="?attr/colorPrimary"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -276,17 +276,17 @@
             android:layout_height="52dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/fab_margin"
-            android:backgroundTint="#4e005e"
+            android:backgroundTint="?attr/colorPrimary"
             android:insetLeft="0dp"
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             app:cornerRadius="26dp"
             android:layout_gravity=""
             app:icon="@android:drawable/ic_media_play"
             app:iconSize="24dp"
-            app:iconTint="#ffffff" />
+            app:iconTint="@color/white" />
     </RelativeLayout>
 
 </LinearLayout>

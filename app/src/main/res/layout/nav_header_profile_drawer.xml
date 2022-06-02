@@ -18,7 +18,7 @@
         android:paddingTop="?attr/actionBarSize"
         android:text="@string/nav_header_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor=" #4e005e"
+        android:textColor="?attr/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold" />
 
