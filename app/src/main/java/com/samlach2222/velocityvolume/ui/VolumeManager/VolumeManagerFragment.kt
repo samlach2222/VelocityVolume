@@ -16,7 +16,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.samlach2222.velocityvolume.R
@@ -141,7 +140,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
     }
 
-    fun Fragment.setActivityTitle(title: String) {
+    private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
 }

@@ -44,10 +44,10 @@ class ProfileDrawerActivity : AppCompatActivity() {
             //it's possible to do more actions on several items, if there is a large amount of items I prefer switch(){case} instead of if()
             when (menuItem.itemId) {
                 R.id.settings -> {
-                    LockDrawerLayout(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    lockDrawerLayout(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                     navController.navigate(R.id.nav_settings)
                 }
-                R.id.add_new_profile -> AddProfile()
+                R.id.add_new_profile -> addProfile()
                 else -> {
                     val bundle = bundleOf("id" to menuItem.toString())
                     navController.navigate(R.id.nav_volumemanager, bundle)
@@ -72,7 +72,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    fun AddProfile() {
+    private fun addProfile() {
         val editTextField = EditText(this@ProfileDrawerActivity)
         editTextField.isSingleLine = true
 
@@ -116,7 +116,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    fun LockDrawerLayout(lockMode: Int){
+    fun lockDrawerLayout(lockMode: Int){
         drawerLayout.setDrawerLockMode(lockMode)
     }
 }

@@ -283,7 +283,6 @@
             android:insetBottom="0dp"
             android:textColor="@color/white"
             app:cornerRadius="26dp"
-            android:layout_gravity=""
             app:icon="@android:drawable/ic_media_play"
             app:iconSize="24dp"
             app:iconTint="@color/white" />

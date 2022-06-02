@@ -23,18 +23,12 @@ class HomePageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel =
-            ViewModelProvider(this)[HomePageViewModel::class.java]
+
 
         setActivityTitle("Velocity Volume")
 
         _binding = FragmentHomepageBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
     }
 
@@ -43,7 +37,9 @@ class HomePageFragment : Fragment() {
         _binding = null
     }
 
-    fun Fragment.setActivityTitle(title: String) {
+    private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
+
+    // TODO : Do the link between button and profile creation
 }
