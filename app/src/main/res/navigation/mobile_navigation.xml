@@ -9,17 +9,17 @@
         android:id="@+id/nav_home"
         android:name="com.samlach2222.velocityvolume.ui.VolumeManager.VolumeManagerFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_volumemanager" />
 
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.samlach2222.velocityvolume.ui.HomePage.HomePageFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_homepage" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.samlach2222.velocityvolume.ui.Settings.SettingsFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_settings" />
 </navigation>

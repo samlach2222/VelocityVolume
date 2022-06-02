@@ -20,7 +20,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.samlach2222.velocityvolume.R
-import com.samlach2222.velocityvolume.databinding.FragmentHomeBinding
+import com.samlach2222.velocityvolume.databinding.FragmentVolumemanagerBinding
 
 
 class VolumeManagerFragment : Fragment() , LocationListener {
@@ -28,7 +28,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private lateinit var tvGpsLocation: TextView // The TextView where the speed where displayed
     private val criteria = Criteria() // Geolocation criteria variable creation
     private var previousLocation: Location? = null // save of the previous location to calculate speed
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentVolumemanagerBinding? = null
 
     private var activityResultLauncher: ActivityResultLauncher<Array<String>>
     init{
@@ -60,7 +60,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentVolumemanagerBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
 
@@ -139,10 +139,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
     override fun onProviderEnabled(provider: String) {
 
-    }
-
-    fun Fragment.setActivityTitle(@StringRes id: Int) {
-        (activity as AppCompatActivity?)?.supportActionBar?.title = getString(id)
     }
 
     fun Fragment.setActivityTitle(title: String) {
