@@ -42,7 +42,7 @@ class SettingsFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        (activity as ProfileDrawerActivity).LockDrawerLayout(DrawerLayout.LOCK_MODE_UNLOCKED)
+        (activity as ProfileDrawerActivity).lockDrawerLayout(DrawerLayout.LOCK_MODE_UNLOCKED)
         super.onDestroyView()
         _binding = null
     }
