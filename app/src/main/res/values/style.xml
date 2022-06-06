@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<attr name="welcome_message" format="string|reference"/>
+
     <style name="SwitchTheme">
         <item name="colorAccent">?attr/colorPrimary</item>
     </style>

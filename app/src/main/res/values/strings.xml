@@ -31,5 +31,4 @@
     <string name="current_gps_speed"> </string>
     <string name="settingsActionBar">Settings</string>
     <string name="create_a_profile">Create a profile</string>
-    <string name="welcome_message">Welcome to <font color="?attr/colorPrimaryVariant">Velocity Volume</font>. \n\n This application is used to change the volume of your phone according to your driving speed. \n\n To use this application, you must first <font color='?attr/colorPrimaryVariant'>create a profile</font></string> <!-- TODO :  change color to accept theme color -->
 </resources>

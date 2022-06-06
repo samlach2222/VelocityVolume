@@ -21,7 +21,7 @@
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="@dimen/fab_margin"
             android:gravity="center"
-            android:text="@string/welcome_message"
+            android:text="?attr/welcome_message"
             android:textSize="24sp"
             android:textStyle="bold" />
 
