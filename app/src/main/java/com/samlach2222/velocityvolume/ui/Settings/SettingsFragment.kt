@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ArrayAdapter
+import android.widget.NumberPicker
+import android.widget.RadioGroup
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -34,10 +37,49 @@ class SettingsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        // Units of measurements
+        val unitGroup: RadioGroup = binding.rgUnits
+        val unitFromSavedSettings = null  // TODO : Get the unit stored in the saved settings
+        when (unitFromSavedSettings) {
+            "miles" -> unitGroup.check(binding.rbMile.id)
+            "kilometers" -> unitGroup.check(binding.rbKm.id)
+            else -> unitGroup.check(binding.rbKm.id)
         }
+
+        // Night mode
+        val spinnerNightMode: Spinner = binding.sNightMode
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        activity?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.night_modes,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                // Apply the adapter to the spinner
+                spinnerNightMode.adapter = adapter
+            }
+        }
+        // Set night mode current value
+        val nightModeFromSavedSettings = null  // TODO : Get the night mode stored in the saved settings
+        when (unitFromSavedSettings) {
+            "auto" -> spinnerNightMode.setSelection(0)
+            "on" -> spinnerNightMode.setSelection(1)
+            "off" -> spinnerNightMode.setSelection(2)
+            else -> spinnerNightMode.setSelection(0)
+        }
+
+        // GPS sensibility
+        val numberPickerGPSSensibility: NumberPicker = binding.npGpsSensibility
+        numberPickerGPSSensibility.minValue = 0
+        numberPickerGPSSensibility.maxValue = 20
+        numberPickerGPSSensibility.wrapSelectorWheel = false
+        val numberPickerGPSSensibilityValues = Array<String>(21) {(it - 10).toString()}
+        numberPickerGPSSensibility.displayedValues = numberPickerGPSSensibilityValues
+        val gpsSensibilityFromSavedSettings = 10  // TODO : Get the gps sensibility stored in the saved settings
+        numberPickerGPSSensibility.value = gpsSensibilityFromSavedSettings
+
         return root
     }
 
