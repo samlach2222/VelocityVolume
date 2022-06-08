@@ -10,10 +10,12 @@ import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.core.view.size
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
+import com.samlach2222.velocityvolume.ui.VolumeManager.VolumeManagerFragment
 
 class ProfileDrawerActivity : AppCompatActivity() {
 
@@ -49,6 +51,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
                 }
                 R.id.add_new_profile -> addProfile()
                 else -> {
+                    // TODO : Stop GPS Here by calling child fun
                     val bundle = bundleOf("id" to menuItem.toString())
                     navController.navigate(R.id.nav_volumemanager, bundle)
                 }

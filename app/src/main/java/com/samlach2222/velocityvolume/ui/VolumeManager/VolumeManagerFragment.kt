@@ -112,7 +112,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             else {
                 volumeManagerRunning = false
                 view.findViewById<TextView>(R.id.textView).text = ""
-                locationManager.removeUpdates(this)
+                stopGPS()
                 button.setImageResource(android.R.drawable.ic_media_play)
             }
         }
@@ -353,6 +353,10 @@ class VolumeManagerFragment : Fragment() , LocationListener {
                 }
             }
         }
+    }
+
+    fun stopGPS() {
+        locationManager.removeUpdates(this)
     }
 }
 
