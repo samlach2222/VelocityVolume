@@ -233,7 +233,7 @@
             android:layout_height="40dp" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch1"
+            android:id="@+id/switchWindow"
             android:theme="@style/SwitchTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -270,22 +270,18 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/getLocation"
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/fab_margin"
             android:backgroundTint="?attr/colorPrimary"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            android:textColor="@color/white"
-            app:cornerRadius="26dp"
-            app:icon="@android:drawable/ic_media_play"
-            app:iconSize="24dp"
-            app:iconTint="@color/white" />
+            app:backgroundTint="#4000FF00"
+            app:rippleColor="@android:color/white"
+            android:contentDescription="@string/play_pause_button"
+            android:iconTint="@color/white"
+            android:src="@android:drawable/ic_media_play" />
     </RelativeLayout>
 
 </LinearLayout>

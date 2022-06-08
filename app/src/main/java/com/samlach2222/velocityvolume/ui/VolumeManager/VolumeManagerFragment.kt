@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -20,6 +19,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentVolumemanagerBinding
 
@@ -31,6 +32,11 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private var previousLocation: Location? = null // save of the previous location to calculate speed
     private var _binding: FragmentVolumemanagerBinding? = null
 
+    // Application states
+    private var volumeManagerRunning = false
+    private val arraySlidersWindowClosed = arrayOf(100, 100, 100, 100, 100)
+    private val arraySlidersWindowOpened = arrayOf(100, 100, 100, 100, 100)
+
     // Audio Slider Controllers
     private var slider1Value = 100
     private var slider2Value = 100
@@ -39,7 +45,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private var slider5Value = 100
 
     // Variables for Audio
-    private var speedUnit = "km/h"
+    private var speedUnit = "km/h" // TODO : Get speedUnit from database/parameters
     private lateinit var audioManager: AudioManager // not yet initialized
     private var currentVolume: Int = -1 // not yet initialized
     private var maxVolume: Int = -1 // not yet initialized
@@ -82,6 +88,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         _binding = null
     }
 
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -91,13 +98,89 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         bundle?.getString("id")?.let { setActivityTitle(it) }
 
         // Play Button
-        val button: Button = view.findViewById(R.id.getLocation) // Get the button "Get Location"
+        val button: FloatingActionButton = view.findViewById(R.id.getLocation) // Get the button "Get Location"
         button.setOnClickListener {
-            val appPerms = arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-            activityResultLauncher.launch(appPerms)
+            if(!volumeManagerRunning) {
+                volumeManagerRunning = true
+                button.setImageResource(android.R.drawable.ic_media_pause)
+                val appPerms = arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+                activityResultLauncher.launch(appPerms)
+            }
+            else {
+                volumeManagerRunning = false
+                view.findViewById<TextView>(R.id.textView).text = ""
+                locationManager.removeUpdates(this)
+                button.setImageResource(android.R.drawable.ic_media_play)
+            }
+        }
+
+        // Windows slider
+        val windowSwitch : SwitchMaterial = view.findViewById(R.id.switchWindow)
+        windowSwitch.setOnClickListener {
+            val slider1: SeekBar = view.findViewById(R.id.slider_1)
+            val slider2: SeekBar = view.findViewById(R.id.slider_2)
+            val slider3: SeekBar = view.findViewById(R.id.slider_3)
+            val slider4: SeekBar = view.findViewById(R.id.slider_4)
+            val slider5: SeekBar = view.findViewById(R.id.slider_5)
+            val percentage1 : TextView = view.findViewById(R.id.percentage_1)
+            val percentage2 : TextView = view.findViewById(R.id.percentage_2)
+            val percentage3 : TextView = view.findViewById(R.id.percentage_3)
+            val percentage4 : TextView = view.findViewById(R.id.percentage_4)
+            val percentage5 : TextView = view.findViewById(R.id.percentage_5)
+
+            if(!windowSwitch.isChecked) { // window closed
+                //Save current
+                arraySlidersWindowOpened[0] = slider1Value
+                arraySlidersWindowOpened[1] = slider2Value
+                arraySlidersWindowOpened[2] = slider3Value
+                arraySlidersWindowOpened[3] = slider4Value
+                arraySlidersWindowOpened[4] = slider5Value
+
+                // set current
+                slider1.progress = arraySlidersWindowClosed[0]
+                slider2.progress = arraySlidersWindowClosed[1]
+                slider3.progress = arraySlidersWindowClosed[2]
+                slider4.progress = arraySlidersWindowClosed[3]
+                slider5.progress = arraySlidersWindowClosed[4]
+                slider1Value = arraySlidersWindowClosed[0]
+                slider2Value = arraySlidersWindowClosed[1]
+                slider3Value = arraySlidersWindowClosed[2]
+                slider4Value = arraySlidersWindowClosed[3]
+                slider5Value = arraySlidersWindowClosed[4]
+                percentage1.text = arraySlidersWindowClosed[0].toString()
+                percentage2.text = arraySlidersWindowClosed[1].toString()
+                percentage3.text = arraySlidersWindowClosed[2].toString()
+                percentage4.text = arraySlidersWindowClosed[3].toString()
+                percentage5.text = arraySlidersWindowClosed[4].toString()
+            }
+            else { // window opened
+                //Save current
+                arraySlidersWindowClosed[0] = slider1Value
+                arraySlidersWindowClosed[1] = slider2Value
+                arraySlidersWindowClosed[2] = slider3Value
+                arraySlidersWindowClosed[3] = slider4Value
+                arraySlidersWindowClosed[4] = slider5Value
+
+                // set current
+                slider1.progress = arraySlidersWindowOpened[0]
+                slider2.progress = arraySlidersWindowOpened[1]
+                slider3.progress = arraySlidersWindowOpened[2]
+                slider4.progress = arraySlidersWindowOpened[3]
+                slider5.progress = arraySlidersWindowOpened[4]
+                slider1Value = arraySlidersWindowOpened[0]
+                slider2Value = arraySlidersWindowOpened[1]
+                slider3Value = arraySlidersWindowOpened[2]
+                slider4Value = arraySlidersWindowOpened[3]
+                slider5Value = arraySlidersWindowOpened[4]
+                percentage1.text = arraySlidersWindowOpened[0].toString()
+                percentage2.text = arraySlidersWindowOpened[1].toString()
+                percentage3.text = arraySlidersWindowOpened[2].toString()
+                percentage4.text = arraySlidersWindowOpened[3].toString()
+                percentage5.text = arraySlidersWindowOpened[4].toString()
+            }
         }
 
         // Sliders
@@ -216,14 +299,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         setAudioVolumeBySpeed(speedInKmH.toInt())
     }
 
-    override fun onProviderDisabled(provider: String) {
-
-    }
-
-    override fun onProviderEnabled(provider: String) {
-
-    }
-
     private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
@@ -252,6 +327,30 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             }
             else if(speed >= 100) { // NOT ALWAYS 100
                 setAudioVolumeWithPercent(slider5Value)
+            }
+
+            // Block changes when speed > 5km/h to avoid changes while driving
+            if(speed >= 5) { // TODO : Popup to ask if you are the driver to know if we have to deactivate this
+                val slider1: SeekBar? = view?.findViewById(R.id.slider_1)
+                if (slider1 != null) {
+                    slider1.isEnabled = false
+                }
+                val slider2: SeekBar? = view?.findViewById(R.id.slider_2)
+                if (slider2 != null) {
+                    slider2.isEnabled = false
+                }
+                val slider3: SeekBar? = view?.findViewById(R.id.slider_3)
+                if (slider3 != null) {
+                    slider3.isEnabled = false
+                }
+                val slider4: SeekBar? = view?.findViewById(R.id.slider_4)
+                if (slider4 != null) {
+                    slider4.isEnabled = false
+                }
+                val slider5: SeekBar? = view?.findViewById(R.id.slider_5)
+                if (slider5 != null) {
+                    slider5.isEnabled = false
+                }
             }
         }
     }
