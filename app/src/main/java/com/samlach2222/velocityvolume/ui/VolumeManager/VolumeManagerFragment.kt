@@ -88,7 +88,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         _binding = null
     }
 
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    @SuppressLint("UseSwitchCompatOrMaterialCode", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -150,11 +150,11 @@ class VolumeManagerFragment : Fragment() , LocationListener {
                 slider3Value = arraySlidersWindowClosed[2]
                 slider4Value = arraySlidersWindowClosed[3]
                 slider5Value = arraySlidersWindowClosed[4]
-                percentage1.text = arraySlidersWindowClosed[0].toString()
-                percentage2.text = arraySlidersWindowClosed[1].toString()
-                percentage3.text = arraySlidersWindowClosed[2].toString()
-                percentage4.text = arraySlidersWindowClosed[3].toString()
-                percentage5.text = arraySlidersWindowClosed[4].toString()
+                percentage1.text = arraySlidersWindowClosed[0].toString() + "%"
+                percentage2.text = arraySlidersWindowClosed[1].toString() + "%"
+                percentage3.text = arraySlidersWindowClosed[2].toString() + "%"
+                percentage4.text = arraySlidersWindowClosed[3].toString() + "%"
+                percentage5.text = arraySlidersWindowClosed[4].toString() + "%"
             }
             else { // window opened
                 //Save current
@@ -175,11 +175,11 @@ class VolumeManagerFragment : Fragment() , LocationListener {
                 slider3Value = arraySlidersWindowOpened[2]
                 slider4Value = arraySlidersWindowOpened[3]
                 slider5Value = arraySlidersWindowOpened[4]
-                percentage1.text = arraySlidersWindowOpened[0].toString()
-                percentage2.text = arraySlidersWindowOpened[1].toString()
-                percentage3.text = arraySlidersWindowOpened[2].toString()
-                percentage4.text = arraySlidersWindowOpened[3].toString()
-                percentage5.text = arraySlidersWindowOpened[4].toString()
+                percentage1.text = arraySlidersWindowOpened[0].toString() + "%"
+                percentage2.text = arraySlidersWindowOpened[1].toString() + "%"
+                percentage3.text = arraySlidersWindowOpened[2].toString() + "%"
+                percentage4.text = arraySlidersWindowOpened[3].toString() + "%"
+                percentage5.text = arraySlidersWindowOpened[4].toString() + "%"
             }
         }
 
