@@ -72,7 +72,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    private fun addProfile() {
+    fun addProfile() {
         val editTextField = EditText(this@ProfileDrawerActivity)
         editTextField.isSingleLine = true
 

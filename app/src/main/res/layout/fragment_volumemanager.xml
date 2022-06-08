@@ -205,7 +205,7 @@
             android:orientation="horizontal">
 
             <SeekBar
-                android:id="@+id/slider5"
+                android:id="@+id/slider_5"
                 style="@style/Widget.AppCompat.SeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

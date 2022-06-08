@@ -7,11 +7,13 @@ import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.media.AudioManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -28,6 +30,19 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private val criteria = Criteria() // Geolocation criteria variable creation
     private var previousLocation: Location? = null // save of the previous location to calculate speed
     private var _binding: FragmentVolumemanagerBinding? = null
+
+    // Audio Slider Controllers
+    private var slider1Value = 100
+    private var slider2Value = 100
+    private var slider3Value = 100
+    private var slider4Value = 100
+    private var slider5Value = 100
+
+    // Variables for Audio
+    private var speedUnit = "km/h"
+    private lateinit var audioManager: AudioManager // not yet initialized
+    private var currentVolume: Int = -1 // not yet initialized
+    private var maxVolume: Int = -1 // not yet initialized
 
     private var activityResultLauncher: ActivityResultLauncher<Array<String>>
     init{
@@ -58,12 +73,8 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentVolumemanagerBinding.inflate(inflater, container, false)
-
-        val root: View = binding.root
-
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {
@@ -79,6 +90,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         //idProfile.text = bundle?.getString("id")
         bundle?.getString("id")?.let { setActivityTitle(it) }
 
+        // Play Button
         val button: Button = view.findViewById(R.id.getLocation) // Get the button "Get Location"
         button.setOnClickListener {
             val appPerms = arrayOf(
@@ -88,6 +100,71 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             activityResultLauncher.launch(appPerms)
         }
 
+        // Sliders
+        val slider1: SeekBar = view.findViewById(R.id.slider_1)
+        slider1.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            @SuppressLint("SetTextI18n")
+            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
+                view.findViewById<TextView>(R.id.percentage_1).text = "$progress%"
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seek: SeekBar) {
+                slider1Value = seek.progress
+            }
+        })
+
+        val slider2: SeekBar = view.findViewById(R.id.slider_2)
+        slider2.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            @SuppressLint("SetTextI18n")
+            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
+                view.findViewById<TextView>(R.id.percentage_2).text = "$progress%"
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seek: SeekBar) {
+                slider2Value = seek.progress
+            }
+        })
+
+        val slider3: SeekBar = view.findViewById(R.id.slider_3)
+        slider3.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            @SuppressLint("SetTextI18n")
+            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
+                view.findViewById<TextView>(R.id.percentage_3).text = "$progress%"
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seek: SeekBar) {
+                slider3Value = seek.progress
+            }
+        })
+
+        val slider4: SeekBar = view.findViewById(R.id.slider_4)
+        slider4.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            @SuppressLint("SetTextI18n")
+            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
+                view.findViewById<TextView>(R.id.percentage_4).text = "$progress%"
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seek: SeekBar) {
+                slider4Value = seek.progress
+            }
+        })
+
+        val slider5: SeekBar = view.findViewById(R.id.slider_5)
+        slider5.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            @SuppressLint("SetTextI18n")
+            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
+                view.findViewById<TextView>(R.id.percentage_5).text = "$progress%"
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seek: SeekBar) {
+                slider5Value = seek.progress
+            }
+        })
 
         // GPS criteria
         criteria.accuracy = Criteria.ACCURACY_FINE
@@ -95,6 +172,11 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         criteria.isAltitudeRequired = false
         criteria.isBearingRequired = false
         criteria.isSpeedRequired = false
+
+        // AUDIO
+        audioManager = activity?.applicationContext?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
     }
     /**
      * function, which is used to request the authorization to have access to the GPS and to launch a regular automatic scan to obtain the GPS coordinates.
@@ -130,6 +212,8 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         tvGpsLocation  = requireView().findViewById(R.id.textView) // TextView to display the speed in km/h
         val speedInKmH = speed.toDouble() * 18/5 // speed in Km/h
         tvGpsLocation.text = "Speed: " + speedInKmH.toInt() +  " km/h" // display the speed
+
+        setAudioVolumeBySpeed(speedInKmH.toInt())
     }
 
     override fun onProviderDisabled(provider: String) {
@@ -143,5 +227,35 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
+
+    private fun setAudioVolumeWithPercent(percent : Int) {
+        //val currentVolume: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        val maxVolume: Int = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        val percentBetween0And1 = percent / 100f
+        val seventyVolume = (maxVolume * percentBetween0And1).toInt()
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, seventyVolume, 0)
+    }
+
+    private fun setAudioVolumeBySpeed(speed : Int) {
+        if(speedUnit == "km/h") {
+            if(speed < 20) {
+                setAudioVolumeWithPercent(slider1Value)
+            }
+            else if(speed in 20..39) {
+                setAudioVolumeWithPercent(slider2Value)
+            }
+            else if(speed in 40 .. 59) {
+                setAudioVolumeWithPercent(slider3Value)
+            }
+            else if(speed in 60 .. 99) {
+                setAudioVolumeWithPercent(slider4Value)
+            }
+            else if(speed >= 100) { // NOT ALWAYS 100
+                setAudioVolumeWithPercent(slider5Value)
+            }
+        }
+    }
 }
+
+// TODO : Block changes when speed > 5km/h to avoid changes while driving
 
