@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.NumberPicker
 import android.widget.RadioGroup
-import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -38,7 +39,7 @@ class SettingsFragment : Fragment() {
         val root: View = binding.root
 
         // Units of measurements
-        val unitGroup: RadioGroup = binding.rgUnits
+        val unitGroup: RadioGroup = binding.rgUnit
         val unitFromSavedSettings = null  // TODO : Get the unit stored in the saved settings
         when (unitFromSavedSettings) {
             "miles" -> unitGroup.check(binding.rbMile.id)
@@ -47,27 +48,17 @@ class SettingsFragment : Fragment() {
         }
 
         // Night mode
-        val spinnerNightMode: Spinner = binding.sNightMode
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        activity?.let {
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.night_modes,
-                android.R.layout.simple_spinner_item
-            ).also { adapter ->
-                // Specify the layout to use when the list of choices appears
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                // Apply the adapter to the spinner
-                spinnerNightMode.adapter = adapter
-            }
+        val nightModeLayout: ConstraintLayout = binding.clNightMode
+        nightModeLayout.setOnClickListener {
+            showNightModeDialog()
         }
-        // Set night mode current value
+        val nightModeCurrent: TextView = binding.tvNightModeCurrent
         val nightModeFromSavedSettings = null  // TODO : Get the night mode stored in the saved settings
-        when (unitFromSavedSettings) {
-            "auto" -> spinnerNightMode.setSelection(0)
-            "on" -> spinnerNightMode.setSelection(1)
-            "off" -> spinnerNightMode.setSelection(2)
-            else -> spinnerNightMode.setSelection(0)
+        when (nightModeFromSavedSettings) {
+            "system" -> nightModeCurrent.text = resources.getString(R.string.system)
+            "on" -> nightModeCurrent.text = resources.getString(R.string.on)
+            "off" -> nightModeCurrent.text = resources.getString(R.string.off)
+            else -> nightModeCurrent.text = resources.getString(R.string.system)
         }
 
         // GPS sensibility
@@ -75,7 +66,7 @@ class SettingsFragment : Fragment() {
         numberPickerGPSSensibility.minValue = 0
         numberPickerGPSSensibility.maxValue = 20
         numberPickerGPSSensibility.wrapSelectorWheel = false
-        val numberPickerGPSSensibilityValues = Array<String>(21) {(it - 10).toString()}
+        val numberPickerGPSSensibilityValues = Array(21) {(it - 10).toString()}
         numberPickerGPSSensibility.displayedValues = numberPickerGPSSensibilityValues
         val gpsSensibilityFromSavedSettings = 10  // TODO : Get the gps sensibility stored in the saved settings
         numberPickerGPSSensibility.value = gpsSensibilityFromSavedSettings
@@ -91,5 +82,10 @@ class SettingsFragment : Fragment() {
 
     fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
+    }
+
+    private fun showNightModeDialog() {
+        // TODO : Show an alertDialog containing the different night modes, and get the selected value
+        Toast.makeText(this.context,"Night Mode DIALOG", Toast.LENGTH_SHORT).show()
     }
 }

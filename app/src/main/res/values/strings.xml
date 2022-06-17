@@ -51,4 +51,5 @@
     <string name="gps_sensibility">GPS Sensibility</string>
     <string name="difference_gps_actual_speed">Difference between GPS reported speed and actual speed</string>
     <string name="saving">Saving :</string>
+    <string name="error">ERROR</string>
 </resources>
