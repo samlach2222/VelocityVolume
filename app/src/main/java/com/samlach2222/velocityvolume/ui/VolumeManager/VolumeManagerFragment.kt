@@ -2,13 +2,16 @@ package com.samlach2222.velocityvolume.ui.VolumeManager
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
+import android.hardware.display.DisplayManager
 import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.media.AudioManager
 import android.os.Bundle
+import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,11 +29,17 @@ import com.samlach2222.velocityvolume.databinding.FragmentVolumemanagerBinding
 
 
 class VolumeManagerFragment : Fragment() , LocationListener {
+
+    private var _binding: FragmentVolumemanagerBinding? = null
+    private var isUserPassenger = false
+    private var isPopupDisplayed = false
+    private var isUserExceedSpeedLimit = false
+
+    //GPS needs
     private lateinit var locationManager: LocationManager // Creation of GPS manager
+    private var previousLocation: Location? = null // save of the previous location to calculate speed
     private lateinit var tvGpsLocation: TextView // The TextView where the speed where displayed
     private val criteria = Criteria() // Geolocation criteria variable creation
-    private var previousLocation: Location? = null // save of the previous location to calculate speed
-    private var _binding: FragmentVolumemanagerBinding? = null
     private var started = false
 
     // Application states
@@ -310,7 +319,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
 
-    private fun setAudioVolumeWithPercent(percent : Int) {
+    private fun setAudioVolumeWithPercent(percent : Int) { // TODO : change progressively the volume
         //val currentVolume: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         val maxVolume: Int = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
         val percentBetween0And1 = percent / 100f
@@ -337,26 +346,41 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             }
 
             // Block changes when speed > 5km/h to avoid changes while driving
-            if(speed >= 5) { // TODO : Popup to ask if you are the driver to know if we have to deactivate this
-                val slider1: SeekBar? = view?.findViewById(R.id.slider_1)
-                if (slider1 != null) {
-                    slider1.isEnabled = false
+            if(speed >= 5) {
+                isUserExceedSpeedLimit = true
+            }
+
+            if(isUserExceedSpeedLimit) {
+                if(!isUserPassenger) {
+                    val slider1: SeekBar? = view?.findViewById(R.id.slider_1)
+                    if (slider1 != null) {
+                        slider1.isEnabled = false
+                    }
+                    val slider2: SeekBar? = view?.findViewById(R.id.slider_2)
+                    if (slider2 != null) {
+                        slider2.isEnabled = false
+                    }
+                    val slider3: SeekBar? = view?.findViewById(R.id.slider_3)
+                    if (slider3 != null) {
+                        slider3.isEnabled = false
+                    }
+                    val slider4: SeekBar? = view?.findViewById(R.id.slider_4)
+                    if (slider4 != null) {
+                        slider4.isEnabled = false
+                    }
+                    val slider5: SeekBar? = view?.findViewById(R.id.slider_5)
+                    if (slider5 != null) {
+                        slider5.isEnabled = false
+                    }
                 }
-                val slider2: SeekBar? = view?.findViewById(R.id.slider_2)
-                if (slider2 != null) {
-                    slider2.isEnabled = false
-                }
-                val slider3: SeekBar? = view?.findViewById(R.id.slider_3)
-                if (slider3 != null) {
-                    slider3.isEnabled = false
-                }
-                val slider4: SeekBar? = view?.findViewById(R.id.slider_4)
-                if (slider4 != null) {
-                    slider4.isEnabled = false
-                }
-                val slider5: SeekBar? = view?.findViewById(R.id.slider_5)
-                if (slider5 != null) {
-                    slider5.isEnabled = false
+
+                if(!isPopupDisplayed){ // if user drive (default state) AND the popup is not displayed
+                    val dm = requireContext().getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
+                    for (display in dm.displays) {
+                        if (display.state == Display.STATE_ON) { // display popup only if the screen is ON
+                            displayPopupToKnowIfUserDrive()
+                        }
+                    }
                 }
             }
         }
@@ -364,10 +388,55 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
     private fun stopGPS() {
         if(started){
+            isPopupDisplayed = false
+            isUserPassenger = false
+            isUserExceedSpeedLimit = false
             locationManager.removeUpdates(this)
         }
     }
-}
 
-// TODO : Block changes when speed > 5km/h to avoid changes while driving
+    private fun displayPopupToKnowIfUserDrive() {
+        isPopupDisplayed = true
+
+        val dialog: AlertDialog = AlertDialog.Builder(this.context)
+            .setTitle("Are you a passenger in the car?")
+            .setMessage("")  // toast or message ?
+            .setNegativeButton("No", null)
+            .setPositiveButton("Yes", null)
+            .create()
+
+        dialog.setOnShowListener {
+            val yesButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            val noButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            yesButton.setOnClickListener {
+                isUserPassenger = true
+                val slider1: SeekBar? = view?.findViewById(R.id.slider_1)
+                if (slider1 != null) {
+                    slider1.isEnabled = true
+                }
+                val slider2: SeekBar? = view?.findViewById(R.id.slider_2)
+                if (slider2 != null) {
+                    slider2.isEnabled = true
+                }
+                val slider3: SeekBar? = view?.findViewById(R.id.slider_3)
+                if (slider3 != null) {
+                    slider3.isEnabled = true
+                }
+                val slider4: SeekBar? = view?.findViewById(R.id.slider_4)
+                if (slider4 != null) {
+                    slider4.isEnabled = true
+                }
+                val slider5: SeekBar? = view?.findViewById(R.id.slider_5)
+                if (slider5 != null) {
+                    slider5.isEnabled = true
+                }
+                dialog.dismiss()
+            }
+            noButton.setOnClickListener {
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+}
 
