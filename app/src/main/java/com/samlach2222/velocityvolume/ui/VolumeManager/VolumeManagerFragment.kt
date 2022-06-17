@@ -31,6 +31,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private val criteria = Criteria() // Geolocation criteria variable creation
     private var previousLocation: Location? = null // save of the previous location to calculate speed
     private var _binding: FragmentVolumemanagerBinding? = null
+    private var started = false
 
     // Application states
     private var volumeManagerRunning = false
@@ -86,6 +87,11 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopGPS()
     }
 
     @SuppressLint("UseSwitchCompatOrMaterialCode", "SetTextI18n")
@@ -267,6 +273,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private fun getLocation() {
         locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager // Create instance of location Manager
         locationManager.requestLocationUpdates(0, 0f, criteria, this, null) // Request updates of location using criteria and locationListener
+        started = true
 //        var providerName: String? = locationManager.getBestProvider(criteria, true)
 //        if (providerName != null) {
 //            locationManager.requestLocationUpdates(providerName, 0,0f,this)
@@ -355,8 +362,10 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         }
     }
 
-    fun stopGPS() {
-        locationManager.removeUpdates(this)
+    private fun stopGPS() {
+        if(started){
+            locationManager.removeUpdates(this)
+        }
     }
 }
 
