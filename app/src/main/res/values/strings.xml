@@ -49,7 +49,7 @@
     <string name="night_mode_selector">Night Mode selector</string>
     <string name="night_mode">Night Mode</string>
     <string name="gps_sensibility">GPS Sensibility</string>
-    <string name="difference_gps_actual_speed">Difference between GPS reported speed and actual speed</string>
+    <string name="gps_sensibility_message">Difference between GPS reported speed and actual speed</string>
     <string name="saving">Saving :</string>
     <string name="error">ERROR</string>
     <string name="delete_profiles">Delete Profiles</string>
@@ -57,4 +57,11 @@
     <string name="import_settings_message">Import settings from a JSON file</string>
     <string name="export_settings">Export settings</string>
     <string name="export_settings_message">Export settings to a JSON file</string>
+    <string name="about">About :</string>
+    <string name="github">GitHub</string>
+    <string name="github_message">GitHub page of the project</string>
+    <string name="report_a_bug">Report a bug</string>
+    <string name="report_a_bug_message">GitHub page to report a bug on the project</string>
+    <string name="rate_this_app">Rate this app</string>
+    <string name="rate_this_app_message">Rate this app on the Google Play Store</string>
 </resources>
