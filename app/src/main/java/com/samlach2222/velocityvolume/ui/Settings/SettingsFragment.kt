@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.play.core.review.ReviewManagerFactory
 import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
@@ -214,6 +215,20 @@ class SettingsFragment : Fragment() {
     }
 
     private fun rateApp() {
-        DEBUGToast("rateApp isn't implemented")
+        DEBUGToast("rateApp called")
+
+        val manager = ReviewManagerFactory.create(this.requireContext())
+
+        val request = manager.requestReviewFlow()
+        request.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // We got the ReviewInfo object
+                val reviewInfo = task.result
+                val flow = reviewInfo?.let { manager.launchReviewFlow(requireActivity(), it) }
+                flow?.addOnCompleteListener { _ ->
+                    DEBUGToast("App rated")
+                }
+            }
+        }
     }
 }
