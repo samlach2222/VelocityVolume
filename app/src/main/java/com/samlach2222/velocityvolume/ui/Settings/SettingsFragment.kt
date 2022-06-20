@@ -1,6 +1,8 @@
 package com.samlach2222.velocityvolume.ui.Settings
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -92,6 +94,26 @@ class SettingsFragment : Fragment() {
             exportSettings()
         }
 
+        // ABOUT
+
+        // GitHub
+        val githubLayout: ConstraintLayout = binding.clGithubPage
+        githubLayout.setOnClickListener {
+            githubPage()
+        }
+
+        // Report a bug
+        val reportBugLayout: ConstraintLayout = binding.clReportBugPage
+        reportBugLayout.setOnClickListener {
+            reportBugPage()
+        }
+
+        // Rate this app
+        val rateAppLayout: ConstraintLayout = binding.clRateApplication
+        rateAppLayout.setOnClickListener {
+            rateApp()
+        }
+
         return root
     }
 
@@ -151,7 +173,7 @@ class SettingsFragment : Fragment() {
 
         val dialog: AlertDialog = AlertDialog.Builder(this.context)
             .setTitle(resources.getString(R.string.gps_sensibility))
-            .setMessage(resources.getString(R.string.difference_gps_actual_speed))  // toast or message ?
+            .setMessage(resources.getString(R.string.gps_sensibility_message))  // toast or message ?
             .setView(numberPickerGPSSensibility)
             .setPositiveButton("OK", null)
             .setNegativeButton("Cancel", null)
@@ -179,5 +201,19 @@ class SettingsFragment : Fragment() {
     private fun exportSettings() {
         // TODO : Implement export settings
         DEBUGToast("exportSettings isn't implemented")
+    }
+
+    private fun githubPage() {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/samlach2222/VelocityVolume"))
+        startActivity(browserIntent)
+    }
+
+    private fun reportBugPage() {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/samlach2222/VelocityVolume/issues/new"))
+        startActivity(browserIntent)
+    }
+
+    private fun rateApp() {
+        DEBUGToast("rateApp isn't implemented")
     }
 }
