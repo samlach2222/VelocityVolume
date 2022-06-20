@@ -48,28 +48,20 @@ class SettingsFragment : Fragment() {
         }
 
         // Night mode
-        val nightModeLayout: ConstraintLayout = binding.clNightMode
-        nightModeLayout.setOnClickListener {
-            showNightModeDialog()
-        }
-        val nightModeCurrent: TextView = binding.tvNightModeCurrent
+        val nightModeGroup: RadioGroup = binding.rgNightMode
         val nightModeFromSavedSettings = null  // TODO : Get the night mode stored in the saved settings
         when (nightModeFromSavedSettings) {
-            "system" -> nightModeCurrent.text = resources.getString(R.string.system)
-            "on" -> nightModeCurrent.text = resources.getString(R.string.on)
-            "off" -> nightModeCurrent.text = resources.getString(R.string.off)
-            else -> nightModeCurrent.text = resources.getString(R.string.system)
+            "system" -> nightModeGroup.check(binding.rbNightModeSystem.id)
+            "on" -> nightModeGroup.check(binding.rbNightModeOn.id)
+            "off" -> nightModeGroup.check(binding.rbNightModeOff.id)
+            else -> nightModeGroup.check(binding.rbNightModeSystem.id)
         }
 
         // GPS sensibility
-        val numberPickerGPSSensibility: NumberPicker = binding.npGpsSensibility
-        numberPickerGPSSensibility.minValue = 0
-        numberPickerGPSSensibility.maxValue = 20
-        numberPickerGPSSensibility.wrapSelectorWheel = false
-        val numberPickerGPSSensibilityValues = Array(21) {(it - 10).toString()}
-        numberPickerGPSSensibility.displayedValues = numberPickerGPSSensibilityValues
-        val gpsSensibilityFromSavedSettings = 10  // TODO : Get the gps sensibility stored in the saved settings
-        numberPickerGPSSensibility.value = gpsSensibilityFromSavedSettings
+        val gpsSensibilityLayout: ConstraintLayout = binding.clGpsSensibility
+        gpsSensibilityLayout.setOnClickListener {
+            showGPSSensibilityDialog()
+        }
 
         return root
     }
@@ -84,8 +76,20 @@ class SettingsFragment : Fragment() {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
 
-    private fun showNightModeDialog() {
-        // TODO : Show an alertDialog containing the different night modes, and get the selected value
-        Toast.makeText(this.context,"Night Mode DIALOG", Toast.LENGTH_SHORT).show()
+    private fun showGPSSensibilityDialog() {
+        // TODO : Show an alertDialog containing the NumberPicker for the gps sensibility, and get the selected value
+        Toast.makeText(this.context,"GPS Sensibility DIALOG", Toast.LENGTH_SHORT).show()
+
+        val numberPickerGPSSensibility = NumberPicker(this.context)
+        numberPickerGPSSensibility.minValue = 0
+        numberPickerGPSSensibility.maxValue = 20
+        numberPickerGPSSensibility.wrapSelectorWheel = false
+        val numberPickerGPSSensibilityValues = Array(21) {(it - 10).toString()}
+        numberPickerGPSSensibility.displayedValues = numberPickerGPSSensibilityValues
+        var gpsSensibilityFromSavedSettings: Int? = null  // TODO : Get the gps sensibility stored in the saved settings
+        if (gpsSensibilityFromSavedSettings == null) {
+            gpsSensibilityFromSavedSettings = 10  // 10th entry, which is 0
+        }
+        numberPickerGPSSensibility.value = gpsSensibilityFromSavedSettings
     }
 }

@@ -78,10 +78,8 @@
                     android:id="@+id/cl_nightMode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground">
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp">
 
                     <TextView
                         android:id="@+id/textView12"
@@ -92,14 +90,32 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_nightModeCurrent"
+                    <RadioGroup
+                        android:id="@+id/rg_nightMode"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/error"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+                        <RadioButton
+                            android:id="@+id/rb_nightMode_system"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/system" />
+
+                        <RadioButton
+                            android:id="@+id/rb_nightMode_on"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/on" />
+
+                        <RadioButton
+                            android:id="@+id/rb_nightMode_off"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/off" />
+                    </RadioGroup>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -107,7 +123,10 @@
                     android:id="@+id/cl_gpsSensibility"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
 
                     <TextView
                         android:id="@+id/textView13"
@@ -122,17 +141,11 @@
                         android:id="@+id/textView14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
                         android:text="@string/difference_gps_actual_speed"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
-                    <NumberPicker
-                        android:id="@+id/np_gpsSensibility"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView14" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
@@ -140,7 +153,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginVertical="8dp"
                 android:background="?attr/colorPrimary" />
 
             <LinearLayout
