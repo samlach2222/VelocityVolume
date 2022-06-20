@@ -26,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentVolumemanagerBinding
+import java.lang.Thread.sleep
 
 
 class VolumeManagerFragment : Fragment() , LocationListener {
@@ -319,12 +320,24 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
 
-    private fun setAudioVolumeWithPercent(percent : Int) { // TODO : change progressively the volume
-        //val currentVolume: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-        val maxVolume: Int = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-        val percentBetween0And1 = percent / 100f
-        val seventyVolume = (maxVolume * percentBetween0And1).toInt()
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, seventyVolume, 0)
+    private fun setAudioVolumeWithPercent(percent : Int) {
+        Thread { // Thread to progressively increment volume
+            // initialization
+            var currentVolume: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+            val maxVolume: Int = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+            val percentBetween0And1 = percent / 100f
+            val seventyVolume = (maxVolume * percentBetween0And1).toInt()
+            val nbSwitchMS = 2000 // number of ms to go from currentVolume to seventyVolume
+            val diffVolume = seventyVolume - currentVolume // difference between goal volume and current
+            val speedChange = nbSwitchMS / diffVolume // speed to increase volume
+
+            // Increment loop
+            while(currentVolume != seventyVolume){
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, 0)
+                sleep(speedChange.toLong()) // number of ms to wait
+                currentVolume++
+            }
+        }.start()
     }
 
     private fun setAudioVolumeBySpeed(speed : Int) {
