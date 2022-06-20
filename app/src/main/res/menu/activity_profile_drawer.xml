@@ -23,9 +23,13 @@
             android:id="@+id/add_new_profile"
             android:icon="@drawable/ic_menu_person_add"
             android:title="@string/add_profile" />
+        <item
+            android:id="@+id/delete_profiles"
+            android:icon="@drawable/ic_menu_person_add"
+            android:title="@string/delete_profiles" />
     </group>
 
-    <group android:checkableBehavior="single" android:id="@+id/group_settings" android:orderInCategory="102">
+    <group android:checkableBehavior="single" android:id="@+id/group_settings" android:orderInCategory="103">
         <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_menu_settings"
