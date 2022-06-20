@@ -45,6 +45,8 @@ class SettingsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // GENERAL SETTINGS
+
         // Units of measurements
         val unitGroup: RadioGroup = binding.rgUnit
         val unitFromSavedSettings = null  // TODO : Get the unit stored in the saved settings
@@ -76,6 +78,20 @@ class SettingsFragment : Fragment() {
             showGPSSensibilityDialog()
         }
 
+        // SAVING
+
+        // Import settings
+        val importSettingsLayout: ConstraintLayout = binding.clImportSettings
+        importSettingsLayout.setOnClickListener {
+            importSettings()
+        }
+
+        // Export settings
+        val exportSettingsLayout: ConstraintLayout = binding.clExportSettings
+        exportSettingsLayout.setOnClickListener {
+            exportSettings()
+        }
+
         return root
     }
 
@@ -87,6 +103,10 @@ class SettingsFragment : Fragment() {
 
     fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
+    }
+
+    private fun DEBUGToast(message: Any) {
+        Toast.makeText(this.context, "$message", Toast.LENGTH_SHORT).show()
     }
 
     private fun DEBUGToastSelectedValue(selectedValue: Any) {
@@ -149,5 +169,15 @@ class SettingsFragment : Fragment() {
         }
 
         dialog.show()
+    }
+
+    private fun importSettings() {
+        // TODO : Implement import settings
+        DEBUGToast("importSettings isn't implemented")
+    }
+
+    private fun exportSettings() {
+        // TODO : Implement export settings
+        DEBUGToast("exportSettings isn't implemented")
     }
 }

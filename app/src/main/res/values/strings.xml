@@ -52,4 +52,8 @@
     <string name="difference_gps_actual_speed">Difference between GPS reported speed and actual speed</string>
     <string name="saving">Saving :</string>
     <string name="error">ERROR</string>
+    <string name="import_settings">Import settings</string>
+    <string name="import_settings_message">Import settings from a JSON file</string>
+    <string name="export_settings">Export settings</string>
+    <string name="export_settings_message">Export settings to a JSON file</string>
 </resources>
