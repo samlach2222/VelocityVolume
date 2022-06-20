@@ -17,8 +17,15 @@ import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
 
-class SettingsFragment : Fragment() {
+// Internal values have to be the same in every language
+const val milesString = "miles"
+const val kilometersString = "kilometers"
+const val systemString = "system"
+const val onString = "on"
+const val offString = "off"
 
+class SettingsFragment : Fragment() {
+// TODO : UPDATE THE SETTINGS WHEN THE USER CHANGE A VALUE
     private var _binding: FragmentSettingsBinding? = null
 
     // This property is only valid between onCreateView and
@@ -42,19 +49,25 @@ class SettingsFragment : Fragment() {
         val unitGroup: RadioGroup = binding.rgUnit
         val unitFromSavedSettings = null  // TODO : Get the unit stored in the saved settings
         when (unitFromSavedSettings) {
-            "miles" -> unitGroup.check(binding.rbMile.id)
-            "kilometers" -> unitGroup.check(binding.rbKm.id)
+            kilometersString -> unitGroup.check(binding.rbKm.id)
+            milesString -> unitGroup.check(binding.rbMile.id)
             else -> unitGroup.check(binding.rbKm.id)
+        }
+        unitGroup.setOnCheckedChangeListener { _, checkedId ->
+            onRadioGroupUnitChange(checkedId)
         }
 
         // Night mode
         val nightModeGroup: RadioGroup = binding.rgNightMode
         val nightModeFromSavedSettings = null  // TODO : Get the night mode stored in the saved settings
         when (nightModeFromSavedSettings) {
-            "system" -> nightModeGroup.check(binding.rbNightModeSystem.id)
-            "on" -> nightModeGroup.check(binding.rbNightModeOn.id)
-            "off" -> nightModeGroup.check(binding.rbNightModeOff.id)
+            systemString -> nightModeGroup.check(binding.rbNightModeSystem.id)
+            onString -> nightModeGroup.check(binding.rbNightModeOn.id)
+            offString -> nightModeGroup.check(binding.rbNightModeOff.id)
             else -> nightModeGroup.check(binding.rbNightModeSystem.id)
+        }
+        nightModeGroup.setOnCheckedChangeListener { _, checkedId ->
+            onRadioGroupNightModeChange(checkedId)
         }
 
         // GPS sensibility
@@ -74,6 +87,33 @@ class SettingsFragment : Fragment() {
 
     fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
+    }
+
+    private fun DEBUGToastSelectedValue(selectedValue: Any) {
+        Toast.makeText(this.context, "Selected value : $selectedValue", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onRadioGroupUnitChange(checkedId: Int) {
+        val selectedValue = when (checkedId) {
+            R.id.rb_km -> kilometersString
+            R.id.rb_mile -> milesString
+            else -> return
+        }
+
+        // TODO : Update the saved settings with the selected unit
+        DEBUGToastSelectedValue(selectedValue)
+    }
+
+    private fun onRadioGroupNightModeChange(checkedId: Int) {
+        val selectedValue = when (checkedId) {
+            R.id.rb_nightMode_system -> systemString
+            R.id.rb_nightMode_on -> onString
+            R.id.rb_nightMode_off -> offString
+            else -> return
+        }
+
+        // TODO : Update the saved settings with the selected night mode
+        DEBUGToastSelectedValue(selectedValue)
     }
 
     private fun showGPSSensibilityDialog() {
@@ -103,7 +143,7 @@ class SettingsFragment : Fragment() {
                 val selectedValue = numberPickerGPSSensibility.displayedValues[numberPickerGPSSensibility.value].toInt()
 
                 // TODO : Update the saved settings with the selected gps sensibility
-                Toast.makeText(this.context, "Selected value : $selectedValue", Toast.LENGTH_SHORT).show()
+                DEBUGToastSelectedValue(selectedValue)
                 dialog.dismiss()
             }
         }
