@@ -1,12 +1,12 @@
 package com.samlach2222.velocityvolume.ui.Settings
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import android.widget.RadioGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -77,9 +77,6 @@ class SettingsFragment : Fragment() {
     }
 
     private fun showGPSSensibilityDialog() {
-        // TODO : Show an alertDialog containing the NumberPicker for the gps sensibility, and get the selected value
-        Toast.makeText(this.context,"GPS Sensibility DIALOG", Toast.LENGTH_SHORT).show()
-
         val numberPickerGPSSensibility = NumberPicker(this.context)
         numberPickerGPSSensibility.minValue = 0
         numberPickerGPSSensibility.maxValue = 20
@@ -88,8 +85,29 @@ class SettingsFragment : Fragment() {
         numberPickerGPSSensibility.displayedValues = numberPickerGPSSensibilityValues
         var gpsSensibilityFromSavedSettings: Int? = null  // TODO : Get the gps sensibility stored in the saved settings
         if (gpsSensibilityFromSavedSettings == null) {
-            gpsSensibilityFromSavedSettings = 10  // 10th entry, which is 0
+            gpsSensibilityFromSavedSettings = numberPickerGPSSensibilityValues.indexOf("0")
         }
-        numberPickerGPSSensibility.value = gpsSensibilityFromSavedSettings
+        numberPickerGPSSensibility.value = gpsSensibilityFromSavedSettings  // value uses the index
+
+        val dialog: AlertDialog = AlertDialog.Builder(this.context)
+            .setTitle(resources.getString(R.string.gps_sensibility))
+            .setMessage(resources.getString(R.string.difference_gps_actual_speed))  // toast or message ?
+            .setView(numberPickerGPSSensibility)
+            .setPositiveButton("OK", null)
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        dialog.setOnShowListener {
+            val okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            okButton.setOnClickListener {
+                val selectedValue = numberPickerGPSSensibility.displayedValues[numberPickerGPSSensibility.value].toInt()
+
+                // TODO : Update the saved settings with the selected gps sensibility
+                Toast.makeText(this.context, "Selected value : $selectedValue", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+        }
+
+        dialog.show()
     }
 }
