@@ -36,18 +36,21 @@
     <string name="settings_scroll_contentDescription">Settings of Velocity Volume</string>
     <string name="general_settings">General settings</string>
     <string name="unit_of_measurement">Unit of measurement</string>
-    <string name="miles">Miles</string>
     <string name="kilometers">Kilometers</string>
+    <string name="miles">Miles</string>
+    <string-array name="units_of_measurement">
+        <item>@string/kilometers</item>
+        <item>@string/miles</item>
+    </string-array>
+    <string name="night_mode">Night Mode</string>
+    <string name="system">System</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
     <string-array name="night_modes">
         <item>@string/system</item>
         <item>@string/on</item>
         <item>@string/off</item>
     </string-array>
-    <string name="system">System</string>
-    <string name="on">On</string>
-    <string name="off">Off</string>
-    <string name="night_mode_selector">Night Mode selector</string>
-    <string name="night_mode">Night Mode</string>
     <string name="gps_sensibility">GPS Sensibility</string>
     <string name="gps_sensibility_message">Difference between GPS reported speed and actual speed</string>
     <string name="saving">Saving</string>

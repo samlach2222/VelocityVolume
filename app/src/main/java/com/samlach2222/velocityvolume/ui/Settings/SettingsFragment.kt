@@ -1,17 +1,13 @@
 package com.samlach2222.velocityvolume.ui.Settings
 
-import android.app.AlertDialog
 import android.content.Intent
-import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.NumberPicker
-import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
@@ -22,6 +18,7 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
+
 
 // Internal values have to be the same in every language
 const val milesString = "miles"
@@ -152,13 +149,50 @@ class SettingsFragment : Fragment() {
     }
 
     private fun showUnitDialog() {
-        // TODO : Show unit dialog with radio buttons in a vertical orientation and get the selected value
-        DEBUGToast("showUnitDialog isn't implemented")
+        val dialogBuilder = AlertDialog.Builder(this.requireContext())
+        dialogBuilder.setTitle(resources.getString(R.string.unit_of_measurement))
+        val items = resources.getStringArray(R.array.units_of_measurement)
+        val checkedItem = 0  // TODO : Get the unit stored in the saved settings
+        dialogBuilder.setSingleChoiceItems(
+            items, checkedItem
+        ) { dialog, which ->
+            when (which) {
+                0 -> unitChange(kilometersString)
+                1 -> unitChange(milesString)
+            }
+            dialog.dismiss()
+        }
+        val dialog = dialogBuilder.create()
+        dialog.show()
+    }
+
+    private fun unitChange(selectedValue: String) {
+        // TODO : Update the saved settings with the selected unit
+        DEBUGToastSelectedValue(selectedValue)
     }
 
     private fun showNightModeDialog() {
-        // TODO : Show night mode dialog with radio buttons in a vertical orientation and get the selected value
-        DEBUGToast("showNightModeDialog isn't implemented")
+        val dialogBuilder = AlertDialog.Builder(this.requireContext())
+        dialogBuilder.setTitle(resources.getString(R.string.night_mode))
+        val items = resources.getStringArray(R.array.night_modes)
+        val checkedItem = 0  // TODO : Get the unit stored in the saved settings
+        dialogBuilder.setSingleChoiceItems(
+            items, checkedItem
+        ) { dialog, which ->
+            when (which) {
+                0 -> nightModeChange(systemString)
+                1 -> nightModeChange(onString)
+                2 -> nightModeChange(offString)
+            }
+            dialog.dismiss()
+        }
+        val dialog = dialogBuilder.create()
+        dialog.show()
+    }
+
+    private fun nightModeChange(selectedValue: String) {
+        // TODO : Update the saved settings with the selected night mode
+        DEBUGToastSelectedValue(selectedValue)
     }
 
     private fun onSliderGPSSensibilityStopTrackingTouch(slider: Slider) {
