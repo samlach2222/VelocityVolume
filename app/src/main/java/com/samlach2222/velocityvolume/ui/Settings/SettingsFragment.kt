@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -167,6 +168,13 @@ class SettingsFragment : Fragment() {
     }
 
     private fun unitChange(selectedValue: String) {
+        // Update subtext with the selected unit
+        val textViewUnitCurrentValue = this.requireView().findViewById<TextView>(R.id.tv_unitValue)
+        when (selectedValue) {
+            kilometersString -> textViewUnitCurrentValue.text = resources.getString(R.string.kilometers)
+            milesString -> textViewUnitCurrentValue.text = resources.getString(R.string.miles)
+        }
+
         // TODO : Update the saved settings with the selected unit
         DEBUGToastSelectedValue(selectedValue)
     }
@@ -191,6 +199,14 @@ class SettingsFragment : Fragment() {
     }
 
     private fun nightModeChange(selectedValue: String) {
+        // Update subtext with the selected night mode
+        val textViewNightModeCurrentValue = this.requireView().findViewById<TextView>(R.id.tv_nightModeValue)
+        when (selectedValue) {
+            systemString -> textViewNightModeCurrentValue.text = resources.getString(R.string.system)
+            onString -> textViewNightModeCurrentValue.text = resources.getString(R.string.on)
+            offString -> textViewNightModeCurrentValue.text = resources.getString(R.string.off)
+        }
+
         // TODO : Update the saved settings with the selected night mode
         DEBUGToastSelectedValue(selectedValue)
     }
