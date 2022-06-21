@@ -20,6 +20,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,6 +28,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentVolumemanagerBinding
 import java.lang.Thread.sleep
+import kotlin.math.absoluteValue
 
 
 class VolumeManagerFragment : Fragment() , LocationListener {
@@ -60,6 +62,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private lateinit var audioManager: AudioManager // not yet initialized
     private var currentVolume: Int = -1 // not yet initialized
     private var maxVolume: Int = -1 // not yet initialized
+    private var threadExist = false
 
     private var activityResultLauncher: ActivityResultLauncher<Array<String>>
     init{
@@ -280,9 +283,10 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     /**
      * function, which is used to request the authorization to have access to the GPS and to launch a regular automatic scan to obtain the GPS coordinates.
      */
-    private fun getLocation() {
+    private fun getLocation() { // TODO : Find a better function (not deprecated) to have location updates
         locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager // Create instance of location Manager
-        locationManager.requestLocationUpdates(0, 0f, criteria, this, null) // Request updates of location using criteria and locationListener
+        //locationManager.requestLocationUpdates(0, 0f, FUSED_PROVIDER, this, null) // Request updates of location using criteria and locationListener
+        //locationManager.requestLocationUpdates(0,0f,this)
         started = true
 //        var providerName: String? = locationManager.getBestProvider(criteria, true)
 //        if (providerName != null) {
@@ -321,41 +325,112 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     }
 
     private fun setAudioVolumeWithPercent(percent : Int) {
+        threadExist = true
+
+        Thread {
+            var currentVolumeInPercent = (currentVolume.toFloat() * (100f / maxVolume.toFloat())).toInt()
+            val nbSwitchMS = 2000 // number of ms to go from currentVolume to seventyVolume
+            val diffVolumePercent = (currentVolumeInPercent - percent).absoluteValue
+            val speedChangePercent: Int = if (diffVolumePercent != 0) {
+                nbSwitchMS / diffVolumePercent // speed to increase volume
+            } else {
+                0 // speed to increase volume
+            }
+            while (currentVolumeInPercent != percent){
+
+                if(currentVolumeInPercent > percent) {
+                    currentVolumeInPercent--
+                }
+                else if(currentVolumeInPercent < percent) {
+                    currentVolumeInPercent++
+                }
+
+                runOnUiThread{
+                    val tvVolume: TextView =
+                        requireView().findViewById(R.id.textView2) // The TextView where the volume where displayed // TextView to display the speed in km/h
+                    tvVolume.text = "Volume: $currentVolumeInPercent%" // display the speed
+                }
+                sleep(speedChangePercent.toLong()) // number of ms to wait
+
+            }
+        }.start()
+
         Thread { // Thread to progressively increment volume
-            // initialization
-            var currentVolume: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-            val maxVolume: Int = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+            currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
             val percentBetween0And1 = percent / 100f
             val seventyVolume = (maxVolume * percentBetween0And1).toInt()
             val nbSwitchMS = 2000 // number of ms to go from currentVolume to seventyVolume
-            val diffVolume = seventyVolume - currentVolume // difference between goal volume and current
-            val speedChange = nbSwitchMS / diffVolume // speed to increase volume
-
+            val diffVolume = (seventyVolume - currentVolume).absoluteValue
+            val speedChange: Int = if (diffVolume != 0) {
+                nbSwitchMS / diffVolume // speed to increase volume
+            } else {
+                0 // speed to increase volume
+            }
             // Increment loop
-            while(currentVolume != seventyVolume){
+            while (currentVolume != seventyVolume) {
+
+                if(currentVolume > seventyVolume) {
+                    currentVolume--
+                }
+                else if(currentVolume < seventyVolume) {
+                    currentVolume++
+                }
+
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, 0)
                 sleep(speedChange.toLong()) // number of ms to wait
-                currentVolume++
             }
+            threadExist = false
         }.start()
     }
 
-    private fun setAudioVolumeBySpeed(speed : Int) {
+    private fun Fragment?.runOnUiThread(action: () -> Unit) {
+        this ?: return
+        if (!isAdded) return // Fragment not attached to an Activity
+        activity?.runOnUiThread(action)
+    }
+
+    private fun setAudioVolumeBySpeed(speed : Int) { // TODO : Optimize code !
+        //Volume display initialization
         if(speedUnit == "km/h") {
-            if(speed < 20) {
-                setAudioVolumeWithPercent(slider1Value)
+            val tvVolume: TextView = requireView().findViewById(R.id.textView2) // The TextView where the volume where displayed // TextView to display the speed in km/h
+            currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+            if(tvVolume.text.isEmpty()) {
+                if(speed < 20 && (currentVolume == (slider1Value * maxVolume / 100))) {
+                    tvVolume.text = "Volume: $slider1Value%" // display the speed
+                }
+                else if(speed in 20..39 && (currentVolume == (slider2Value * maxVolume / 100))) {
+                    tvVolume.text = "Volume: $slider2Value%" // display the speed
+                }
+                else if(speed in 40 .. 59 && (currentVolume == (slider3Value * maxVolume / 100))) {
+                    tvVolume.text = "Volume: $slider3Value%" // display the speed
+                }
+                else if(speed in 60 .. 99 && (currentVolume == (slider4Value * maxVolume / 100))) {
+                    tvVolume.text = "Volume: $slider4Value%" // display the speed
+                }
+                else if(speed >= 100 && (currentVolume == (slider4Value * maxVolume / 100))) { // NOT ALWAYS 100
+                    tvVolume.text = "Volume: $slider5Value%" // display the speed
+                }
             }
-            else if(speed in 20..39) {
-                setAudioVolumeWithPercent(slider2Value)
-            }
-            else if(speed in 40 .. 59) {
-                setAudioVolumeWithPercent(slider3Value)
-            }
-            else if(speed in 60 .. 99) {
-                setAudioVolumeWithPercent(slider4Value)
-            }
-            else if(speed >= 100) { // NOT ALWAYS 100
-                setAudioVolumeWithPercent(slider5Value)
+        }
+
+        if(speedUnit == "km/h") {
+            if(!threadExist) {
+                currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+                if(speed < 20 && (currentVolume != (slider1Value * maxVolume / 100))) {
+                    setAudioVolumeWithPercent(slider1Value)
+                }
+                else if(speed in 20..39 && (currentVolume != (slider2Value * maxVolume / 100))) {
+                    setAudioVolumeWithPercent(slider2Value)
+                }
+                else if(speed in 40 .. 59 && (currentVolume != (slider3Value * maxVolume / 100))) {
+                    setAudioVolumeWithPercent(slider3Value)
+                }
+                else if(speed in 60 .. 99 && (currentVolume != (slider4Value * maxVolume / 100))) {
+                    setAudioVolumeWithPercent(slider4Value)
+                }
+                else if(speed >= 100 && (currentVolume != (slider5Value * maxVolume / 100))) { // NOT ALWAYS 100
+                    setAudioVolumeWithPercent(slider5Value)
+                }
             }
 
             // Block changes when speed > 5km/h to avoid changes while driving

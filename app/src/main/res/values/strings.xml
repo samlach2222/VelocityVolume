@@ -15,11 +15,11 @@
     <string name="create_a_profile">Create a profile</string>
 
     <!-- Volume Manager -->
-    <string name="interval_1">[0 – 20 km/h]</string>
-    <string name="interval_2">[20 – 40 km/h]</string>
-    <string name="interval_3">[40 – 60 km/h]</string>
-    <string name="interval_4">[60 – 100 km/h]</string>
-    <string name="interval_5">[> 100 km/h]</string>
+    <string name="interval_1">0 – 20 km/h</string>
+    <string name="interval_2">20 – 40 km/h</string>
+    <string name="interval_3">40 – 60 km/h</string>
+    <string name="interval_4">60 – 100 km/h</string>
+    <string name="interval_5">> 100 km/h</string>
     <string name="percentage_1">100%</string>
     <string name="percentage_2">100%</string>
     <string name="percentage_3">100%</string>
@@ -58,4 +58,5 @@
     <string name="github">GitHub</string>
     <string name="report_a_bug">Report a bug</string>
     <string name="rate_this_app">Rate this app</string>
+    <string name="rate_this_app_message">Rate this app on the Google Play Store</string>
 </resources>

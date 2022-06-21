@@ -276,22 +276,39 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="?attr/colorPrimaryVariant"
-        android:paddingVertical="20dp">
+        android:paddingVertical="10dp">
 
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:text="@string/current_gps_speed"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/current_gps_speed"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/current_media_volume"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/getLocation"
             android:layout_width="52dp"
+            android:layout_centerVertical="true"
             android:layout_height="52dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/fab_margin"
