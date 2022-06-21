@@ -59,4 +59,5 @@
     <string name="report_a_bug">Report a bug</string>
     <string name="rate_this_app">Rate this app</string>
     <string name="rate_this_app_message">Rate this app on the Google Play Store</string>
+    <string name="current_media_volume" />
 </resources>

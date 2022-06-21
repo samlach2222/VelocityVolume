@@ -285,7 +285,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
      */
     private fun getLocation() { // TODO : Find a better function (not deprecated) to have location updates
         locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager // Create instance of location Manager
-        //locationManager.requestLocationUpdates(0, 0f, FUSED_PROVIDER, this, null) // Request updates of location using criteria and locationListener
+        locationManager.requestLocationUpdates(0, 0f, criteria, this, null) // Request updates of location using criteria and locationListener
         //locationManager.requestLocationUpdates(0,0f,this)
         started = true
 //        var providerName: String? = locationManager.getBestProvider(criteria, true)
