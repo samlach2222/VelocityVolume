@@ -34,14 +34,17 @@
                     android:paddingEnd="8dp"
                     android:text="@string/general_settings"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorPrimary" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_unit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp">
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="8dp">
 
                     <TextView
                         android:id="@+id/textView10"
@@ -52,34 +55,24 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <RadioGroup
-                        android:id="@+id/rg_unit"
+                    <TextView
+                        android:id="@+id/tv_unitValue"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10">
+                        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-                        <RadioButton
-                            android:id="@+id/rb_km"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/kilometers" />
-
-                        <RadioButton
-                            android:id="@+id/rb_mile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/miles" />
-                    </RadioGroup>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_nightMode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp">
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="8dp">
 
                     <TextView
                         android:id="@+id/textView12"
@@ -90,32 +83,13 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <RadioGroup
-                        android:id="@+id/rg_nightMode"
+                    <TextView
+                        android:id="@+id/tv_nightModeValue"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView12">
-
-                        <RadioButton
-                            android:id="@+id/rb_nightMode_system"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/system" />
-
-                        <RadioButton
-                            android:id="@+id/rb_nightMode_on"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/on" />
-
-                        <RadioButton
-                            android:id="@+id/rb_nightMode_off"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/off" />
-                    </RadioGroup>
+                        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -123,28 +97,28 @@
                     android:id="@+id/cl_gpsSensibility"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground">
+                    android:padding="8dp">
 
                     <TextView
                         android:id="@+id/textView13"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/gps_sensibility"
+                        android:text="@string/gps_car_speed_difference"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView14"
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/s_gpsSensibility"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/gps_sensibility_message"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/gps_sensibility_contentDescription"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView13"
+                        android:valueFrom="-10"
+                        android:valueTo="10"
+                        android:stepSize="1"
+                        app:tickVisible="false"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -152,7 +126,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_marginVertical="8dp"
                 android:background="?attr/colorPrimary" />
 
@@ -169,7 +143,8 @@
                     android:paddingEnd="8dp"
                     android:text="@string/saving"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorPrimary"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_importSettings"
@@ -178,7 +153,8 @@
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:padding="8dp">
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
                         android:id="@+id/textView16"
@@ -189,15 +165,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/import_settings_message"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView16" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -207,7 +174,8 @@
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:padding="8dp">
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
                         android:id="@+id/textView18"
@@ -218,15 +186,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/export_settings_message"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
@@ -234,7 +193,7 @@
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_marginVertical="8dp"
                 android:background="?attr/colorPrimary" />
 
@@ -251,7 +210,8 @@
                     android:paddingEnd="8dp"
                     android:text="@string/about"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorPrimary"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_githubPage"
@@ -260,7 +220,8 @@
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:padding="8dp">
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
                         android:id="@+id/textView21"
@@ -271,15 +232,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView22"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/github_message"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -289,7 +241,8 @@
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:padding="8dp">
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
                         android:id="@+id/textView23"
@@ -300,15 +253,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView24"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/report_a_bug_message"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView23" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -318,7 +262,8 @@
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:padding="8dp">
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="12dp">
 
                     <TextView
                         android:id="@+id/textView25"
@@ -328,15 +273,6 @@
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/textView26"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/rate_this_app_message"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

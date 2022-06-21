@@ -64,4 +64,6 @@
     <string name="report_a_bug_message">GitHub page to report a bug on the project</string>
     <string name="rate_this_app">Rate this app</string>
     <string name="rate_this_app_message">Rate this app on the Google Play Store</string>
+    <string name="gps_car_speed_difference">GPS and car\'s reported speed difference</string>
+    <string name="gps_sensibility_contentDescription">Difference between GPS reported speed and car\'s reported speed</string>
 </resources>

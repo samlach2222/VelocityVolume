@@ -2,9 +2,11 @@ package com.samlach2222.velocityvolume.ui.Settings
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
@@ -15,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.slider.Slider
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.R
@@ -51,35 +54,47 @@ class SettingsFragment : Fragment() {
         // GENERAL SETTINGS
 
         // Units of measurements
-        val unitGroup: RadioGroup = binding.rgUnit
         val unitFromSavedSettings = null  // TODO : Get the unit stored in the saved settings
         when (unitFromSavedSettings) {
-            kilometersString -> unitGroup.check(binding.rbKm.id)
-            milesString -> unitGroup.check(binding.rbMile.id)
-            else -> unitGroup.check(binding.rbKm.id)
+            kilometersString -> binding.tvUnitValue.text = resources.getString(R.string.kilometers)
+            milesString -> binding.tvUnitValue.text = resources.getString(R.string.miles)
+            else -> binding.tvUnitValue.text = resources.getString(R.string.kilometers)
         }
-        unitGroup.setOnCheckedChangeListener { _, checkedId ->
-            onRadioGroupUnitChange(checkedId)
+        val unitLayout: ConstraintLayout = binding.clUnit
+        unitLayout.setOnClickListener {
+            showUnitDialog()
         }
 
         // Night mode
-        val nightModeGroup: RadioGroup = binding.rgNightMode
         val nightModeFromSavedSettings = null  // TODO : Get the night mode stored in the saved settings
         when (nightModeFromSavedSettings) {
-            systemString -> nightModeGroup.check(binding.rbNightModeSystem.id)
-            onString -> nightModeGroup.check(binding.rbNightModeOn.id)
-            offString -> nightModeGroup.check(binding.rbNightModeOff.id)
-            else -> nightModeGroup.check(binding.rbNightModeSystem.id)
+            systemString -> binding.tvNightModeValue.text = resources.getString(R.string.system)
+            onString -> binding.tvNightModeValue.text = resources.getString(R.string.on)
+            offString -> binding.tvNightModeValue.text = resources.getString(R.string.off)
+            else -> binding.tvNightModeValue.text = resources.getString(R.string.system)
         }
-        nightModeGroup.setOnCheckedChangeListener { _, checkedId ->
-            onRadioGroupNightModeChange(checkedId)
+        val nightModeLayout: ConstraintLayout = binding.clNightMode
+        nightModeLayout.setOnClickListener {
+            showNightModeDialog()
         }
 
         // GPS sensibility
-        val gpsSensibilityLayout: ConstraintLayout = binding.clGpsSensibility
-        gpsSensibilityLayout.setOnClickListener {
-            showGPSSensibilityDialog()
+        val gpsSensibilitySlider: Slider = binding.sGpsSensibility
+        val gpsSensibilityFromSavedSettings = null  // TODO : Get the gps sensibility stored in the saved settings
+        if (gpsSensibilityFromSavedSettings == null) {
+            gpsSensibilitySlider.value = 0F
+        } else {
+            gpsSensibilitySlider.value = gpsSensibilityFromSavedSettings as Float
         }
+        gpsSensibilitySlider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
+            override fun onStartTrackingTouch(slider: Slider) {
+                //Do nothing
+            }
+
+            override fun onStopTrackingTouch(slider: Slider) {
+                onSliderGPSSensibilityStopTrackingTouch(slider)
+            }
+        })
 
         // SAVING
 
@@ -136,62 +151,21 @@ class SettingsFragment : Fragment() {
         Toast.makeText(this.context, "Selected value : $selectedValue", Toast.LENGTH_SHORT).show()
     }
 
-    private fun onRadioGroupUnitChange(checkedId: Int) {
-        val selectedValue = when (checkedId) {
-            R.id.rb_km -> kilometersString
-            R.id.rb_mile -> milesString
-            else -> return
-        }
-
-        // TODO : Update the saved settings with the selected unit
-        DEBUGToastSelectedValue(selectedValue)
+    private fun showUnitDialog() {
+        // TODO : Show unit dialog with radio buttons in a vertical orientation and get the selected value
+        DEBUGToast("showUnitDialog isn't implemented")
     }
 
-    private fun onRadioGroupNightModeChange(checkedId: Int) {
-        val selectedValue = when (checkedId) {
-            R.id.rb_nightMode_system -> systemString
-            R.id.rb_nightMode_on -> onString
-            R.id.rb_nightMode_off -> offString
-            else -> return
-        }
-
-        // TODO : Update the saved settings with the selected night mode
-        DEBUGToastSelectedValue(selectedValue)
+    private fun showNightModeDialog() {
+        // TODO : Show night mode dialog with radio buttons in a vertical orientation and get the selected value
+        DEBUGToast("showNightModeDialog isn't implemented")
     }
 
-    private fun showGPSSensibilityDialog() {
-        val numberPickerGPSSensibility = NumberPicker(this.context)
-        numberPickerGPSSensibility.minValue = 0
-        numberPickerGPSSensibility.maxValue = 20
-        numberPickerGPSSensibility.wrapSelectorWheel = false
-        val numberPickerGPSSensibilityValues = Array(21) {(it - 10).toString()}
-        numberPickerGPSSensibility.displayedValues = numberPickerGPSSensibilityValues
-        var gpsSensibilityFromSavedSettings: Int? = null  // TODO : Get the gps sensibility stored in the saved settings
-        if (gpsSensibilityFromSavedSettings == null) {
-            gpsSensibilityFromSavedSettings = numberPickerGPSSensibilityValues.indexOf("0")
-        }
-        numberPickerGPSSensibility.value = gpsSensibilityFromSavedSettings  // value uses the index
+    private fun onSliderGPSSensibilityStopTrackingTouch(slider: Slider) {
+        val selectedValue = slider.value.toInt()
 
-        val dialog: AlertDialog = AlertDialog.Builder(this.context)
-            .setTitle(resources.getString(R.string.gps_sensibility))
-            .setMessage(resources.getString(R.string.gps_sensibility_message))  // toast or message ?
-            .setView(numberPickerGPSSensibility)
-            .setPositiveButton("OK", null)
-            .setNegativeButton("Cancel", null)
-            .create()
-
-        dialog.setOnShowListener {
-            val okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-            okButton.setOnClickListener {
-                val selectedValue = numberPickerGPSSensibility.displayedValues[numberPickerGPSSensibility.value].toInt()
-
-                // TODO : Update the saved settings with the selected gps sensibility
-                DEBUGToastSelectedValue(selectedValue)
-                dialog.dismiss()
-            }
-        }
-
-        dialog.show()
+        // TODO : Update the saved settings with the selected gps sensibility
+        DEBUGToastSelectedValue(selectedValue)
     }
 
     private fun importSettings() {
