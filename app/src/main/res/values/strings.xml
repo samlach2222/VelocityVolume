@@ -1,20 +1,20 @@
 <resources>
+    <!-- App title -->
     <string name="app_name">VelocityVolume</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Velocity Volume</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
+    <!-- Side bar -->
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="profile_1">Profile 1</string>
-    <string name="profile_2">Profile 2</string>
-    <string name="profile_3">Profile 3</string>
     <string name="add_profile">Add Profile</string>
+    <string name="delete_profiles">Delete Profiles</string>
     <string name="settings">Settings</string>
 
+    <!-- Home Page -->
+    <string name="create_a_profile">Create a profile</string>
+
+    <!-- Volume Manager -->
     <string name="interval_1">[0 – 20 km/h]</string>
     <string name="interval_2">[20 – 40 km/h]</string>
     <string name="interval_3">[40 – 60 km/h]</string>
@@ -25,14 +25,12 @@
     <string name="percentage_3">100%</string>
     <string name="percentage_4">100%</string>
     <string name="percentage_5">100%</string>
-
     <string name="window_mode">Window open</string>
-    <string name="get_location">Get location</string>
     <string name="current_gps_speed"> </string>
     <string name="settingsActionBar">Settings</string>
-    <string name="create_a_profile">Create a profile</string>
     <string name="play_pause_button">Play/Pause button</string>
 
+    <!-- Settings -->
     <string name="settings_scroll_contentDescription">Settings of Velocity Volume</string>
     <string name="general_settings">General settings</string>
     <string name="unit_of_measurement">Unit of measurement</string>
@@ -51,22 +49,13 @@
         <item>@string/on</item>
         <item>@string/off</item>
     </string-array>
-    <string name="gps_sensibility">GPS Sensibility</string>
-    <string name="gps_sensibility_message">Difference between GPS reported speed and actual speed</string>
-    <string name="saving">Saving</string>
-    <string name="error">ERROR</string>
-    <string name="delete_profiles">Delete Profiles</string>
-    <string name="import_settings">Import settings</string>
-    <string name="import_settings_message">Import settings from a JSON file</string>
-    <string name="export_settings">Export settings</string>
-    <string name="export_settings_message">Export settings to a JSON file</string>
-    <string name="about">About</string>
-    <string name="github">GitHub</string>
-    <string name="github_message">GitHub page of the project</string>
-    <string name="report_a_bug">Report a bug</string>
-    <string name="report_a_bug_message">GitHub page to report a bug on the project</string>
-    <string name="rate_this_app">Rate this app</string>
-    <string name="rate_this_app_message">Rate this app on the Google Play Store</string>
     <string name="gps_car_speed_difference">GPS and car\'s reported speed difference</string>
     <string name="gps_sensibility_contentDescription">Difference between GPS reported speed and car\'s reported speed</string>
+    <string name="saving">Saving</string>
+    <string name="import_settings">Import settings</string>
+    <string name="export_settings">Export settings</string>
+    <string name="about">About</string>
+    <string name="github">GitHub</string>
+    <string name="report_a_bug">Report a bug</string>
+    <string name="rate_this_app">Rate this app</string>
 </resources>
