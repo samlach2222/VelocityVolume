@@ -34,7 +34,7 @@
     <string name="play_pause_button">Play/Pause button</string>
 
     <string name="settings_scroll_contentDescription">Settings of Velocity Volume</string>
-    <string name="general_settings">General settings :</string>
+    <string name="general_settings">General settings</string>
     <string name="unit_of_measurement">Unit of measurement</string>
     <string name="miles">Miles</string>
     <string name="kilometers">Kilometers</string>
@@ -50,14 +50,14 @@
     <string name="night_mode">Night Mode</string>
     <string name="gps_sensibility">GPS Sensibility</string>
     <string name="gps_sensibility_message">Difference between GPS reported speed and actual speed</string>
-    <string name="saving">Saving :</string>
+    <string name="saving">Saving</string>
     <string name="error">ERROR</string>
     <string name="delete_profiles">Delete Profiles</string>
     <string name="import_settings">Import settings</string>
     <string name="import_settings_message">Import settings from a JSON file</string>
     <string name="export_settings">Export settings</string>
     <string name="export_settings_message">Export settings to a JSON file</string>
-    <string name="about">About :</string>
+    <string name="about">About</string>
     <string name="github">GitHub</string>
     <string name="github_message">GitHub page of the project</string>
     <string name="report_a_bug">Report a bug</string>
