@@ -144,7 +144,7 @@ class SettingsFragment : Fragment() {
         _binding = null
     }
 
-    fun Fragment.setActivityTitle(title: String) {
+    private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
 
