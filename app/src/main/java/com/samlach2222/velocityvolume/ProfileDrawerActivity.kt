@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Gravity
-import android.view.Menu
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -24,6 +23,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileDrawerBinding
     private lateinit var drawerLayout: DrawerLayout
     private var profileNameTable = ArrayList<String>()
+    private var currentProfileId = -1
 
     // id
     private var currentFreeId = 0
@@ -58,6 +58,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
                 R.id.add_new_profile -> addProfile()
                 R.id.delete_profiles -> deleteProfiles()
                 else -> {
+                    currentProfileId = menuItem.itemId
                     val bundle = bundleOf("id" to menuItem.toString())
                     navController.navigate(R.id.nav_volumemanager, bundle)
                 }
@@ -71,18 +72,24 @@ class ProfileDrawerActivity : AppCompatActivity() {
             true
         }
 
-        if(navView.menu.size == 3) { // if there is no profile created = First launch of app
+        // if there is no profile created = First launch of app
+        if(navView.menu.size == 3) {
             navController.navigate(R.id.nav_homepage)
+        }
+
+        // if no profiles when launched, don't display "Delete Profiles" button
+        if(listIdMenu.isEmpty()){
+            findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.delete_profiles).isVisible = false
+            findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.delete_profiles).isEnabled = false
         }
     }
 
     private fun deleteProfiles() {
-        // TODO : Redirect first available profile when we delete current profile
 
         val dialogBuilder = AlertDialog.Builder(this@ProfileDrawerActivity)
         dialogBuilder.setTitle("Choose profiles")
 
-        var profileNameToDelete = ArrayList<String>()
+        val profileNameToDelete = ArrayList<String>()
 
         val arr: Array<String?> = arrayOfNulls<String>(profileNameTable.size)
         for (i in 0 until profileNameTable.size) {
@@ -98,19 +105,34 @@ class ProfileDrawerActivity : AppCompatActivity() {
                 profileNameToDelete.remove(profileNameTable[which])
             }
         }
-        dialogBuilder.setPositiveButton("Delete",
-            DialogInterface.OnClickListener { _, _ ->
-                // The user clicked Delete
-                for(i in 0 until profileNameToDelete.size) {
-                    profileNameTable.remove(profileNameToDelete[i])
-                    // delete link
-                    val idToDelete = listIdMenu[profileNameToDelete[i]]
-                    val menu = findViewById<NavigationView>(R.id.nav_view).menu
-                    if (idToDelete != null) {
-                        menu.removeItem(idToDelete)
-                    }
+        dialogBuilder.setPositiveButton("Delete"
+        ) { _, _ ->
+            // The user clicked Delete
+            for (i in 0 until profileNameToDelete.size) {
+                profileNameTable.remove(profileNameToDelete[i])
+                // delete link
+                val idToDelete = listIdMenu[profileNameToDelete[i]]
+                if (idToDelete != null) {
+                    listIdMenu.remove(profileNameToDelete[i])
+                    findViewById<NavigationView>(R.id.nav_view).menu.removeItem(idToDelete)
                 }
-            })
+            }
+            // redirect if current is delete
+            if (listIdMenu.isEmpty()) { // if no profile to redirect --> Go to Home
+                findNavController(R.id.nav_host_fragment_content_profile_drawer).navigate(R.id.nav_homepage)
+                findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.delete_profiles).isVisible =
+                    false
+                findViewById<NavigationView>(R.id.nav_view).menu.findItem(R.id.delete_profiles).isEnabled =
+                    false
+            } else if (!listIdMenu.containsValue(currentProfileId)) { // if redirection possible
+                val lastName = listIdMenu.keys.last()
+                val bundle = bundleOf("id" to lastName)
+                findNavController(R.id.nav_host_fragment_content_profile_drawer).navigate(
+                    R.id.nav_volumemanager,
+                    bundle
+                )
+            }
+        }
         dialogBuilder.setNegativeButton("Cancel", null)
 
         // Create and show the alert dialog
@@ -154,7 +176,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
                     val menu = findViewById<NavigationView>(R.id.nav_view).menu
 
                     val newMenuItem = menu.add(R.id.group_profiles, currentFreeId, 100, enteredText)
-                    listIdMenu[enteredText] = currentFreeId // add new element in the list
+                    listIdMenu[enteredTextLowercase] = currentFreeId // add new element in the list
+                    currentProfileId = currentFreeId
                     newMenuItem.setIcon(R.drawable.ic_menu_person)
                     currentFreeId++
 
@@ -164,12 +187,13 @@ class ProfileDrawerActivity : AppCompatActivity() {
                     navController.navigate(R.id.nav_volumemanager, bundle)
                     dialog.dismiss()
                     profileNameTable.add(enteredTextLowercase)
+                    menu.findItem(R.id.delete_profiles).isVisible = true
+                    menu.findItem(R.id.delete_profiles).isEnabled = true
                 } else {
                     dialog.setMessage("A profile named " + editTextField.text.toString() + " already exist")
                 }
             }
         }
-
         dialog.show()
     }
 
