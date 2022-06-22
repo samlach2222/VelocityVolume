@@ -1,14 +1,12 @@
 package com.samlach2222.velocityvolume
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
-import androidx.core.view.get
 import androidx.core.view.size
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -16,7 +14,9 @@ import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
 
-
+/**
+ * ProfileDrawerActivity manages the application and the links with Fragments
+ */
 class ProfileDrawerActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -29,6 +29,10 @@ class ProfileDrawerActivity : AppCompatActivity() {
     private var currentFreeId = 0
     private var listIdMenu : HashMap<String, Int> = HashMap()
 
+    /**
+     * function to create the main Activity
+     * This function initialize all necessary variables and buttons bindings
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -84,6 +88,10 @@ class ProfileDrawerActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * function bind to the delete profile button
+     * This function show a popup where we can delete profiles
+     */
     private fun deleteProfiles() {
 
         val dialogBuilder = AlertDialog.Builder(this@ProfileDrawerActivity)
@@ -140,11 +148,18 @@ class ProfileDrawerActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    /**
+     * function linked with the hamburger button
+     */
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    /**
+     * function bind to the add profile button
+     * This function show a popup where we can add a profile
+     */
     fun addProfile() {
         val editTextField = EditText(this@ProfileDrawerActivity)
         editTextField.isSingleLine = true
@@ -197,6 +212,9 @@ class ProfileDrawerActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    /**
+     * function to block the drawer menu
+     */
     fun lockDrawerLayout(lockMode: Int){
         drawerLayout.setDrawerLockMode(lockMode)
     }
