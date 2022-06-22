@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -14,7 +15,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.slider.Slider
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.R
@@ -52,7 +52,7 @@ class SettingsFragment : Fragment() {
         // GENERAL SETTINGS
 
         // Units of measurements
-        val unitFromSavedSettings = null  // TODO : Get the unit stored in the saved settings
+        val unitFromSavedSettings: String? = null  // TODO : Get the unit stored in the saved settings
         when (unitFromSavedSettings) {
             kilometersString -> binding.tvUnitValue.text = resources.getString(R.string.kilometers)
             milesString -> binding.tvUnitValue.text = resources.getString(R.string.miles)
@@ -64,7 +64,7 @@ class SettingsFragment : Fragment() {
         }
 
         // Night mode
-        val nightModeFromSavedSettings = null  // TODO : Get the night mode stored in the saved settings
+        val nightModeFromSavedSettings: String? = null  // TODO : Get the night mode stored in the saved settings
         when (nightModeFromSavedSettings) {
             systemString -> binding.tvNightModeValue.text = resources.getString(R.string.system)
             onString -> binding.tvNightModeValue.text = resources.getString(R.string.on)
@@ -77,20 +77,27 @@ class SettingsFragment : Fragment() {
         }
 
         // GPS sensibility
-        val gpsSensibilitySlider: Slider = binding.sGpsSensibility
-        val gpsSensibilityFromSavedSettings = null  // TODO : Get the gps sensibility stored in the saved settings
+        val gpsSensibilitySeekbar: SeekBar = binding.sGpsSensibility
+        val gpsSensibilityFromSavedSettings: Int? = null  // TODO : Get the gps sensibility stored in the saved settings
         if (gpsSensibilityFromSavedSettings == null) {
-            gpsSensibilitySlider.value = 0F
+            val defaultSeekbarValue = 0
+            gpsSensibilitySeekbar.progress = defaultSeekbarValue
+            binding.tvGpsSensibilityValue.text = defaultSeekbarValue.toString()
         } else {
-            gpsSensibilitySlider.value = gpsSensibilityFromSavedSettings as Float
+            gpsSensibilitySeekbar.progress = gpsSensibilityFromSavedSettings
+            binding.tvGpsSensibilityValue.text = gpsSensibilityFromSavedSettings.toString()
         }
-        gpsSensibilitySlider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
-            override fun onStartTrackingTouch(slider: Slider) {
+        gpsSensibilitySeekbar.setOnSeekBarChangeListener (object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                requireView().findViewById<TextView>(R.id.tv_gpsSensibilityValue).text = progress.toString()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 //Do nothing
             }
 
-            override fun onStopTrackingTouch(slider: Slider) {
-                onSliderGPSSensibilityStopTrackingTouch(slider)
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                onSeekbarGPSSensibilityStopTrackingTouch(seekBar)
             }
         })
 
@@ -211,11 +218,13 @@ class SettingsFragment : Fragment() {
         DEBUGToastSelectedValue(selectedValue)
     }
 
-    private fun onSliderGPSSensibilityStopTrackingTouch(slider: Slider) {
-        val selectedValue = slider.value.toInt()
+    private fun onSeekbarGPSSensibilityStopTrackingTouch(seekBar: SeekBar?) {
+        val selectedValue = seekBar?.progress
 
-        // TODO : Update the saved settings with the selected gps sensibility
-        DEBUGToastSelectedValue(selectedValue)
+        if (selectedValue != null) {
+            // TODO : Update the saved settings with the selected gps sensibility
+            DEBUGToastSelectedValue(selectedValue)
+        }
     }
 
     private fun importSettings() {

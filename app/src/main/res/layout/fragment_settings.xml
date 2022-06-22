@@ -108,17 +108,38 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.slider.Slider
-                        android:id="@+id/s_gpsSensibility"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="@string/gps_sensibility_contentDescription"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView13"
-                        android:valueFrom="-10"
-                        android:valueTo="10"
-                        android:stepSize="1"
-                        app:tickVisible="false"/>
+                        app:layout_constraintTop_toBottomOf="@id/textView13">
+
+                        <SeekBar
+                            android:id="@+id/s_gpsSensibility"
+                            style="@style/Widget.AppCompat.SeekBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:max="10"
+                            android:min="-10"
+                            android:progressBackgroundTint="?attr/colorPrimaryVariant"
+                            android:progressBackgroundTintMode="src_over"
+                            android:progressTint="?attr/colorPrimary"
+                            android:thumbTint="?attr/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tv_gpsSensibilityValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
