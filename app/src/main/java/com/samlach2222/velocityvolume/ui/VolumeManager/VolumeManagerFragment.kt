@@ -341,7 +341,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
                 if(currentVolumeInPercent > percent) {
                     currentVolumeInPercent--
                 }
-                else if(currentVolumeInPercent < percent) {
+                else {
                     currentVolumeInPercent++
                 }
 
@@ -372,7 +372,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
                 if(currentVolume > seventyVolume) {
                     currentVolume--
                 }
-                else if(currentVolume < seventyVolume) {
+                else {
                     currentVolume++
                 }
 
