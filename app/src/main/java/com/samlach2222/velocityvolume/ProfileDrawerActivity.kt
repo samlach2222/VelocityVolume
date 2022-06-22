@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
+import com.samlach2222.velocityvolume.ui.Settings.SettingsFragment
 
 /**
  * ProfileDrawerActivity manages the application and the links with Fragments
@@ -217,5 +218,18 @@ class ProfileDrawerActivity : AppCompatActivity() {
      */
     fun lockDrawerLayout(lockMode: Int){
         drawerLayout.setDrawerLockMode(lockMode)
+    }
+
+    /**
+     * quit the app if the back button is pressed and the current fragment isn't the settings
+     */
+    override fun onBackPressed() {
+        // Don't quit if the current fragment is the settings
+        if (supportFragmentManager.fragments.last().childFragmentManager.fragments.last() !is SettingsFragment) {
+            // TODO : Maybe check if nothing is being done in the background (GPS, settings saved etc.) before quitting and wait until those are done
+            finish()
+        } else {
+            super.onBackPressed()
+        }
     }
 }
