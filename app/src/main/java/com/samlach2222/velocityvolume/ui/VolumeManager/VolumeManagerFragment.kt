@@ -30,7 +30,9 @@ import com.samlach2222.velocityvolume.databinding.FragmentVolumemanagerBinding
 import java.lang.Thread.sleep
 import kotlin.math.absoluteValue
 
-
+/**
+ * VolumeManager fragment class who manages all the volume, speed, GPS and interaction between the user and these functions
+ */
 class VolumeManagerFragment : Fragment() , LocationListener {
 
     private var _binding: FragmentVolumemanagerBinding? = null
@@ -88,6 +90,9 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    /**
+     * function called when the view is created
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -97,16 +102,27 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         return binding.root
     }
 
+    /**
+     * function called when the view is destroyed
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    /**
+     * function called when the view is stopped, override to call stopGPS
+     */
     override fun onStop() {
         super.onStop()
         stopGPS()
     }
 
+    /**
+     * function called when the view is in creation, initialize variables and button bindings
+     * @param[view] actual view of the fragment
+     * @param[savedInstanceState] saved fragment
+     */
     @SuppressLint("UseSwitchCompatOrMaterialCode", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -320,10 +336,21 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         setAudioVolumeBySpeed(speedInKmH.toInt())
     }
 
+    /**
+     * function called to change the display title at the top of the screen, to display profile name
+     * @param[title] The profile name
+     */
     private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
 
+    /**
+     * function called to change the device volume with [percent] parameter
+     * This function call 2 threads :
+     * - The first thread increase the volume smoothly / progressively
+     * - The second thread increase the displayed volume percentage
+     * @param[percent] the number between 0 and 100 which is the new volume percent
+     */
     private fun setAudioVolumeWithPercent(percent : Int) {
         threadExist = true
 
@@ -383,12 +410,20 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         }.start()
     }
 
+    /**
+     * function to allow Thread to access view objects like textview
+     * @param[action] The action that will be performed
+     */
     private fun Fragment?.runOnUiThread(action: () -> Unit) {
         this ?: return
         if (!isAdded) return // Fragment not attached to an Activity
         activity?.runOnUiThread(action)
     }
 
+    /**
+     * function to set the volume using the [speed] parameter and call popup if user use the application when he drive
+     * @param[speed] Actual speed of the car
+     */
     private fun setAudioVolumeBySpeed(speed : Int) { // TODO : Optimize code !
         //Volume display initialization
         if(speedUnit == "km/h") {
@@ -474,6 +509,9 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         }
     }
 
+    /**
+     * function called when the fragment stop displayed and disable the GPS
+     */
     private fun stopGPS() {
         if(started){
             isPopupDisplayed = false
@@ -483,6 +521,10 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         }
     }
 
+    /**
+     * function who display a popup who tell if the user drive or if he is a passenger to block controls if he drive.
+     * This function reduce car accidents
+     */
     private fun displayPopupToKnowIfUserDrive() {
         isPopupDisplayed = true
 
