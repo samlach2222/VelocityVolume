@@ -1,4 +1,4 @@
-package com.samlach2222.velocityvolume.ui.VolumeManager
+package com.samlach2222.velocityvolume.ui.volumemanager
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -50,7 +50,6 @@
         <item>@string/off</item>
     </string-array>
     <string name="gps_car_speed_difference">GPS and car\'s reported speed difference</string>
-    <string name="gps_sensibility_contentDescription">Difference between GPS reported speed and car\'s reported speed</string>
     <string name="saving">Saving</string>
     <string name="import_settings">Import settings</string>
     <string name="export_settings">Export settings</string>
@@ -58,6 +57,5 @@
     <string name="github">GitHub</string>
     <string name="report_a_bug">Report a bug</string>
     <string name="rate_this_app">Rate this app</string>
-    <string name="rate_this_app_message">Rate this app on the Google Play Store</string>
     <string name="current_media_volume" />
 </resources>

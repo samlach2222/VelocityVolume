@@ -10,10 +10,11 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.size
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
-import com.samlach2222.velocityvolume.ui.Settings.SettingsFragment
+import com.samlach2222.velocityvolume.ui.settings.SettingsFragment
 
 /**
  * ProfileDrawerActivity manages the application and the links with Fragments
@@ -43,7 +44,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarProfileDrawer.toolbar)
         drawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_profile_drawer) as NavHostFragment
+        val navController = navHostFragment.navController
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -100,7 +102,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
 
         val profileNameToDelete = ArrayList<String>()
 
-        val arr: Array<String?> = arrayOfNulls<String>(profileNameTable.size)
+        val arr: Array<String?> = arrayOfNulls(profileNameTable.size)
         for (i in 0 until profileNameTable.size) {
             arr[i] = profileNameTable[i]
         }

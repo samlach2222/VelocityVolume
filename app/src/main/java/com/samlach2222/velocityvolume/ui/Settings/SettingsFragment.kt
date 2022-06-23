@@ -1,4 +1,4 @@
-package com.samlach2222.velocityvolume.ui.Settings
+package com.samlach2222.velocityvolume.ui.settings
 
 import android.content.Intent
 import android.net.Uri

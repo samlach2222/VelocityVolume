@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_volumemanager"
-        android:name="com.samlach2222.velocityvolume.ui.VolumeManager.VolumeManagerFragment"
+        android:name="com.samlach2222.velocityvolume.ui.volumemanager.VolumeManagerFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_volumemanager" />
 
     <fragment
         android:id="@+id/nav_homepage"
-        android:name="com.samlach2222.velocityvolume.ui.HomePage.HomePageFragment"
+        android:name="com.samlach2222.velocityvolume.ui.homepage.HomePageFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_homepage" />
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.samlach2222.velocityvolume.ui.Settings.SettingsFragment"
+        android:name="com.samlach2222.velocityvolume.ui.settings.SettingsFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_settings" />
 </navigation>

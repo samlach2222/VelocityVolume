@@ -1,4 +1,4 @@
-package com.samlach2222.velocityvolume.ui.HomePage
+package com.samlach2222.velocityvolume.ui.homepage
 
 import android.os.Bundle
 import android.view.LayoutInflater

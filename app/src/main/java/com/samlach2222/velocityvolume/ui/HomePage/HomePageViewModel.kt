@@ -1,4 +1,4 @@
-package com.samlach2222.velocityvolume.ui.HomePage
+package com.samlach2222.velocityvolume.ui.homepage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

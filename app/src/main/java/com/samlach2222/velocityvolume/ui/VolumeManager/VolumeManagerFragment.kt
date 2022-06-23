@@ -1,4 +1,4 @@
-package com.samlach2222.velocityvolume.ui.VolumeManager
+package com.samlach2222.velocityvolume.ui.volumemanager
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -20,7 +20,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
