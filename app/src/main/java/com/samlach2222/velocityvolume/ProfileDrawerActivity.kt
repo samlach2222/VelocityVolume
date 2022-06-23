@@ -214,7 +214,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
     }
 
     /**
-     * function to block the drawer menu
+     * function to block the drawer menu using [lockMode]
      */
     fun lockDrawerLayout(lockMode: Int){
         drawerLayout.setDrawerLockMode(lockMode)
