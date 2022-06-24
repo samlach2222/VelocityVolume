@@ -1,12 +1,9 @@
 <resources>
     <!-- App title -->
-    <string name="app_name">VelocityVolume</string>
+    <string name="app_name">Velocity Volume</string>
     <string name="nav_header_title">Velocity Volume</string>
 
     <!-- Side bar -->
-    <string name="menu_home" />
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
     <string name="add_profile">Add Profile</string>
     <string name="delete_profiles">Delete Profiles</string>
     <string name="settings">Settings</string>
