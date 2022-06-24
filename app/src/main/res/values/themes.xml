@@ -7,8 +7,6 @@
         <item name="colorOnPrimary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-        <item name="welcome_message">@color/purple_light</item>
     </style>
 
     <style name="Theme.VelocityVolume.NoActionBar">

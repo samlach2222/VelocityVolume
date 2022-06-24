@@ -7,8 +7,6 @@
         <item name="colorOnPrimary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-        <item name="welcome_message">@color/purple_dark</item>
     </style>
 
     <style name="Theme.VelocityVolume.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
