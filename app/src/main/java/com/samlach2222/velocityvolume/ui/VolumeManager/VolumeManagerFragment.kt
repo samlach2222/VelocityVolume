@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.hardware.display.DisplayManager
-import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -29,6 +28,7 @@ import com.samlach2222.velocityvolume.databinding.FragmentVolumemanagerBinding
 import java.lang.Thread.sleep
 import kotlin.math.absoluteValue
 
+
 /**
  * VolumeManager fragment class who manages all the volume, speed, GPS and interaction between the user and these functions
  */
@@ -43,8 +43,28 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private lateinit var locationManager: LocationManager // Creation of GPS manager
     private var previousLocation: Location? = null // save of the previous location to calculate speed
     private lateinit var tvGpsLocation: TextView // The TextView where the speed where displayed
-    private val criteria = Criteria() // Geolocation criteria variable creation
     private var started = false
+    private var geolocationGranted = false
+    private var activityResultLauncher: ActivityResultLauncher<Array<String>>
+    private val runningQOrLater = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q // TODO : Display <Android Q popup or handle Android Q different GPS mode
+    init{
+        this.activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()) {result ->
+            var allAreGranted = true
+            for(b in result.values) {
+                allAreGranted = allAreGranted && b
+            }
+
+            if(allAreGranted) {
+                geolocationGranted = true
+                getLocation()
+            }
+            else {
+                Toast.makeText(activity,"Error, please accept geolocation",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
     // Application states
     private var volumeManagerRunning = false
@@ -64,25 +84,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private var currentVolume: Int = -1 // not yet initialized
     private var maxVolume: Int = -1 // not yet initialized
     private var threadExist = false
-
-    private var activityResultLauncher: ActivityResultLauncher<Array<String>>
-    init{
-        this.activityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()) {result ->
-            var allAreGranted = true
-            for(b in result.values) {
-                allAreGranted = allAreGranted && b
-            }
-
-            if(allAreGranted) {
-                Toast.makeText(activity,"You are now geolocated",Toast.LENGTH_SHORT).show()
-                getLocation()
-            }
-            else {
-                Toast.makeText(activity,"Error, please accept geolocation",Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
 
     // This property is only valid between onCreateView and
@@ -118,6 +119,14 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     }
 
     /**
+     * function called to know if geolocation is enabled in Android parameters
+     * @return if GPS services are enabled
+     */
+    private fun isLocationEnabled(): Boolean {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    /**
      * function called when the view is in creation, initialize variables and button bindings
      * @param[view] actual view of the fragment
      * @param[savedInstanceState] saved fragment
@@ -136,7 +145,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         button.setOnClickListener {
             if(!volumeManagerRunning) {
                 volumeManagerRunning = true
-                button.setImageResource(android.R.drawable.ic_media_pause)
                 val appPerms = arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
@@ -146,6 +154,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             else {
                 volumeManagerRunning = false
                 view.findViewById<TextView>(R.id.textView).text = ""
+                view.findViewById<TextView>(R.id.textView2).text = ""
                 stopGPS()
                 button.setImageResource(android.R.drawable.ic_media_play)
             }
@@ -283,30 +292,33 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             }
         })
 
-        // GPS criteria
-        criteria.accuracy = Criteria.ACCURACY_FINE
-        criteria.isCostAllowed = false
-        criteria.isAltitudeRequired = false
-        criteria.isBearingRequired = false
-        criteria.isSpeedRequired = false
-
         // AUDIO
         audioManager = activity?.applicationContext?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
     }
+
     /**
      * function, which is used to request the authorization to have access to the GPS and to launch a regular automatic scan to obtain the GPS coordinates.
      */
-    private fun getLocation() { // TODO : Find a better function (not deprecated) to have location updates
+    private fun getLocation() {
         locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager // Create instance of location Manager
-        locationManager.requestLocationUpdates(0, 0f, criteria, this, null) // Request updates of location using criteria and locationListener
-        //locationManager.requestLocationUpdates(0,0f,this)
-        started = true
-//        var providerName: String? = locationManager.getBestProvider(criteria, true)
-//        if (providerName != null) {
-//            locationManager.requestLocationUpdates(providerName, 0,0f,this)
-//        }
+        /* We use GPS_PROVIDER because :
+            - uses GPS chip on device
+            - very accurate (6 meters) but high power consumption
+            - works without having Internet
+        */
+        if(isLocationEnabled()){
+            Toast.makeText(activity,"You are now geolocated",Toast.LENGTH_SHORT).show()
+            view?.findViewById<FloatingActionButton?>(R.id.getLocation)
+                ?.setImageResource(android.R.drawable.ic_media_pause)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this, null) // Request updates of location using locationListener
+            started = true
+        }
+        else {
+            Toast.makeText(activity,"Please active geolocation on Android parameters",Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     /**
