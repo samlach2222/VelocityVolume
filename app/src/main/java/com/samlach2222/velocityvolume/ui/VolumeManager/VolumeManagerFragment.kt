@@ -60,7 +60,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
                 getLocation()
             }
             else {
-                Toast.makeText(activity,"Error, please accept geolocation",Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,getString(R.string.Allow_GPS_error),Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -137,7 +137,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
         // Get ID of Profile
         val bundle = arguments
-        //idProfile.text = bundle?.getString("id")
         bundle?.getString("id")?.let { setActivityTitle(it) }
 
         // Play Button
@@ -309,14 +308,14 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             - works without having Internet
         */
         if(isLocationEnabled()){
-            Toast.makeText(activity,"You are now geolocated",Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity,getString(R.string.Allow_GPS_accept),Toast.LENGTH_SHORT).show()
             view?.findViewById<FloatingActionButton?>(R.id.getLocation)
                 ?.setImageResource(android.R.drawable.ic_media_pause)
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this, null) // Request updates of location using locationListener
             started = true
         }
         else {
-            Toast.makeText(activity,"Please active geolocation on Android parameters",Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity,getString(R.string.Allow_GPS_unactivated),Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -342,7 +341,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
         tvGpsLocation  = requireView().findViewById(R.id.textView) // TextView to display the speed in km/h
         val speedInKmH = speed.toDouble() * 18/5 // speed in Km/h
-        tvGpsLocation.text = "Speed: " + speedInKmH.toInt() +  " km/h" // display the speed
+        tvGpsLocation.text = getText(R.string.current_gps_speed_prefix).toString() + " " + speedInKmH.toInt() +  " km/h" // display the speed
 
         setAudioVolumeBySpeed(speedInKmH.toInt())
     }
@@ -386,7 +385,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
                 runOnUiThread{
                     val tvVolume: TextView =
                         requireView().findViewById(R.id.textView2) // The TextView where the volume where displayed // TextView to display the speed in km/h
-                    tvVolume.text = "Volume: $currentVolumeInPercent%" // display the speed
+                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() + " " + currentVolumeInPercent + "%" // display the speed
                 }
                 sleep(speedChangePercent.toLong()) // number of ms to wait
 
@@ -442,19 +441,19 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
             if(tvVolume.text.isEmpty()) {
                 if(speed < 20 && (currentVolume == (slider1Value * maxVolume / 100))) {
-                    tvVolume.text = "Volume: $slider1Value%" // display the speed
+                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider1Value%" // display the speed
                 }
                 else if(speed in 20..39 && (currentVolume == (slider2Value * maxVolume / 100))) {
-                    tvVolume.text = "Volume: $slider2Value%" // display the speed
+                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider2Value%" // display the speed
                 }
                 else if(speed in 40 .. 59 && (currentVolume == (slider3Value * maxVolume / 100))) {
-                    tvVolume.text = "Volume: $slider3Value%" // display the speed
+                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider3Value%" // display the speed
                 }
                 else if(speed in 60 .. 99 && (currentVolume == (slider4Value * maxVolume / 100))) {
-                    tvVolume.text = "Volume: $slider4Value%" // display the speed
+                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider4Value%" // display the speed
                 }
                 else if(speed >= 100 && (currentVolume == (slider4Value * maxVolume / 100))) { // NOT ALWAYS 100
-                    tvVolume.text = "Volume: $slider5Value%" // display the speed
+                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider5Value%" // display the speed
                 }
             }
         }

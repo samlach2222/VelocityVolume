@@ -1,29 +1,41 @@
 <resources>
     <!-- App title -->
-    <string name="app_name">Velocity Volume</string>
-    <string name="nav_header_title">Velocity Volume</string>
+    <string name="app_name" translatable="false">VelocityVolume</string>
+    <string name="nav_header_title" translatable="false">Velocity Volume</string>
 
     <!-- Side bar -->
     <string name="add_profile">Add Profile</string>
-    <string name="delete_profiles">Delete Profiles</string>
     <string name="settings">Settings</string>
+    <string name="delete_profiles">Delete profiles</string>
+    <string name="Add_profile_popup_title">Name of the new profile</string>
+    <string name="Dialog_OK_label" translatable="false">OK</string>
+    <string name="Dialog_cancel_label">Cancel</string>
+    <string name="Delete_profile_popup_label">Choose profiles</string>
+    <string name="Dialog_delete_label">Delete</string>
 
     <!-- Home Page -->
     <string name="create_a_profile">Create a profile</string>
+    <string name="home_message_part_1">Welcome to</string>
+    <string name="home_message_part_2" translatable="false">Velocity Volume</string>
+    <string name="home_message_part_3">. \n\n This application is used to change the volume of your phone according to your driving speed. \n\n To use this application, you must first</string>
+    <string name="home_message_part_4">create a profile</string>
 
     <!-- Volume Manager -->
-    <string name="interval_1">0 – 20 km/h</string>
-    <string name="interval_2">20 – 40 km/h</string>
-    <string name="interval_3">40 – 60 km/h</string>
-    <string name="interval_4">60 – 100 km/h</string>
-    <string name="interval_5">> 100 km/h</string>
-    <string name="percentage_1">100%</string>
-    <string name="percentage_2">100%</string>
-    <string name="percentage_3">100%</string>
-    <string name="percentage_4">100%</string>
-    <string name="percentage_5">100%</string>
+    <string name="interval_1" translatable="false">0 – 20 km/h</string>
+    <string name="interval_2" translatable="false">20 – 40 km/h</string>
+    <string name="interval_3" translatable="false">40 – 60 km/h</string>
+    <string name="interval_4" translatable="false">60 – 100 km/h</string>
+    <string name="interval_5" translatable="false">> 100 km/h</string>
+    <string name="percentage_1" translatable="false">100%</string>
+    <string name="percentage_2" translatable="false">100%</string>
+    <string name="percentage_3" translatable="false">100%</string>
+    <string name="percentage_4" translatable="false">100%</string>
+    <string name="percentage_5" translatable="false">100%</string>
     <string name="window_mode">Window open</string>
-    <string name="current_gps_speed"> </string>
+    <string name="current_gps_speed" translatable="false"> </string>
+    <string name="current_gps_speed_prefix">Speed:</string>
+    <string name="current_media_volume" translatable="false" />
+    <string name="current_media_volume_prefix">Volume:</string>
     <string name="settingsActionBar">Settings</string>
     <string name="play_pause_button">Play/Pause button</string>
 
@@ -51,8 +63,12 @@
     <string name="import_settings">Import settings</string>
     <string name="export_settings">Export settings</string>
     <string name="about">About</string>
-    <string name="github">GitHub</string>
+    <string name="github" translatable="false">GitHub</string>
     <string name="report_a_bug">Report a bug</string>
     <string name="rate_this_app">Rate this app</string>
-    <string name="current_media_volume" />
+    <string name="Allow_GPS_error">Error, please accept geolocation</string>
+    <string name="Allow_GPS_accept">You are now geolocated</string>
+    <string name="Allow_GPS_unactivated">Please active geolocation on Android parameters</string>
+    <string name="Profile_already_exist_part_1">A profile named</string>
+    <string name="Profile_already_exist_part_3">already exist</string>
 </resources>

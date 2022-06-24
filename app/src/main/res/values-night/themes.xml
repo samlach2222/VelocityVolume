@@ -8,7 +8,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="welcome_message">Welcome to <font color="#CC99FF">Velocity Volume</font>. \n\n This application is used to change the volume of your phone according to your driving speed. \n\n To use this application, you must first <font color="#CC99FF">create a profile</font></item>
+        <item name="welcome_message">@color/purple_dark</item>
     </style>
 
     <style name="Theme.VelocityVolume.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

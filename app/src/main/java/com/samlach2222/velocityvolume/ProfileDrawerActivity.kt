@@ -2,8 +2,13 @@ package com.samlach2222.velocityvolume
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
@@ -12,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
 import com.samlach2222.velocityvolume.ui.settings.SettingsFragment
@@ -98,7 +104,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
     private fun deleteProfiles() {
 
         val dialogBuilder = AlertDialog.Builder(this@ProfileDrawerActivity)
-        dialogBuilder.setTitle("Choose profiles")
+        dialogBuilder.setTitle(getString(R.string.Delete_profile_popup_label))
 
         val profileNameToDelete = ArrayList<String>()
 
@@ -116,7 +122,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
                 profileNameToDelete.remove(profileNameTable[which])
             }
         }
-        dialogBuilder.setPositiveButton("Delete"
+        dialogBuilder.setPositiveButton(getString(R.string.Dialog_delete_label)
         ) { _, _ ->
             // The user clicked Delete
             for (i in 0 until profileNameToDelete.size) {
@@ -144,7 +150,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
                 )
             }
         }
-        dialogBuilder.setNegativeButton("Cancel", null)
+        dialogBuilder.setNegativeButton(getString(R.string.Dialog_cancel_label), null)
 
         // Create and show the alert dialog
         val dialog: AlertDialog = dialogBuilder.create()
@@ -169,11 +175,11 @@ class ProfileDrawerActivity : AppCompatActivity() {
         editTextField.gravity = Gravity.CENTER_HORIZONTAL
 
         val dialog: AlertDialog = AlertDialog.Builder(this@ProfileDrawerActivity)
-            .setTitle("Name of the new profile")
+            .setTitle(getString(R.string.Add_profile_popup_title))
             .setMessage("")
             .setView(editTextField)
-            .setPositiveButton("OK", null)
-            .setNegativeButton("Cancel", null)
+            .setPositiveButton(getString(R.string.Dialog_OK_label), null)
+            .setNegativeButton(getString(R.string.Dialog_cancel_label), null)
             .create()
 
         dialog.setOnShowListener {
@@ -208,7 +214,15 @@ class ProfileDrawerActivity : AppCompatActivity() {
                     menu.findItem(R.id.delete_profiles).isVisible = true
                     menu.findItem(R.id.delete_profiles).isEnabled = true
                 } else {
-                    dialog.setMessage("A profile named " + editTextField.text.toString() + " already exist")
+                    val color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorPrimary, null)
+
+                    val txt = getString(R.string.Profile_already_exist_part_1) + " " + editTextField.text.toString() + " " + getString(R.string.Profile_already_exist_part_3)
+                    val spannable2 = SpannableString(txt) // String for which you want to change the color
+                    spannable2.setSpan(
+                        ForegroundColorSpan(color), 0, txt.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+                    dialog.setMessage(spannable2)
                 }
             }
         }

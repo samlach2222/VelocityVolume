@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Side bar -->
+    <string name="add_profile">Ajouter un profil</string>
+    <string name="delete_profiles">Supprimer des profils</string>
+    <string name="settings">Paramètres</string>
+    <string name="Dialog_cancel_label">Annuler</string>
+    <string name="Add_profile_popup_title">Nom du nouveau profil</string>
+    <string name="Delete_profile_popup_label">Choisir les profils</string>
+    <string name="Dialog_delete_label">Supprimer</string>
+
+    <!-- Home Page -->
+    <string name="create_a_profile">Créer un profil</string>
+    <string name="home_message_part_1">Bienvenue sur</string>
+    <string name="home_message_part_3">. \n\n Cette application sert à changer le volume de votre télépone en fonction de votre vitesse de conduite. \n\n Pour utiliser cette application, vous devez d\'abord</string>
+    <string name="home_message_part_4">créer un profil</string>
+
+    <!-- Volume Manager -->
+    <string name="window_mode">Fenêtre ouverte</string>
+    <string name="settingsActionBar">Paramètres</string>
+    <string name="play_pause_button">Bouton marche/arrêt</string>
+
+    <!-- Settings -->
+    <string name="settings_scroll_contentDescription">Paramètres de Velocity Volume</string>
+    <string name="general_settings">Paramètres généraux</string>
+    <string name="unit_of_measurement">Unités de mesure</string>
+    <string name="kilometers">Kilomètres</string>
+    <string name="miles">Miles</string>
+    <string name="system">Système</string>
+    <string name="off">Désactivé</string>
+    <string name="on">Activé</string>
+    <string name="night_mode">Mode Nuit</string>
+    <string-array name="night_modes">
+        <item>@string/system</item>
+        <item>@string/on</item>
+        <item>@string/off</item>
+    </string-array>
+    <string name="gps_car_speed_difference">Différence entre la vitesse GPS et voiture</string>
+    <string name="saving">Sauvegarde</string>
+    <string name="import_settings">Importer les paramètres</string>
+    <string name="export_settings">Exporter les paramètres</string>
+    <string name="about">À propos</string>
+    <string name="report_a_bug">Signaler un bug</string>
+    <string name="rate_this_app">Noter l\'application</string>
+    <string name="current_gps_speed_prefix">Vitesse :</string>
+    <string name="current_media_volume_prefix">Volume :</string>
+    <string name="Allow_GPS_error">Erreur, veuillez accepter la géolocalisation</string>
+    <string name="Allow_GPS_accept">Vous êtes maintenant géolocalisé</string>
+    <string name="Allow_GPS_unactivated">Veuillez activer la géolocalisation dans les paramètres d\'Android</string>
+    <string name="Profile_already_exist_part_1">Un profil nommé</string>
+    <string name="Profile_already_exist_part_3">existe déjà</string>
+</resources>

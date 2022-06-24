@@ -1,15 +1,24 @@
 package com.samlach2222.velocityvolume.ui.homepage
 
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.color.MaterialColors
 import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentHomepageBinding
+
 
 class HomePageFragment : Fragment() {
 
@@ -40,6 +49,23 @@ class HomePageFragment : Fragment() {
         button.setOnClickListener {
             (activity as ProfileDrawerActivity).addProfile()
         }
+
+        // colorized text
+       val color = MaterialColors.getColor(this.context, com.google.android.material.R.attr.colorPrimary, null)
+
+        val txtPart1 = getString(R.string.home_message_part_1)
+        val txtPart2 = getString(R.string.home_message_part_2)
+        val txtPart3 = getString(R.string.home_message_part_3)
+        val txtPart4 = getString(R.string.home_message_part_4)
+        val spannable2 = SpannableString(txtPart2) // String for which you want to change the color
+        val spannable4 = SpannableString(txtPart4) // String for which you want to change the color
+        spannable2.setSpan(
+            ForegroundColorSpan(color), 0, txtPart2.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable4.setSpan(
+            ForegroundColorSpan(color), 0, txtPart4.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        view.findViewById<TextView>(R.id.welcome_message).text = TextUtils.concat(txtPart1," " , spannable2, txtPart3, " ", spannable4)
     }
 
     private fun Fragment.setActivityTitle(title: String) {
