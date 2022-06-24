@@ -19,7 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,12 +31,11 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
+                    android:paddingHorizontal="8dp"
                     android:text="@string/general_settings"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary" />
+                    android:textStyle="bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_unit"
@@ -160,12 +160,11 @@
                     android:id="@+id/textView15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
+                    android:paddingHorizontal="8dp"
                     android:text="@string/saving"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"/>
+                    android:textStyle="bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_importSettings"
@@ -227,12 +226,11 @@
                     android:id="@+id/textView20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
+                    android:paddingHorizontal="8dp"
                     android:text="@string/about"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"/>
+                    android:textStyle="bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_githubPage"
