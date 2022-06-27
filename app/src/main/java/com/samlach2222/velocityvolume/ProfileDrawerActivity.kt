@@ -1,6 +1,7 @@
 package com.samlach2222.velocityvolume
 
 import android.app.AlertDialog
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -12,6 +13,8 @@ import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.core.view.size
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
@@ -19,6 +22,7 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
 import com.samlach2222.velocityvolume.ui.settings.SettingsFragment
+
 
 /**
  * ProfileDrawerActivity manages the application and the links with Fragments
@@ -28,6 +32,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityProfileDrawerBinding
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navController: NavController
     private var profileNameTable = ArrayList<String>()
     private var currentProfileId = -1
 
@@ -49,7 +54,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
         drawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_profile_drawer) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -95,6 +100,49 @@ class ProfileDrawerActivity : AppCompatActivity() {
         }
     }
 
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+
+        // get profiles from DB
+        val vvDB = DBHelper(this, null) // get DBHelper
+        var profiles = vvDB.getProfilesNameAndId()
+
+        // moving the cursor to first position and
+        // appending value in the text view
+
+        if(profiles!!.moveToFirst()){
+            var idDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.ID))).toInt()
+            var nameDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.NAME)))
+            addProfileToList(idDBProfile, nameDBProfile, navController)
+
+            // moving our cursor to next
+            // position and appending values
+            while(profiles.moveToNext()){
+                idDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.ID))).toInt()
+                nameDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.NAME)))
+                addProfileToList(idDBProfile, nameDBProfile, navController)
+            }
+        }
+        vvDB.close()
+    }
+
+    private fun addProfileToList(id : Int, name : String, navController: NavController) {
+        val menu = findViewById<NavigationView>(R.id.nav_view).menu
+
+        val newMenuItem = menu.add(R.id.group_profiles, id, 100, name)
+        listIdMenu[name] = id // add new element in the list
+        currentProfileId = id
+        newMenuItem.setIcon(R.drawable.ic_menu_person)
+
+        //Redirect to the newly created profile
+        val bundle = bundleOf("id" to newMenuItem.toString())
+        val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
+        navController.navigate(R.id.nav_volumemanager, bundle)
+        profileNameTable.add(name)
+        menu.findItem(R.id.delete_profiles).isVisible = true
+        menu.findItem(R.id.delete_profiles).isEnabled = true
+    }
+
     /**
      * function bind to the delete profile button
      * This function show a popup where we can delete profiles
@@ -128,9 +176,16 @@ class ProfileDrawerActivity : AppCompatActivity() {
                 // delete link
                 val idToDelete = listIdMenu[profileNameToDelete[i]]
                 if (idToDelete != null) {
+                    // REMOVE FROM DB
+                    val vvDB = DBHelper(this, null) // get DBHelper
+                    vvDB.deleteProfile(idToDelete)
+                    vvDB.close()
+
                     listIdMenu.remove(profileNameToDelete[i])
                     findViewById<NavigationView>(R.id.nav_view).menu.removeItem(idToDelete)
                 }
+
+
             }
             // redirect if current is delete
             if (listIdMenu.isEmpty()) { // if no profile to redirect --> Go to Home
@@ -211,6 +266,12 @@ class ProfileDrawerActivity : AppCompatActivity() {
                     profileNameTable.add(enteredTextLowercase)
                     menu.findItem(R.id.delete_profiles).isVisible = true
                     menu.findItem(R.id.delete_profiles).isEnabled = true
+
+                    // ADD TO DB
+                    val vvDB = DBHelper(this, null) // get DBHelper
+                    vvDB.addProfile(enteredTextLowercase)
+                    vvDB.close()
+
                 } else {
                     val color = MaterialColors.getColor(this, com.google.android.material.R.attr.colorPrimary, null)
 
