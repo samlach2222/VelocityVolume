@@ -20,14 +20,6 @@ import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
 
-
-// Internal values have to be the same in every language
-const val milesString = "miles"
-const val kilometersString = "km"
-const val systemString = "system"
-const val onString = "on"
-const val offString = "off"
-
 /**
  * Interface for the Settings fragment class which manages the interactivity of the Settings ui
  */
@@ -304,5 +296,16 @@ open class SettingsFragmentInterface : Fragment() {
      */
     protected open fun initialiseRateAppLayout(binding: FragmentSettingsBinding) {
 
+    }
+
+    /**
+     * const values which correspond to the database enums
+     */
+    protected companion object DatabaseEnums {
+        const val milesString = "miles"
+        const val kilometersString = "km"
+        const val systemString = "system"
+        const val onString = "on"
+        const val offString = "off"
     }
 }
