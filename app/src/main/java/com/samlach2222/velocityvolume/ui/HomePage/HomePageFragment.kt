@@ -1,7 +1,5 @@
 package com.samlach2222.velocityvolume.ui.homepage
 
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString

@@ -23,7 +23,7 @@ import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
 /**
  * Interface for the Settings fragment class which manages the interactivity of the Settings ui
  */
-open class SettingsFragmentInterface : Fragment() {
+abstract class SettingsFragmentAbstract : Fragment() {
 // TODO : UPDATE THE SETTINGS WHEN THE USER CHANGE A VALUE
     private var _binding: FragmentSettingsBinding? = null
 

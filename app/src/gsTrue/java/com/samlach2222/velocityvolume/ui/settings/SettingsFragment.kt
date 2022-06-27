@@ -7,7 +7,7 @@ import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
 /**
  * The Settings fragment class manages the interactivity of the Settings ui
  */
-class SettingsFragment : SettingsFragmentInterface() {
+class SettingsFragment : SettingsFragmentAbstract() {
 
     /**
      * Initialise the layout for rating the app by adding an onClickListener
