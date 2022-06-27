@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -233,9 +234,18 @@ class SettingsFragment : Fragment() {
         // Update subtext with the selected night mode
         val textViewNightModeCurrentValue = this.requireView().findViewById<TextView>(R.id.tv_nightModeValue)
         when (selectedValue) {
-            systemString -> textViewNightModeCurrentValue.text = resources.getString(R.string.system)
-            onString -> textViewNightModeCurrentValue.text = resources.getString(R.string.on)
-            offString -> textViewNightModeCurrentValue.text = resources.getString(R.string.off)
+            systemString -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                textViewNightModeCurrentValue.text = resources.getString(R.string.system)
+            }
+            onString -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                textViewNightModeCurrentValue.text = resources.getString(R.string.on)
+            }
+            offString -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                textViewNightModeCurrentValue.text = resources.getString(R.string.off)
+            }
         }
 
         // TODO : Update the saved settings with the selected night mode
