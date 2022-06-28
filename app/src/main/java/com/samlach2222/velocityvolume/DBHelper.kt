@@ -40,6 +40,10 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 LSPI + " INTEGER DEFAULT null" +
         ")")
         db.execSQL(querySettings)
+
+        // we are in the onCreate function, so that means there's no row in the Settings table
+        // we add a single row to the Settings table
+        db.insert("Settings", LSPI, null)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -173,7 +177,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.update("Settings", values, null, null)
     }
 
-    fun getSettings(): Cursor? {
+    fun getSettings(): Cursor {
         // here we are creating a readable variable of our database as we want to read value from it
         val db = this.readableDatabase
         // below code returns a cursor to read data from the database
