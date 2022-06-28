@@ -192,7 +192,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         // here we have defined variables for our database
 
         // below is variable for database name
-        private const val DATABASE_NAME = "VELOCITY_VOLUME_DB"
+        private const val DATABASE_NAME = "VELOCITY_VOLUME_DB.db"
 
         // below is the variable for database version
         private const val DATABASE_VERSION = 1
