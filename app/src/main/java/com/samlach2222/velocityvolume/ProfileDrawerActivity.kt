@@ -75,6 +75,12 @@ class ProfileDrawerActivity : AppCompatActivity() {
                 R.id.delete_profiles -> deleteProfiles()
                 else -> {
                     currentProfileId = menuItem.itemId
+
+                    // Save latest ProfileId
+                    val vvDB = DBHelper(this, null) // get DBHelper
+                    vvDB.updateLatestSelectedProfileId(currentProfileId)
+                    vvDB.close()
+
                     val bundle = bundleOf("id" to menuItem.toString())
                     navController.navigate(R.id.nav_volumemanager, bundle)
                 }
@@ -122,20 +128,35 @@ class ProfileDrawerActivity : AppCompatActivity() {
         if(profiles!!.moveToFirst()){
             var idDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.ID))).toInt()
             var nameDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.NAME)))
-            addProfileToList(idDBProfile, nameDBProfile, navController)
+            addProfileToList(idDBProfile, nameDBProfile)
 
             // moving our cursor to next
             // position and appending values
             while(profiles.moveToNext()){
                 idDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.ID))).toInt()
                 nameDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.NAME)))
-                addProfileToList(idDBProfile, nameDBProfile, navController)
+                addProfileToList(idDBProfile, nameDBProfile)
             }
         }
         vvDB.close()
+
+        // if a profile exists, go to latest
+        val vvDB2 = DBHelper(this, null) // get DBHelper
+        var settingsCursor = vvDB.getSettings()
+        if(settingsCursor.moveToFirst()){
+            val latestProfileId = (settings.getString(settings.getColumnIndex(DBHelper.LSPI))).toInt()
+            if(latestProfileId != -1){
+                val menu = findViewById<NavigationView>(R.id.nav_view).menu
+                val menuItem = menu.findItem(latestProfileId)
+                val bundle = bundleOf("id" to menuItem.toString())
+                val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
+                navController.navigate(R.id.nav_volumemanager, bundle)
+            }
+        }
+        vvDB2.close()
     }
 
-    private fun addProfileToList(id : Int, name : String, navController: NavController) {
+    private fun addProfileToList(id: Int, name: String) {
         val menu = findViewById<NavigationView>(R.id.nav_view).menu
 
         val newMenuItem = menu.add(R.id.group_profiles, id, 100, name)
