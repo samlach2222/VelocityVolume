@@ -1,7 +1,6 @@
 package com.samlach2222.velocityvolume
 
 import android.app.AlertDialog
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -9,12 +8,12 @@ import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.core.view.size
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
@@ -22,6 +21,7 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
 import com.samlach2222.velocityvolume.databinding.ActivityProfileDrawerBinding
 import com.samlach2222.velocityvolume.ui.settings.SettingsFragment
+import com.samlach2222.velocityvolume.ui.settings.SettingsFragmentAbstract
 
 
 /**
@@ -103,8 +103,17 @@ class ProfileDrawerActivity : AppCompatActivity() {
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        // get profiles from DB
         val vvDB = DBHelper(this, null) // get DBHelper
+
+        // Set the night mode
+        val settings = vvDB.getSettings()
+        when(settings.getString(settings.getColumnIndex(DBHelper.NM))) {
+            SettingsFragmentAbstract.systemString -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            SettingsFragmentAbstract.onString -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            SettingsFragmentAbstract.offString -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+        // get profiles from DB
         var profiles = vvDB.getProfilesNameAndId()
 
         // moving the cursor to first position and

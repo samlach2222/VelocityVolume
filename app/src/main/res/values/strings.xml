@@ -66,6 +66,8 @@
     <string name="github" translatable="false">GitHub</string>
     <string name="report_a_bug">Report a bug</string>
     <string name="rate_this_app">Rate this app</string>
+    <string name="restart_needed">(Restart needed)</string>
+
     <string name="Allow_GPS_error">Error, please accept geolocation</string>
     <string name="Allow_GPS_accept">You are now geolocated</string>
     <string name="Allow_GPS_unactivated">Please active geolocation on Android parameters</string>
