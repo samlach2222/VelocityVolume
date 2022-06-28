@@ -42,8 +42,10 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.execSQL(querySettings)
 
         // we are in the onCreate function, so that means there's no row in the Settings table
-        // we add a single row to the Settings table
-        db.insert("Settings", LSPI, null)
+        // we add a single row to the Settings table with LSPI of -1
+        val values = ContentValues()
+        values.put(LSPI, -1)
+        db.insert("Settings", null, values)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
