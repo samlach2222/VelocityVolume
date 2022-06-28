@@ -37,7 +37,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 UOM + " TEXT CHECK( " + UOM + " IN ('km','miles') )   NOT NULL DEFAULT 'km', " +
                 NM + " TEXT CHECK( " + NM + " IN ('system','on','off') )   NOT NULL DEFAULT 'system', " +
                 GPSD + " INTEGER DEFAULT 0," +
-                LSPI + " INTEGER DEFAULT null" +
+                LSPI + " INTEGER DEFAULT -1" +
         ")")
         db.execSQL(querySettings)
 
@@ -120,11 +120,11 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.update("Profile", values, "$NAME = ?", arrayOf(profileName))
     }
 
-    fun getProfiles(): Cursor? {
+    fun getSpecificProfile(profileName : String): Cursor? {
         // here we are creating a readable variable of our database as we want to read value from it
         val db = this.readableDatabase
         // below code returns a cursor to read data from the database
-        return db.rawQuery("SELECT * FROM Profile", null)
+        return db.rawQuery("SELECT * FROM Profile WHERE $NAME = ?", arrayOf(profileName))
     }
 
     fun getProfilesNameAndId(): Cursor? {

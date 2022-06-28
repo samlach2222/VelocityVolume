@@ -23,10 +23,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.samlach2222.velocityvolume.DBHelper
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentVolumemanagerBinding
 import java.lang.Thread.sleep
 import kotlin.math.absoluteValue
+import kotlin.properties.Delegates
 
 
 /**
@@ -68,6 +70,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
     // Application states
     private var volumeManagerRunning = false
+    private lateinit var profileName : String
     private val arraySlidersWindowClosed = arrayOf(100, 100, 100, 100, 100)
     private val arraySlidersWindowOpened = arrayOf(100, 100, 100, 100, 100)
 
@@ -108,6 +111,16 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        if(::profileName.isInitialized) {
+            val vvDB = DBHelper(requireContext(), null) // get DBHelper
+            val windowSwitch : SwitchMaterial? = view?.findViewById(R.id.switchWindow)
+            vvDB.updateProfileSwitchClose(profileName, arraySlidersWindowClosed[0], arraySlidersWindowClosed[1], arraySlidersWindowClosed[2], arraySlidersWindowClosed[3], arraySlidersWindowClosed[4])
+            vvDB.updateProfileSwitchOpen(profileName, arraySlidersWindowOpened[0], arraySlidersWindowOpened[1], arraySlidersWindowOpened[2], arraySlidersWindowOpened[3], arraySlidersWindowOpened[4])
+            if (windowSwitch != null) {
+                vvDB.switchWindowOpenStatueChange(profileName, windowSwitch.isChecked)
+            }
+            vvDB.close()
+        }
     }
 
     /**
@@ -115,6 +128,17 @@ class VolumeManagerFragment : Fragment() , LocationListener {
      */
     override fun onStop() {
         super.onStop()
+        // BDD Save
+        if(::profileName.isInitialized) {
+            val vvDB = DBHelper(requireContext(), null) // get DBHelper
+            val windowSwitch : SwitchMaterial? = view?.findViewById(R.id.switchWindow)
+            vvDB.updateProfileSwitchClose(profileName, arraySlidersWindowClosed[0], arraySlidersWindowClosed[1], arraySlidersWindowClosed[2], arraySlidersWindowClosed[3], arraySlidersWindowClosed[4])
+            vvDB.updateProfileSwitchOpen(profileName, arraySlidersWindowOpened[0], arraySlidersWindowOpened[1], arraySlidersWindowOpened[2], arraySlidersWindowOpened[3], arraySlidersWindowOpened[4])
+            if (windowSwitch != null) {
+                vvDB.switchWindowOpenStatueChange(profileName, windowSwitch.isChecked)
+            }
+            vvDB.close()
+        }
         stopGPS()
     }
 
@@ -138,6 +162,11 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         // Get ID of Profile
         val bundle = arguments
         bundle?.getString("id")?.let { setActivityTitle(it) }
+        if (bundle != null) {
+            if(bundle.getString("id") != null) {
+                profileName = bundle.getString("id")!!
+            }
+        }
 
         // Play Button
         val button: FloatingActionButton = view.findViewById(R.id.getLocation) // Get the button "Get Location"
@@ -236,6 +265,12 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seek: SeekBar) {
                 slider1Value = seek.progress
+                if(!windowSwitch.isChecked){ // windows closed
+                    arraySlidersWindowClosed[0] = slider1Value
+                }
+                else { // windows opened
+                    arraySlidersWindowOpened[0] = slider1Value
+                }
             }
         })
 
@@ -249,6 +284,12 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seek: SeekBar) {
                 slider2Value = seek.progress
+                if(!windowSwitch.isChecked){ // windows closed
+                    arraySlidersWindowClosed[1] = slider2Value
+                }
+                else { // windows opened
+                    arraySlidersWindowOpened[1] = slider2Value
+                }
             }
         })
 
@@ -262,6 +303,12 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seek: SeekBar) {
                 slider3Value = seek.progress
+                if(!windowSwitch.isChecked){ // windows closed
+                    arraySlidersWindowClosed[2] = slider3Value
+                }
+                else { // windows opened
+                    arraySlidersWindowOpened[2] = slider3Value
+                }
             }
         })
 
@@ -275,6 +322,12 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seek: SeekBar) {
                 slider4Value = seek.progress
+                if(!windowSwitch.isChecked){ // windows closed
+                    arraySlidersWindowClosed[3] = slider4Value
+                }
+                else { // windows opened
+                    arraySlidersWindowOpened[3] = slider4Value
+                }
             }
         })
 
@@ -288,6 +341,12 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seek: SeekBar) {
                 slider5Value = seek.progress
+                if(!windowSwitch.isChecked){ // windows closed
+                    arraySlidersWindowClosed[4] = slider5Value
+                }
+                else { // windows opened
+                    arraySlidersWindowOpened[4] = slider5Value
+                }
             }
         })
 
@@ -295,6 +354,72 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         audioManager = activity?.applicationContext?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+
+        // get profiles from DB
+        if(::profileName.isInitialized) {
+            val vvDB = DBHelper(requireContext(), null) // get DBHelper
+            val profile =  vvDB.getSpecificProfile(profileName)
+
+            // moving the cursor to first position
+            if(profile!!.moveToFirst()){
+                val switchDBProfile = (profile.getString(profile.getColumnIndex(DBHelper.SWITCH))).toBoolean()
+                val percentage1 : TextView = view.findViewById(R.id.percentage_1)
+                val percentage2 : TextView = view.findViewById(R.id.percentage_2)
+                val percentage3 : TextView = view.findViewById(R.id.percentage_3)
+                val percentage4 : TextView = view.findViewById(R.id.percentage_4)
+                val percentage5 : TextView = view.findViewById(R.id.percentage_5)
+
+                if(!switchDBProfile) { // if windows closed
+                    windowSwitch.isChecked = false
+                    slider1.progress = (profile.getString(profile.getColumnIndex(DBHelper.I1C))).toInt()
+                    slider2.progress = (profile.getString(profile.getColumnIndex(DBHelper.I2C))).toInt()
+                    slider3.progress = (profile.getString(profile.getColumnIndex(DBHelper.I3C))).toInt()
+                    slider4.progress = (profile.getString(profile.getColumnIndex(DBHelper.I4C))).toInt()
+                    slider5.progress = (profile.getString(profile.getColumnIndex(DBHelper.I5C))).toInt()
+                    slider1Value = (profile.getString(profile.getColumnIndex(DBHelper.I1C))).toInt()
+                    slider2Value = (profile.getString(profile.getColumnIndex(DBHelper.I2C))).toInt()
+                    slider3Value = (profile.getString(profile.getColumnIndex(DBHelper.I3C))).toInt()
+                    slider4Value = (profile.getString(profile.getColumnIndex(DBHelper.I4C))).toInt()
+                    slider5Value = (profile.getString(profile.getColumnIndex(DBHelper.I5C))).toInt()
+                    percentage1.text = (profile.getString(profile.getColumnIndex(DBHelper.I1C))) + "%"
+                    percentage2.text = (profile.getString(profile.getColumnIndex(DBHelper.I2C))) + "%"
+                    percentage3.text = (profile.getString(profile.getColumnIndex(DBHelper.I3C))) + "%"
+                    percentage4.text = (profile.getString(profile.getColumnIndex(DBHelper.I4C))) + "%"
+                    percentage5.text = (profile.getString(profile.getColumnIndex(DBHelper.I5C))) + "%"
+                }
+                else { // if windows opened
+                    windowSwitch.isChecked = true
+                    slider1.progress = (profile.getString(profile.getColumnIndex(DBHelper.I1O))).toInt()
+                    slider2.progress = (profile.getString(profile.getColumnIndex(DBHelper.I2O))).toInt()
+                    slider3.progress = (profile.getString(profile.getColumnIndex(DBHelper.I3O))).toInt()
+                    slider4.progress = (profile.getString(profile.getColumnIndex(DBHelper.I4O))).toInt()
+                    slider5.progress = (profile.getString(profile.getColumnIndex(DBHelper.I5O))).toInt()
+                    slider1Value = (profile.getString(profile.getColumnIndex(DBHelper.I1O))).toInt()
+                    slider2Value = (profile.getString(profile.getColumnIndex(DBHelper.I2O))).toInt()
+                    slider3Value = (profile.getString(profile.getColumnIndex(DBHelper.I3O))).toInt()
+                    slider4Value = (profile.getString(profile.getColumnIndex(DBHelper.I4O))).toInt()
+                    slider5Value = (profile.getString(profile.getColumnIndex(DBHelper.I5O))).toInt()
+                    percentage1.text = (profile.getString(profile.getColumnIndex(DBHelper.I1O))) + "%"
+                    percentage2.text = (profile.getString(profile.getColumnIndex(DBHelper.I2O))) + "%"
+                    percentage3.text = (profile.getString(profile.getColumnIndex(DBHelper.I3O))) + "%"
+                    percentage4.text = (profile.getString(profile.getColumnIndex(DBHelper.I4O))) + "%"
+                    percentage5.text = (profile.getString(profile.getColumnIndex(DBHelper.I5O))) + "%"
+                }
+                arraySlidersWindowClosed[0] = (profile.getString(profile.getColumnIndex(DBHelper.I1C))).toInt()
+                arraySlidersWindowClosed[1] = (profile.getString(profile.getColumnIndex(DBHelper.I2C))).toInt()
+                arraySlidersWindowClosed[2] = (profile.getString(profile.getColumnIndex(DBHelper.I3C))).toInt()
+                arraySlidersWindowClosed[3] = (profile.getString(profile.getColumnIndex(DBHelper.I4C))).toInt()
+                arraySlidersWindowClosed[4] = (profile.getString(profile.getColumnIndex(DBHelper.I5C))).toInt()
+
+                arraySlidersWindowOpened[0] = (profile.getString(profile.getColumnIndex(DBHelper.I1O))).toInt()
+                arraySlidersWindowOpened[1] = (profile.getString(profile.getColumnIndex(DBHelper.I2O))).toInt()
+                arraySlidersWindowOpened[2] = (profile.getString(profile.getColumnIndex(DBHelper.I3O))).toInt()
+                arraySlidersWindowOpened[3] = (profile.getString(profile.getColumnIndex(DBHelper.I4O))).toInt()
+                arraySlidersWindowOpened[4] = (profile.getString(profile.getColumnIndex(DBHelper.I5O))).toInt()
+            }
+            vvDB.close()
+        }
+
     }
 
     /**
@@ -579,4 +704,3 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         dialog.show()
     }
 }
-
