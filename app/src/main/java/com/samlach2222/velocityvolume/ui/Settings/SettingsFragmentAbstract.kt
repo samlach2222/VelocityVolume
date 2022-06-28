@@ -11,11 +11,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.samlach2222.velocityvolume.DBHelper
 import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
@@ -24,8 +24,9 @@ import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
  * Interface for the Settings fragment class which manages the interactivity of the Settings ui
  */
 abstract class SettingsFragmentAbstract : Fragment() {
-// TODO : UPDATE THE SETTINGS WHEN THE USER CHANGE A VALUE
+
     private var _binding: FragmentSettingsBinding? = null
+    private lateinit var db: DBHelper
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -48,11 +49,14 @@ abstract class SettingsFragmentAbstract : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // Initialize DB variable for getting and updating settings
+        db = DBHelper(this.requireContext(), null)
+        val settings = db.getSettings()
+
         // GENERAL SETTINGS
 
         // Units of measurements
-        val unitFromSavedSettings: String? = null  // TODO : Get the unit stored in the saved settings
-        when (unitFromSavedSettings) {
+        when (settings.getString(settings.getColumnIndex(DBHelper.UOM))) {
             kilometersString -> binding.tvUnitValue.text = resources.getString(R.string.kilometers)
             milesString -> binding.tvUnitValue.text = resources.getString(R.string.miles)
             else -> binding.tvUnitValue.text = resources.getString(R.string.kilometers)
@@ -63,8 +67,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
         }
 
         // Night mode
-        val nightModeFromSavedSettings: String? = null  // TODO : Get the night mode stored in the saved settings
-        when (nightModeFromSavedSettings) {
+        when (settings.getString(settings.getColumnIndex(DBHelper.NM))) {
             systemString -> binding.tvNightModeValue.text = resources.getString(R.string.system)
             onString -> binding.tvNightModeValue.text = resources.getString(R.string.on)
             offString -> binding.tvNightModeValue.text = resources.getString(R.string.off)
@@ -77,15 +80,9 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
         // GPS sensibility
         val gpsSensibilitySeekbar: SeekBar = binding.sGpsSensibility
-        val gpsSensibilityFromSavedSettings: Int? = null  // TODO : Get the gps sensibility stored in the saved settings
-        if (gpsSensibilityFromSavedSettings == null) {
-            val defaultSeekbarValue = 0
-            gpsSensibilitySeekbar.progress = defaultSeekbarValue
-            binding.tvGpsSensibilityValue.text = defaultSeekbarValue.toString()
-        } else {
-            gpsSensibilitySeekbar.progress = gpsSensibilityFromSavedSettings
-            binding.tvGpsSensibilityValue.text = gpsSensibilityFromSavedSettings.toString()
-        }
+        val gpsSensibilityFromSavedSettings = settings.getInt(settings.getColumnIndex(DBHelper.GPSD))
+        gpsSensibilitySeekbar.progress = gpsSensibilityFromSavedSettings
+        binding.tvGpsSensibilityValue.text = gpsSensibilityFromSavedSettings.toString()
         gpsSensibilitySeekbar.setOnSeekBarChangeListener (object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 requireView().findViewById<TextView>(R.id.tv_gpsSensibilityValue).text = progress.toString()
@@ -141,6 +138,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
         (activity as ProfileDrawerActivity).lockDrawerLayout(DrawerLayout.LOCK_MODE_UNLOCKED)
         super.onDestroyView()
         _binding = null
+        db.close()
     }
 
     /**
@@ -171,7 +169,14 @@ abstract class SettingsFragmentAbstract : Fragment() {
         val dialogBuilder = AlertDialog.Builder(this.requireContext())
         dialogBuilder.setTitle(resources.getString(R.string.unit_of_measurement))
         val items = resources.getStringArray(R.array.units_of_measurement)
-        val checkedItem = 0  // TODO : Get the unit stored in the saved settings
+
+        val settings = db.getSettings()
+        val checkedItem = when(settings.getString(settings.getColumnIndex(DBHelper.UOM))) {
+            kilometersString -> 0
+            milesString -> 1
+            else -> 0
+        }
+
         dialogBuilder.setSingleChoiceItems(
             items, checkedItem
         ) { dialog, which ->
@@ -196,7 +201,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
             milesString -> textViewUnitCurrentValue.text = resources.getString(R.string.miles)
         }
 
-        // TODO : Update the saved settings with the selected unit
+        db.updateUnitOfMeasurement(selectedValue)
         DEBUGToastSelectedValue(selectedValue)
     }
 
@@ -207,7 +212,15 @@ abstract class SettingsFragmentAbstract : Fragment() {
         val dialogBuilder = AlertDialog.Builder(this.requireContext())
         dialogBuilder.setTitle(resources.getString(R.string.night_mode))
         val items = resources.getStringArray(R.array.night_modes)
-        val checkedItem = 0  // TODO : Get the unit stored in the saved settings
+
+        val settings = db.getSettings()
+        val checkedItem = when(settings.getString(settings.getColumnIndex(DBHelper.NM))) {
+            systemString -> 0
+            onString -> 1
+            offString -> 2
+            else -> 0
+        }
+
         dialogBuilder.setSingleChoiceItems(
             items, checkedItem
         ) { dialog, which ->
@@ -226,24 +239,22 @@ abstract class SettingsFragmentAbstract : Fragment() {
      * Apply the night mode selected
      */
     private fun nightModeChange(selectedValue: String) {
-        // Update subtext with the selected night mode
+        // Update subtext with the selected night mode and precise a restart is needed
         val textViewNightModeCurrentValue = this.requireView().findViewById<TextView>(R.id.tv_nightModeValue)
+        val restartNeededString = resources.getString(R.string.restart_needed)
         when (selectedValue) {
             systemString -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                textViewNightModeCurrentValue.text = resources.getString(R.string.system)
+                textViewNightModeCurrentValue.text = resources.getString(R.string.system) + ' ' + restartNeededString
             }
             onString -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                textViewNightModeCurrentValue.text = resources.getString(R.string.on)
+                textViewNightModeCurrentValue.text = resources.getString(R.string.on) + ' ' + restartNeededString
             }
             offString -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                textViewNightModeCurrentValue.text = resources.getString(R.string.off)
+                textViewNightModeCurrentValue.text = resources.getString(R.string.off) + ' ' + restartNeededString
             }
         }
 
-        // TODO : Update the saved settings with the selected night mode
+        db.updateNightMode(selectedValue)
         DEBUGToastSelectedValue(selectedValue)
     }
 
@@ -254,7 +265,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
         val selectedValue = seekBar?.progress
 
         if (selectedValue != null) {
-            // TODO : Update the saved settings with the selected gps sensibility
+            db.updateGPSDifference(selectedValue)
             DEBUGToastSelectedValue(selectedValue)
         }
     }
@@ -301,9 +312,9 @@ abstract class SettingsFragmentAbstract : Fragment() {
     /**
      * const values which correspond to the database enums
      */
-    protected companion object DatabaseEnums {
-        const val milesString = "miles"
+    companion object DatabaseEnums {
         const val kilometersString = "km"
+        const val milesString = "miles"
         const val systemString = "system"
         const val onString = "on"
         const val offString = "off"
