@@ -180,8 +180,10 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun getSettings(): Cursor {
         // here we are creating a readable variable of our database as we want to read value from it
         val db = this.readableDatabase
-        // below code returns a cursor to read data from the database
-        return db.rawQuery("SELECT * FROM Settings", null)
+        // below code returns a cursor at the first row (there's only one row) to read data from the database
+        val settings = db.rawQuery("SELECT * FROM Settings", null)
+        settings.moveToFirst()
+        return settings
     }
 
     companion object{
