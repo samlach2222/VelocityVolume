@@ -21,11 +21,11 @@
     <string name="home_message_part_4">create a profile</string>
 
     <!-- Volume Manager -->
-    <string name="interval_1" translatable="false">0 – 20 km/h</string>
-    <string name="interval_2" translatable="false">20 – 40 km/h</string>
-    <string name="interval_3" translatable="false">40 – 60 km/h</string>
-    <string name="interval_4" translatable="false">60 – 100 km/h</string>
-    <string name="interval_5" translatable="false">> 100 km/h</string>
+    <string name="interval_1" translatable="false">0 – 20</string>
+    <string name="interval_2" translatable="false">20 – 40</string>
+    <string name="interval_3" translatable="false">40 – 60</string>
+    <string name="interval_4" translatable="false">60 – 100</string>
+    <string name="interval_5" translatable="false">> 100</string>
     <string name="percentage_1" translatable="false">100%</string>
     <string name="percentage_2" translatable="false">100%</string>
     <string name="percentage_3" translatable="false">100%</string>

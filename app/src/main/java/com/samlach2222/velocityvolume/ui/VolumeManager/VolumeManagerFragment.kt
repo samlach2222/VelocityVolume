@@ -82,7 +82,8 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private var slider5Value = 100
 
     // Variables for Audio
-    private var speedUnit = "km/h" // TODO : Get speedUnit from database/parameters
+    private var speedUnit = "km"
+    private var gpsSensibility = 0
     private lateinit var audioManager: AudioManager // not yet initialized
     private var currentVolume: Int = -1 // not yet initialized
     private var maxVolume: Int = -1 // not yet initialized
@@ -420,6 +421,31 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             vvDB.close()
         }
 
+        // Get Settings from DB
+        val vvDB = DBHelper(requireContext(), null) // get DBHelper
+        val settings =  vvDB.getSettings()
+        if(settings.moveToFirst()){
+            speedUnit = (settings.getString(settings.getColumnIndex(DBHelper.UOM)))
+            gpsSensibility = (settings.getString(settings.getColumnIndex(DBHelper.GPSD))).toInt()
+        }
+
+        // display unity of intervals
+        val i1: TextView = view.findViewById(R.id.interval_1)
+        val i2: TextView = view.findViewById(R.id.interval_2)
+        val i3: TextView = view.findViewById(R.id.interval_3)
+        val i4: TextView = view.findViewById(R.id.interval_4)
+        val i5: TextView = view.findViewById(R.id.interval_5)
+        var unit = ""
+        unit = if(speedUnit == "miles") {
+            "mph"
+        } else {
+            "km/h"
+        }
+        i1.text = i1.text.toString() + " " + unit
+        i2.text = i2.text.toString() + " " + unit
+        i3.text = i3.text.toString() + " " + unit
+        i4.text = i4.text.toString() + " " + unit
+        i5.text = i5.text.toString() + " " + unit
     }
 
     /**
@@ -465,9 +491,20 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         previousLocation = location
 
         tvGpsLocation  = requireView().findViewById(R.id.textView) // TextView to display the speed in km/h
-        val speedInKmH = speed.toDouble() * 18/5 // speed in Km/h
-        tvGpsLocation.text = getText(R.string.current_gps_speed_prefix).toString() + " " + speedInKmH.toInt() +  " km/h" // display the speed
+        var speedInKmH = (speed.toDouble() * 18/5) // speed in km/h
+        var speedInMph = (speed.toDouble() * 2.2369363) // speed in mph
 
+        if(speedInKmH >= 30 || speedInMph >= 30) {
+            speedInKmH += gpsSensibility
+            speedInMph += gpsSensibility
+        }
+
+        if(speedUnit == "miles"){ // mph
+            tvGpsLocation.text = getText(R.string.current_gps_speed_prefix).toString() + " " + speedInMph.toInt() +  " mph" // display the speed
+        }
+        else { // km/h
+            tvGpsLocation.text = getText(R.string.current_gps_speed_prefix).toString() + " " + speedInKmH.toInt() +  " km/h" // display the speed
+        }
         setAudioVolumeBySpeed(speedInKmH.toInt())
     }
 
@@ -704,3 +741,5 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         dialog.show()
     }
 }
+
+// TODO : Get Speed Unit and GPS and car's reported speed difference from Database and manage display
