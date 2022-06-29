@@ -25,7 +25,7 @@
             android:title="@string/add_profile" />
         <item
             android:id="@+id/delete_profiles"
-            android:icon="@drawable/ic_menu_person_add"
+            android:icon="@drawable/ic_menu_person_remove"
             android:title="@string/delete_profiles" />
     </group>
 
