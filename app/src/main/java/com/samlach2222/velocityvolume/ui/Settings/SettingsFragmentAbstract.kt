@@ -239,7 +239,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
      * Apply the night mode selected
      */
     private fun nightModeChange(selectedValue: String) {
-        // Update subtext with the selected night mode and precise a restart is needed
+        // Update subtext with the selected night mode and change the setOnClickListener to make it restart the app
         val textViewNightModeCurrentValue = this.requireView().findViewById<TextView>(R.id.tv_nightModeValue)
         val restartNeededString = resources.getString(R.string.restart_needed)
         when (selectedValue) {
@@ -255,6 +255,12 @@ abstract class SettingsFragmentAbstract : Fragment() {
         }
 
         db.updateNightMode(selectedValue)
+
+        val nightModeLayout = requireView().findViewById<ConstraintLayout>(R.id.cl_nightMode)
+        nightModeLayout.setOnClickListener {
+            requireActivity().recreate()
+        }
+
         DEBUGToastSelectedValue(selectedValue)
     }
 
