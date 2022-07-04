@@ -256,6 +256,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
         db.updateNightMode(selectedValue)
 
+        // TODO : Restart the app automatically and add a value in the db to redirect to the settings immediately after laoding the last profile
         val nightModeLayout = requireView().findViewById<ConstraintLayout>(R.id.cl_nightMode)
         nightModeLayout.setOnClickListener {
             requireActivity().recreate()
