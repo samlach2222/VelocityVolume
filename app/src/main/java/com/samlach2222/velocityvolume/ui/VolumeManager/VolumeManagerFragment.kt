@@ -597,8 +597,9 @@ class VolumeManagerFragment : Fragment() , LocationListener {
      * @param[speed] Actual speed of the car
      */
     private fun setAudioVolumeBySpeed(speed : Int) { // TODO : Optimize code !
+        // TODO : Implement mph (miles)
         //Volume display initialization
-        if(speedUnit == "km/h") {
+        if(speedUnit == "km") {
             val tvVolume: TextView = requireView().findViewById(R.id.textView2) // The TextView where the volume where displayed // TextView to display the speed in km/h
             currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
             if(tvVolume.text.isEmpty()) {
@@ -620,7 +621,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             }
         }
 
-        if(speedUnit == "km/h") {
+        if(speedUnit == "km") {
             if(!threadExist) {
                 currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
                 if(speed < 20 && (currentVolume != (slider1Value * maxVolume / 100))) {
@@ -741,5 +742,3 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         dialog.show()
     }
 }
-
-// TODO : Get Speed Unit and GPS and car's reported speed difference from Database and manage display
