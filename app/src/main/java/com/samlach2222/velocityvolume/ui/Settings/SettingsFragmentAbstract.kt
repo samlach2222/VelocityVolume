@@ -128,6 +128,12 @@ abstract class SettingsFragmentAbstract : Fragment() {
         // [DEPENDS ON FLAVOR] Rate this app
         initialiseRateAppLayout(binding)
 
+        // [DEPENDS ON FLAVOR] Update
+        val updateLayout: ConstraintLayout = binding.clUpdate
+        updateLayout.setOnClickListener {
+            updateApp()
+        }
+
         return root
     }
 
@@ -314,6 +320,14 @@ abstract class SettingsFragmentAbstract : Fragment() {
      */
     protected open fun initialiseRateAppLayout(binding: FragmentSettingsBinding) {
 
+    }
+
+    /**
+     * Overridable function to update the app, if not overridden redirects to the f-droid page of this app
+     */
+    protected open fun updateApp() {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://f-droid.org/packages/com.samlach2222.velocityvolume/"))
+        startActivity(browserIntent)
     }
 
     /**

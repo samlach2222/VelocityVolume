@@ -67,6 +67,9 @@
     <string name="report_a_bug">Report a bug</string>
     <string name="rate_this_app">Rate this app</string>
     <string name="restart_needed">(Restart needed, click to restart)</string>
+    <string name="update">Update</string>
+    <string name="update_failed">The update has failed</string>
+    <string name="update_restart_needed">(Download completed, click to restart)</string>
 
     <string name="Allow_GPS_error">Error, please accept geolocation</string>
     <string name="Allow_GPS_accept">You are now geolocated</string>

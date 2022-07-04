@@ -43,6 +43,9 @@
     <string name="report_a_bug">Signaler un bug</string>
     <string name="rate_this_app">Noter l\'application</string>
     <string name="restart_needed">(Redémarrage requis, cliquez pour redémarrer)</string>
+    <string name="update">Mettre à jour</string>
+    <string name="update_failed">La mise à jour à échouée</string>
+    <string name="update_restart_needed">(Téléchargement complété, cliquez pour redémarrer)</string>
 
     <string name="current_gps_speed_prefix">Vitesse :</string>
     <string name="current_media_volume_prefix">Volume :</string>
