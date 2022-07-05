@@ -1,7 +1,6 @@
-package com.samlach2222.velocityvolume.ui.volumemanager
+package com.samlach2222.velocityvolume.ui.volumeManager
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -30,7 +29,6 @@ import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentVolumemanagerBinding
 import java.lang.Thread.sleep
 import kotlin.math.absoluteValue
-import kotlin.properties.Delegates
 
 
 /**
@@ -157,7 +155,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
      * @param[view] actual view of the fragment
      * @param[savedInstanceState] saved fragment
      */
-    @SuppressLint("UseSwitchCompatOrMaterialCode", "SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -260,7 +257,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         val slider1: SeekBar = view.findViewById(R.id.slider_1)
         slider1.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
-            @SuppressLint("SetTextI18n")
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
                 view.findViewById<TextView>(R.id.percentage_1).text = "$progress%"
             }
@@ -279,7 +275,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         val slider2: SeekBar = view.findViewById(R.id.slider_2)
         slider2.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
-            @SuppressLint("SetTextI18n")
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
                 view.findViewById<TextView>(R.id.percentage_2).text = "$progress%"
             }
@@ -298,7 +293,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         val slider3: SeekBar = view.findViewById(R.id.slider_3)
         slider3.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
-            @SuppressLint("SetTextI18n")
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
                 view.findViewById<TextView>(R.id.percentage_3).text = "$progress%"
             }
@@ -317,7 +311,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         val slider4: SeekBar = view.findViewById(R.id.slider_4)
         slider4.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
-            @SuppressLint("SetTextI18n")
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
                 view.findViewById<TextView>(R.id.percentage_4).text = "$progress%"
             }
@@ -336,7 +329,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         val slider5: SeekBar = view.findViewById(R.id.slider_5)
         slider5.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
-            @SuppressLint("SetTextI18n")
             override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
                 view.findViewById<TextView>(R.id.percentage_5).text = "$progress%"
             }
@@ -436,8 +428,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         val i3: TextView = view.findViewById(R.id.interval_3)
         val i4: TextView = view.findViewById(R.id.interval_4)
         val i5: TextView = view.findViewById(R.id.interval_5)
-        var unit = ""
-        unit = if(speedUnit == "miles") {
+        val unit: String = if(speedUnit == "miles") {
             "mph"
         } else {
             "km/h"
@@ -476,7 +467,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
      * function called each time the geolocation is retrieved and allowing to calculate the speed in m/ s then in km / h to then be able to display it on the application
      * @param[location] actual geolocation of the user
      */
-    @SuppressLint("SetTextI18n")
     override fun onLocationChanged(location: Location) {
         val speed = if (location.hasSpeed()) {
             location.speed // initial value

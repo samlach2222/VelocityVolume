@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/nav_volumemanager"
-        android:name="com.samlach2222.velocityvolume.ui.volumemanager.VolumeManagerFragment"
+        android:name="com.samlach2222.velocityvolume.ui.volumeManager.VolumeManagerFragment"
         tools:layout="@layout/fragment_volumemanager" />
 
     <fragment
         android:id="@+id/nav_homepage"
-        android:name="com.samlach2222.velocityvolume.ui.homepage.HomePageFragment"
+        android:name="com.samlach2222.velocityvolume.ui.homePage.HomePageFragment"
         tools:layout="@layout/fragment_homepage" />
 
     <fragment

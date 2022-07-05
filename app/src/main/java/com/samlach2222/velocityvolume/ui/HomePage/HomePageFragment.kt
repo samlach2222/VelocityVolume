@@ -1,4 +1,4 @@
-package com.samlach2222.velocityvolume.ui.homepage
+package com.samlach2222.velocityvolume.ui.homePage
 
 import android.os.Bundle
 import android.text.Spannable

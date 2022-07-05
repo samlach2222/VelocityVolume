@@ -41,8 +41,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val slideshowViewModel =
-            ViewModelProvider(this)[SettingsViewModel::class.java]
+        ViewModelProvider(this)[SettingsViewModel::class.java]
 
         setActivityTitle(getString(R.string.settingsActionBar))
 

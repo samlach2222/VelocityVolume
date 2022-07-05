@@ -120,7 +120,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
         }
 
         // get profiles from DB
-        var profiles = vvDB.getProfilesNameAndId()
+        val profiles = vvDB.getProfilesNameAndId()
 
         // moving the cursor to first position and
         // appending value in the text view
@@ -142,7 +142,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
 
         // if a profile exists, go to latest
         val vvDB2 = DBHelper(this, null) // get DBHelper
-        var settingsCursor = vvDB.getSettings()
+        val settingsCursor = vvDB.getSettings()
         if(settingsCursor.moveToFirst()){
             val latestProfileId = (settings.getString(settings.getColumnIndex(DBHelper.LSPI))).toInt()
             if(latestProfileId != -1){
