@@ -596,86 +596,80 @@ class VolumeManagerFragment : Fragment() , LocationListener {
      * function to set the volume using the [speed] parameter and call popup if user use the application when he drive
      * @param[speed] Actual speed of the car
      */
-    private fun setAudioVolumeBySpeed(speed : Int) { // TODO : Optimize code !
-        // TODO : Implement mph (miles)
+    private fun setAudioVolumeBySpeed(speed : Int) {
         //Volume display initialization
-        if(speedUnit == "km") {
-            val tvVolume: TextView = requireView().findViewById(R.id.textView2) // The TextView where the volume where displayed // TextView to display the speed in km/h
+        val tvVolume: TextView = requireView().findViewById(R.id.textView2) // The TextView where the volume where displayed // TextView to display the speed in km/h
+        currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        if(tvVolume.text.isEmpty()) {
+            if(speed < 20 && (currentVolume == (slider1Value * maxVolume / 100))) {
+                tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider1Value%" // display the speed
+            }
+            else if(speed in 20..39 && (currentVolume == (slider2Value * maxVolume / 100))) {
+                tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider2Value%" // display the speed
+            }
+            else if(speed in 40 .. 59 && (currentVolume == (slider3Value * maxVolume / 100))) {
+                tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider3Value%" // display the speed
+            }
+            else if(speed in 60 .. 99 && (currentVolume == (slider4Value * maxVolume / 100))) {
+                tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider4Value%" // display the speed
+            }
+            else if(speed >= 100 && (currentVolume == (slider4Value * maxVolume / 100))) { // NOT ALWAYS 100
+                tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider5Value%" // display the speed
+            }
+        }
+        if(!threadExist) {
             currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-            if(tvVolume.text.isEmpty()) {
-                if(speed < 20 && (currentVolume == (slider1Value * maxVolume / 100))) {
-                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider1Value%" // display the speed
-                }
-                else if(speed in 20..39 && (currentVolume == (slider2Value * maxVolume / 100))) {
-                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider2Value%" // display the speed
-                }
-                else if(speed in 40 .. 59 && (currentVolume == (slider3Value * maxVolume / 100))) {
-                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider3Value%" // display the speed
-                }
-                else if(speed in 60 .. 99 && (currentVolume == (slider4Value * maxVolume / 100))) {
-                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider4Value%" // display the speed
-                }
-                else if(speed >= 100 && (currentVolume == (slider4Value * maxVolume / 100))) { // NOT ALWAYS 100
-                    tvVolume.text = getText(R.string.current_media_volume_prefix).toString() +  " $slider5Value%" // display the speed
-                }
+            if(speed < 20 && (currentVolume != (slider1Value * maxVolume / 100))) {
+                setAudioVolumeWithPercent(slider1Value)
+            }
+            else if(speed in 20..39 && (currentVolume != (slider2Value * maxVolume / 100))) {
+                setAudioVolumeWithPercent(slider2Value)
+            }
+            else if(speed in 40 .. 59 && (currentVolume != (slider3Value * maxVolume / 100))) {
+                setAudioVolumeWithPercent(slider3Value)
+            }
+            else if(speed in 60 .. 99 && (currentVolume != (slider4Value * maxVolume / 100))) {
+                setAudioVolumeWithPercent(slider4Value)
+            }
+            else if(speed >= 100 && (currentVolume != (slider5Value * maxVolume / 100))) { // NOT ALWAYS 100
+                setAudioVolumeWithPercent(slider5Value)
             }
         }
 
-        if(speedUnit == "km") {
-            if(!threadExist) {
-                currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-                if(speed < 20 && (currentVolume != (slider1Value * maxVolume / 100))) {
-                    setAudioVolumeWithPercent(slider1Value)
+        // Block changes when speed > 5km/h to avoid changes while driving
+        if(speed >= 5) {
+            isUserExceedSpeedLimit = true
+        }
+
+        if(isUserExceedSpeedLimit) {
+            if(!isUserPassenger) {
+                val slider1: SeekBar? = view?.findViewById(R.id.slider_1)
+                if (slider1 != null) {
+                    slider1.isEnabled = false
                 }
-                else if(speed in 20..39 && (currentVolume != (slider2Value * maxVolume / 100))) {
-                    setAudioVolumeWithPercent(slider2Value)
+                val slider2: SeekBar? = view?.findViewById(R.id.slider_2)
+                if (slider2 != null) {
+                    slider2.isEnabled = false
                 }
-                else if(speed in 40 .. 59 && (currentVolume != (slider3Value * maxVolume / 100))) {
-                    setAudioVolumeWithPercent(slider3Value)
+                val slider3: SeekBar? = view?.findViewById(R.id.slider_3)
+                if (slider3 != null) {
+                    slider3.isEnabled = false
                 }
-                else if(speed in 60 .. 99 && (currentVolume != (slider4Value * maxVolume / 100))) {
-                    setAudioVolumeWithPercent(slider4Value)
+                val slider4: SeekBar? = view?.findViewById(R.id.slider_4)
+                if (slider4 != null) {
+                    slider4.isEnabled = false
                 }
-                else if(speed >= 100 && (currentVolume != (slider5Value * maxVolume / 100))) { // NOT ALWAYS 100
-                    setAudioVolumeWithPercent(slider5Value)
+                val slider5: SeekBar? = view?.findViewById(R.id.slider_5)
+                if (slider5 != null) {
+                    slider5.isEnabled = false
                 }
             }
 
-            // Block changes when speed > 5km/h to avoid changes while driving
-            if(speed >= 5) {
-                isUserExceedSpeedLimit = true
-            }
-
-            if(isUserExceedSpeedLimit) {
-                if(!isUserPassenger) {
-                    val slider1: SeekBar? = view?.findViewById(R.id.slider_1)
-                    if (slider1 != null) {
-                        slider1.isEnabled = false
-                    }
-                    val slider2: SeekBar? = view?.findViewById(R.id.slider_2)
-                    if (slider2 != null) {
-                        slider2.isEnabled = false
-                    }
-                    val slider3: SeekBar? = view?.findViewById(R.id.slider_3)
-                    if (slider3 != null) {
-                        slider3.isEnabled = false
-                    }
-                    val slider4: SeekBar? = view?.findViewById(R.id.slider_4)
-                    if (slider4 != null) {
-                        slider4.isEnabled = false
-                    }
-                    val slider5: SeekBar? = view?.findViewById(R.id.slider_5)
-                    if (slider5 != null) {
-                        slider5.isEnabled = false
-                    }
-                }
-
-                if(!isPopupDisplayed){ // if user drive (default state) AND the popup is not displayed
-                    val dm = requireContext().getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
-                    for (display in dm.displays) {
-                        if (display.state == Display.STATE_ON) { // display popup only if the screen is ON
-                            displayPopupToKnowIfUserDrive()
-                        }
+            if(!isPopupDisplayed){ // if user drive (default state) AND the popup is not displayed
+                val dm = requireContext().getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
+                for (display in dm.displays) {
+                    if (display.state == Display.STATE_ON) { // display popup only if the screen is ON
+                        displayPopupToKnowIfUserDrive()
                     }
                 }
             }
