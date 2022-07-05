@@ -4,12 +4,14 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.hardware.display.DisplayManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.media.AudioManager
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +50,6 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     private var started = false
     private var geolocationGranted = false
     private var activityResultLauncher: ActivityResultLauncher<Array<String>>
-    private val runningQOrLater = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q // TODO : Display <Android Q popup or handle Android Q different GPS mode
     init{
         this.activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()) {result ->
@@ -466,7 +467,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             started = true
         }
         else {
-            Toast.makeText(activity,getString(R.string.Allow_GPS_unactivated),Toast.LENGTH_SHORT).show()
+            showAlertGPSDialog(context)
         }
 
     }
@@ -734,5 +735,24 @@ class VolumeManagerFragment : Fragment() , LocationListener {
             }
         }
         dialog.show()
+    }
+
+    private fun showAlertGPSDialog(context: Context?) {
+        try {
+            context?.let {
+                val builder = AlertDialog.Builder(it)
+                builder.setTitle(it.resources.getString(R.string.app_name))
+                    .setMessage(R.string.Allow_GPS_unactivated)
+                    .setPositiveButton(it.resources.getString(android.R.string.ok)) { dialog, _ ->
+                        dialog.dismiss()
+                        startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                    }
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setCancelable(false)
+                    .show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
