@@ -456,6 +456,19 @@ class VolumeManagerFragment : Fragment() , LocationListener {
                 ?.setImageResource(android.R.drawable.ic_media_pause)
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this, null) // Request updates of location using locationListener
             started = true
+
+            // Initialize Display
+            val tv1 : TextView = requireView().findViewById(R.id.textView)
+            val tv2 : TextView = requireView().findViewById(R.id.textView2)
+            if(speedUnit == "miles"){ // mph
+                tv1.text = getText(R.string.current_gps_speed_prefix).toString() + " " + 0 +  " mph" // display the speed
+            }
+            else { // km/h
+                tv1.text = getText(R.string.current_gps_speed_prefix).toString() + " " + 0 +  " km/h" // display the speed
+            }
+
+            val slider1: SeekBar = view!!.findViewById(R.id.slider_1)
+            tv2.text = getText(R.string.current_media_volume_prefix).toString() + " " + slider1.progress + "%" // display the speed
         }
         else {
             showAlertGPSDialog(context)
