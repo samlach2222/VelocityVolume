@@ -78,20 +78,21 @@ abstract class SettingsFragmentAbstract : Fragment() {
         }
 
         // GPS sensibility
+        // The + 10 and - 10 are because the slider goes from 0 to 20
         val gpsSensibilitySeekbar: SeekBar = binding.sGpsSensibility
-        val gpsSensibilityFromSavedSettings = settings.getInt(settings.getColumnIndex(DBHelper.GPSD))
+        val gpsSensibilityFromSavedSettings = settings.getInt(settings.getColumnIndex(DBHelper.GPSD)) + 10
         gpsSensibilitySeekbar.progress = gpsSensibilityFromSavedSettings
-        binding.tvGpsSensibilityValue.text = gpsSensibilityFromSavedSettings.toString()
+        binding.tvGpsSensibilityValue.text = (gpsSensibilityFromSavedSettings - 10).toString()
         gpsSensibilitySeekbar.setOnSeekBarChangeListener (object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                requireView().findViewById<TextView>(R.id.tv_gpsSensibilityValue).text = progress.toString()
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                requireView().findViewById<TextView>(R.id.tv_gpsSensibilityValue).text = (progress - 10).toString()
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
                 //Do nothing
             }
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
                 onSeekbarGPSSensibilityStopTrackingTouch(seekBar)
             }
         })
@@ -273,13 +274,11 @@ abstract class SettingsFragmentAbstract : Fragment() {
     /**
      * Apply the gps sensibility selected
      */
-    private fun onSeekbarGPSSensibilityStopTrackingTouch(seekBar: SeekBar?) {
-        val selectedValue = seekBar?.progress
+    private fun onSeekbarGPSSensibilityStopTrackingTouch(seekBar: SeekBar) {
+        val selectedValue = seekBar.progress - 10
 
-        if (selectedValue != null) {
-            db.updateGPSDifference(selectedValue)
-            DEBUGToastSelectedValue(selectedValue)
-        }
+        db.updateGPSDifference(selectedValue)
+        DEBUGToastSelectedValue(selectedValue)
     }
 
     /**

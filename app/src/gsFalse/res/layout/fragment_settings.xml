@@ -116,6 +116,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textView13">
 
+                        <!-- min only works with sdk 26 or greater -->
                         <SeekBar
                             android:id="@+id/s_gpsSensibility"
                             style="@style/Widget.AppCompat.SeekBar"
@@ -123,8 +124,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:max="10"
-                            android:min="-10"
+                            android:max="20"
                             android:progressBackgroundTint="?attr/colorPrimaryVariant"
                             android:progressBackgroundTintMode="src_over"
                             android:progressTint="?attr/colorPrimary"
