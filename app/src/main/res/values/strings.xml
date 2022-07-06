@@ -1,6 +1,6 @@
 <resources>
     <!-- App title -->
-    <string name="app_name" translatable="false">VelocityVolume</string>
+    <string name="app_name" translatable="false">Velocity Volume</string>
     <string name="nav_header_title" translatable="false">Velocity Volume</string>
 
     <!-- Side bar -->
