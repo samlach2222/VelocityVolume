@@ -1,5 +1,6 @@
 package com.samlach2222.velocityvolume.ui.settings
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +30,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private lateinit var db: DBHelper
+    private lateinit var createFileResult: ActivityResultLauncher<Intent>
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -109,6 +113,21 @@ abstract class SettingsFragmentAbstract : Fragment() {
         val exportSettingsLayout: ConstraintLayout = binding.clExportSettings
         exportSettingsLayout.setOnClickListener {
             exportSettings()
+        }
+        createFileResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uri = result.data!!.data!!
+                val outputStream = requireContext().contentResolver.openOutputStream(uri)
+
+                outputStream.use { os ->
+                    val outputStreamWriter = os!!.writer()
+
+                    outputStreamWriter.use { osw ->
+                        // TODO : Write the content of VELOCITY_VOLUME_DB.db in the file
+                        osw.append("test")
+                    }
+                }
+            }
         }
 
         // ABOUT
@@ -293,8 +312,13 @@ abstract class SettingsFragmentAbstract : Fragment() {
      * Export the settings to a file
      */
     private fun exportSettings() {
-        // TODO : Implement export settings
-        DEBUGToast("exportSettings isn't implemented")
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(Intent.EXTRA_TITLE, "Velocity Volume.bak")
+        }
+
+        createFileResult.launch(intent)
     }
 
     /**
