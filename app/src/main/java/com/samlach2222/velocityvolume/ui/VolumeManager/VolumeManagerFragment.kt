@@ -144,14 +144,14 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
     /**
      * function called to know if geolocation is enabled in Android parameters
-     * @return if GPS services are enabled
+     * @return true if GPS services are enabled, else false
      */
     private fun isLocationEnabled(): Boolean {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
     /**
-     * function called when the view is in creation, initialize variables and button bindings
+     * function called when the view is in creation, initialize variables, database link and button bindings
      * @param[view] actual view of the fragment
      * @param[savedInstanceState] saved fragment
      */
@@ -740,6 +740,11 @@ class VolumeManagerFragment : Fragment() , LocationListener {
         dialog.show()
     }
 
+    /**
+     * function to display a dialog window to alert the user he don't have location activated on his smartphone,
+     * and go to settings to allow him to activate it
+     * @param[context] the current context
+     */
     private fun showAlertGPSDialog(context: Context?) {
         try {
             context?.let {
