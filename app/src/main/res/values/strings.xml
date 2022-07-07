@@ -60,8 +60,11 @@
     </string-array>
     <string name="gps_car_speed_difference">GPS and car\'s reported speed difference</string>
     <string name="saving">Saving</string>
-    <string name="import_settings">Import settings</string>
-    <string name="export_settings">Export settings</string>
+    <string name="import_data">Import data</string>
+    <string name="data_import_successful">Data imported from %1$s</string>
+    <string name="data_import_failed">ERROR : Couldn\'t import data from %1$s</string>
+    <string name="export_data">Export data</string>
+    <string name="data_exported">Data exported to %1$s</string>
     <string name="about">About</string>
     <string name="github" translatable="false">GitHub</string>
     <string name="report_a_bug">Report a bug</string>
