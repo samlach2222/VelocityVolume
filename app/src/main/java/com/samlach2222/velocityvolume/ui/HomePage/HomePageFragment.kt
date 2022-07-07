@@ -19,6 +19,8 @@ import com.samlach2222.velocityvolume.databinding.FragmentHomepageBinding
 
 /**
  * Class who manage the first Fragment, shown when the is no profiles in the application
+ * @author samlach2222
+ * @author mahtwo
  */
 class HomePageFragment : Fragment() {
 
@@ -27,6 +29,8 @@ class HomePageFragment : Fragment() {
 
     /**
      * function called when the view is created
+     * @author samlach2222
+     * @author mahtwo
      */
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +46,8 @@ class HomePageFragment : Fragment() {
 
     /**
      * function called when the view is destroyed
+     * @author samlach2222
+     * @author mahtwo
      */
     override fun onDestroyView() {
         super.onDestroyView()
@@ -51,6 +57,7 @@ class HomePageFragment : Fragment() {
     /**
      * function called when the view is totally created
      * Initialize the text color and content of the fragment
+     * @author samlach2222
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,6 +88,8 @@ class HomePageFragment : Fragment() {
     /**
      * function who allow to change the activity title with [title]
      * @param[title] the new title of the Fragment
+     * @author samlach2222
+     * @author mahtwo
      */
     private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title

@@ -28,6 +28,8 @@ import java.io.InputStreamReader
 
 /**
  * Interface for the Settings fragment class which manages the interactivity of the Settings ui
+ * @author samlach2222
+ * @author mahtwo
  */
 abstract class SettingsFragmentAbstract : Fragment() {
 
@@ -43,6 +45,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
     /**
      * Called when the view is being created
      * Initialize some texts with the current settings values and interactivity of the interactable elements
+     * @author mahtwo
      */
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -285,6 +288,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
     /**
      * function each time the settings fragment will be shown to the user
      * Change a value in database to stop redirect reboot to settings when we don't change the theme of the application
+     * @author samlach2222
      */
     override fun onStart() {
         super.onStart()
@@ -316,6 +320,8 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Called when the view is being destroyed
+     * @author samlach2222
+     * @author mahtwo
      */
     override fun onDestroyView() {
         (activity as ProfileDrawerActivity).lockDrawerLayout(DrawerLayout.LOCK_MODE_UNLOCKED)
@@ -327,6 +333,8 @@ abstract class SettingsFragmentAbstract : Fragment() {
     /**
      * Change the title of the activity
      * @param[title] new title of the activity
+     * @author samlach2222
+     * @author mahtwo
      */
     private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
@@ -334,6 +342,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * DEBUG method to display [message]
+     * @author mahtwo
      */
     protected fun DEBUGToast(message: Any) {
         Toast.makeText(this.context, "$message", Toast.LENGTH_SHORT).show()
@@ -341,6 +350,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * DEBUG method to display the value of [selectedValue]
+     * @author mahtwo
      */
     protected fun DEBUGToastSelectedValue(selectedValue: Any) {
         Toast.makeText(this.context, "Selected value : $selectedValue", Toast.LENGTH_SHORT).show()
@@ -357,6 +367,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Show an alert dialog to let the user choose the unit
+     * @author mahtwo
      */
     private fun showUnitDialog() {
         val dialogBuilder = AlertDialog.Builder(this.requireContext())
@@ -387,6 +398,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
     /**
      * Apply the unit selected
      * @param[selectedValue] selected value of the user (can be "km" or "miles")
+     * @author mahtwo
      */
     private fun unitChange(selectedValue: String) {
         // Update subtext with the selected unit
@@ -402,6 +414,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Show an alert dialog to let the user choose the night mode
+     * @author mahtwo
      */
     private fun showNightModeDialog() {
         val dialogBuilder = AlertDialog.Builder(this.requireContext())
@@ -434,6 +447,8 @@ abstract class SettingsFragmentAbstract : Fragment() {
     /**
      * Apply the night mode selected
      * @param[selectedValue] selected value of the user (can be "system", "on" or "off")
+     * @author samlach2222
+     * @author mahtwo
      */
     private fun nightModeChange(selectedValue: String) {
         // Update subtext with the selected night mode and change the setOnClickListener to make it restart the app
@@ -471,7 +486,8 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Apply the gps sensibility selected
-     * @param[seekBar] the seekbar from which we take the value
+     * @param[seekBar] the seekbar from we take the value
+     * @author mahtwo
      */
     private fun onSeekbarGPSSensibilityStopTrackingTouch(seekBar: SeekBar) {
         val selectedValue = seekBar.progress - 10
@@ -481,6 +497,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Import the settings from a file
+     * @author mahtwo
      */
     private fun importSettings() {
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
@@ -493,6 +510,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Export the settings to a file
+     * @author mahtwo
      */
     private fun exportSettings() {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
@@ -506,6 +524,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Go to the github page of the project
+     * @author mahtwo
      */
     private fun githubPage() {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/samlach2222/VelocityVolume"))
@@ -514,6 +533,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Go the github page of the project for creating a new issue
+     * @author mahtwo
      */
     private fun reportBugPage() {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/samlach2222/VelocityVolume/issues/new"))
@@ -522,7 +542,8 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Overridable function to initialise the layout for rating the app
-     * @param[binding] views of this fragment
+     * @param[binding] this fragment
+     * @author mahtwo
      */
     protected open fun initialiseRateAppLayout(binding: FragmentSettingsBinding) {
 
@@ -530,6 +551,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Overridable function to update the app, if not overridden redirects to the f-droid page of this app
+     * @author mahtwo
      */
     protected open fun updateApp() {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://f-droid.org/packages/com.samlach2222.velocityvolume/"))
@@ -538,6 +560,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * const values which correspond to the database enums
+     * @author mahtwo
      */
     companion object DatabaseEnums {
         const val kilometersString = "km"

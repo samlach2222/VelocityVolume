@@ -26,6 +26,8 @@ import com.samlach2222.velocityvolume.ui.settings.SettingsFragmentAbstract
 
 /**
  * ProfileDrawerActivity manages the application and the links with Fragments
+ * @author samlach2222
+ * @author mahtwo
  */
 class ProfileDrawerActivity : AppCompatActivity() {
 
@@ -43,6 +45,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
     /**
      * function to create the main Activity
      * This function initialize all necessary variables and buttons bindings
+     * @author samlach2222
+     * @author mahtwo
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +112,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
 
     /**
      * function called when the activity creation is finished
+     * @author samlach2222
+     * @author mahtwo
      */
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
@@ -161,6 +167,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
      * function to add a new profile in the hamburger menu list
      * @param[id] identifier of the new profile
      * @param[name] name of the new profile
+     * @author samlach2222
+     * @author mahtwo
      */
     private fun addProfileToList(id: Int, name: String) {
         val menu = findViewById<NavigationView>(R.id.nav_view).menu
@@ -182,6 +190,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
     /**
      * function bind to the delete profile button
      * This function show a popup where we can delete profiles
+     * @author samlach2222
+     * @author mahtwo
      */
     private fun deleteProfiles() {
 
@@ -249,6 +259,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
     /**
      * function linked with the hamburger button
      * @return true if selected, false if not
+     * @author samlach2222
+     * @author mahtwo
      */
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
@@ -258,6 +270,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
     /**
      * function bind to the add profile button
      * This function show a popup where we can add a profile
+     * @author samlach2222
+     * @author mahtwo
      */
     fun addProfile() {
         val editTextField = EditText(this@ProfileDrawerActivity)
@@ -328,6 +342,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
     /**
      * function to block the drawer menu using [lockMode]
      * @param[lockMode] integer who allow to lock the drawer layout
+     * @author mahtwo
      */
     fun lockDrawerLayout(lockMode: Int){
         drawerLayout.setDrawerLockMode(lockMode)
@@ -335,6 +350,8 @@ class ProfileDrawerActivity : AppCompatActivity() {
 
     /**
      * quit the app if the back button is pressed and the current fragment isn't the settings
+     * @author samlach2222
+     * @author mahtwo
      */
     override fun onBackPressed() {
         // Don't quit if the current fragment is the settings

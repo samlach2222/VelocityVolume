@@ -11,6 +11,8 @@ import android.database.sqlite.SQLiteOpenHelper
  * @param[context] the current context
  * @param[factory] link with SQLite Database
  * @return the SQLite database connexion
+ * @author samlach2222
+ * @author mahtwo
  */
 class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -19,6 +21,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     /**
      * function to build DBHelper class and initialize the Database
      * @param[db] The current database
+     * @author samlach2222
+     * @author mahtwo
      */
     override fun onCreate(db: SQLiteDatabase) {
         // below is a sqlite query, where column names
@@ -64,6 +68,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
      * @param[db] The current database
      * @param[oldVersion] old Database
      * @param[newVersion] new Database
+     * @author samlach2222
      */
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         // this method is to check if table already exists
@@ -81,6 +86,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     /**
      * function to add a new profile in the database
      * @param[profileName] The name of the created profile
+     * @author samlach2222
      */
     fun addProfile(profileName : String){
         // below we are creating  content values variable
@@ -114,6 +120,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
      * @param[I3O] Percentage of the 3rd volume slider when switch is open
      * @param[I4O] Percentage of the 4th volume slider when switch is open
      * @param[I5O] Percentage of the 5th volume slider when switch is open
+     * @author samlach2222
      */
     fun updateProfileSwitchOpen(profileName : String, I1O : Int, I2O : Int, I3O : Int, I4O : Int, I5O : Int) {
         // below we are creating  content values variable
@@ -137,6 +144,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
      * @param[I3C] Percentage of the 3rd volume slider when switch is close
      * @param[I4C] Percentage of the 4th volume slider when switch is close
      * @param[I5C] Percentage of the 5th volume slider when switch is close
+     * @author samlach2222
      */
     fun updateProfileSwitchClose(profileName : String, I1C : Int, I2C : Int, I3C : Int, I4C : Int, I5C : Int) {
         // below we are creating  content values variable
@@ -156,6 +164,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
      * function to update the statue of the switch in the database
      * @param[profileName] Name of the profile we modify
      * @param[switchWindowOpen] Statue of the switch (True if window open, False if window close)
+     * @author samlach2222
      */
     fun switchWindowOpenStatueChange(profileName : String, switchWindowOpen : Boolean) {
         val values = ContentValues()
@@ -170,6 +179,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
      * function to get a specific profile from the database by profile name
      * @param[profileName] Name of the profile we get
      * @return the cursor for query results
+     * @author samlach2222
      */
     fun getSpecificProfile(profileName : String): Cursor? {
         // here we are creating a readable variable of our database as we want to read value from it
@@ -181,6 +191,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     /**
      * function to get all profiles name and id from the database
      * @return the cursor for query results
+     * @author samlach2222
      */
     fun getProfilesNameAndId(): Cursor {
         // here we are creating a readable variable of our database as we want to read value from it
@@ -192,6 +203,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     /**
      * function to delete a profile from the database by profile id
      * @param[id] identifier of the profile we want to delete
+     * @author samlach2222
      */
     fun deleteProfile(id : Int) {
         val db = this.readableDatabase
@@ -205,6 +217,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     /**
      * function to update the [unitOfMeasurement] in the database
      * @param[unitOfMeasurement] Unit can be "km" or "miles"
+     * @author samlach2222
+     * @author mahtwo
      */
     fun updateUnitOfMeasurement(unitOfMeasurement : String) {
         val values = ContentValues()
@@ -218,6 +232,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     /**
      * function to update [nightMode] in the database
      * @param[nightMode] nightMode can be "system", "on" or "off"
+     * @author samlach2222
+     * @author mahtwo
      */
     fun updateNightMode(nightMode : String) {
         val values = ContentValues()
@@ -231,6 +247,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     /**
      * function to update [gpsDifference] in the database
      * @param[gpsDifference] gpsDifference can be an integer between -10 and 10
+     * @author samlach2222
+     * @author mahtwo
      */
     fun updateGPSDifference(gpsDifference : Int) {
         val values = ContentValues()
@@ -247,6 +265,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
      * 0 is for reboot to change theme (Select List)
      * 1 is for reboot to change theme (Theme changing reboot)
      * 2 is for everything is okay after 0 and 1
+     * @author samlach2222
+     * @author mahtwo
      */
     fun updateRebootFromSettingsForThemeChange(rebootFromSettingsForThemeChange : Int){
         val values = ContentValues()
@@ -260,6 +280,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     /**
      * function to update the [latestSelectedProfileId] in the database
      * @param[latestSelectedProfileId] latestSelectedProfileId is the identifier of the latest profile the user selected
+     * @author samlach2222
+     * @author mahtwo
      */
     fun updateLatestSelectedProfileId(latestSelectedProfileId : Int) {
         val values = ContentValues()
@@ -273,6 +295,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     /**
      * function to get all the settings from the database
      * @return the cursor for query results
+     * @author samlach2222
+     * @author mahtwo
      */
     fun getSettings(): Cursor {
         // here we are creating a readable variable of our database as we want to read value from it
@@ -285,6 +309,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     /**
      * List of all short name rows in the database, database name, and version
+     * @author samlach2222
+     * @author mahtwo
      */
     companion object{
         // here we have defined variables for our database

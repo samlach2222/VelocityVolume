@@ -33,6 +33,8 @@ import kotlin.math.absoluteValue
 
 /**
  * VolumeManager fragment class who manages all the volume, speed, GPS and interaction between the user and these functions
+ * @author samlach2222
+ * @author mahtwo
  */
 class VolumeManagerFragment : Fragment() , LocationListener {
 
@@ -95,6 +97,8 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
     /**
      * function called when the view is created
+     * @author samlach2222
+     * @author mahtwo
      */
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,6 +111,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
     /**
      * function called when the view is destroyed
+     * @author samlach2222
      */
     override fun onDestroyView() {
         super.onDestroyView()
@@ -125,6 +130,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
     /**
      * function called when the view is stopped, override to call stopGPS
+     * @author samlach2222
      */
     override fun onStop() {
         super.onStop()
@@ -145,6 +151,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     /**
      * function called to know if geolocation is enabled in Android parameters
      * @return true if GPS services are enabled, else false
+     * @author samlach2222
      */
     private fun isLocationEnabled(): Boolean {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
@@ -154,6 +161,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
      * function called when the view is in creation, initialize variables, database link and button bindings
      * @param[view] actual view of the fragment
      * @param[savedInstanceState] saved fragment
+     * @author samlach2222
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -442,6 +450,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
     /**
      * function, which is used to request the authorization to have access to the GPS and to launch a regular automatic scan to obtain the GPS coordinates.
+     * @author samlach2222
      */
     private fun getLocation() {
         locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager // Create instance of location Manager
@@ -479,6 +488,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     /**
      * function called each time the geolocation is retrieved and allowing to calculate the speed in m/ s then in km / h to then be able to display it on the application
      * @param[location] actual geolocation of the user
+     * @author samlach2222
      */
     override fun onLocationChanged(location: Location) {
         val speed = if (location.hasSpeed()) {
@@ -515,6 +525,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     /**
      * function called to change the display title at the top of the screen, to display profile name
      * @param[title] The profile name
+     * @author mahtwo
      */
     private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
@@ -526,6 +537,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
      * - The first thread increase the volume smoothly / progressively
      * - The second thread increase the displayed volume percentage
      * @param[percent] the number between 0 and 100 which is the new volume percent
+     * @author samlach2222
      */
     private fun setAudioVolumeWithPercent(percent : Int) {
         threadExist = true
@@ -589,6 +601,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     /**
      * function to allow Thread to access view objects like textview
      * @param[action] The action that will be performed
+     * @author samlach2222
      */
     private fun Fragment?.runOnUiThread(action: () -> Unit) {
         this ?: return
@@ -599,6 +612,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     /**
      * function to set the volume using the [speed] parameter and call popup if user use the application when he drive
      * @param[speed] Actual speed of the car
+     * @author samlach2222
      */
     private fun setAudioVolumeBySpeed(speed : Int) {
         //Volume display initialization
@@ -682,6 +696,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
     /**
      * function called when the fragment stop displayed and disable the GPS
+     * @author mahtwo
      */
     private fun stopGPS() {
         if(started){
@@ -695,6 +710,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
     /**
      * function who display a popup who tell if the user drive or if he is a passenger to block controls if he drive.
      * This function reduce car accidents
+     * @author samlach2222
      */
     private fun displayPopupToKnowIfUserDrive() {
         isPopupDisplayed = true
@@ -744,6 +760,7 @@ class VolumeManagerFragment : Fragment() , LocationListener {
      * function to display a dialog window to alert the user he don't have location activated on his smartphone,
      * and go to settings to allow him to activate it
      * @param[context] the current context
+     * @author samlach2222
      */
     private fun showAlertGPSDialog(context: Context?) {
         try {
