@@ -1,7 +1,6 @@
 package com.samlach2222.velocityvolume.ui.settings
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -222,15 +221,14 @@ abstract class SettingsFragmentAbstract : Fragment() {
         var needToChangeTo2 = false
         var needToChangeTo0 = false
         val settings = vvDB1.getSettings()
-        if(settings.moveToFirst()){
-            val rebootFromSettingsForThemeChange = (settings.getString(settings.getColumnIndex(DBHelper.RFSFTC))).toInt()
-            if(rebootFromSettingsForThemeChange == 1) {
-                needToChangeTo2 = true
-            }
-            else if(rebootFromSettingsForThemeChange == 2) {
-                needToChangeTo0 = true
-            }
+        val rebootFromSettingsForThemeChange = (settings.getString(settings.getColumnIndex(DBHelper.RFSFTC))).toInt()
+        if(rebootFromSettingsForThemeChange == 1) {
+            needToChangeTo2 = true
         }
+        else if(rebootFromSettingsForThemeChange == 2) {
+            needToChangeTo0 = true
+        }
+        settings.close()
 
         if(needToChangeTo2){
             val vvDB = DBHelper(this.requireContext(), null) // get DBHelper

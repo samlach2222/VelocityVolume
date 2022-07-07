@@ -7,7 +7,6 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
@@ -124,44 +123,35 @@ class ProfileDrawerActivity : AppCompatActivity() {
         // get profiles from DB
         val profiles = vvDB.getProfilesNameAndId()
 
-        // moving the cursor to first position and
-        // appending value in the text view
-
-        if(profiles.moveToFirst()){
-            var idDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.ID))).toInt()
-            var nameDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.NAME)))
+        // moving our cursor to next
+        // position and appending values
+        while(profiles.moveToNext()){
+            val idDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.ID))).toInt()
+            val nameDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.NAME)))
             addProfileToList(idDBProfile, nameDBProfile)
-
-            // moving our cursor to next
-            // position and appending values
-            while(profiles.moveToNext()){
-                idDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.ID))).toInt()
-                nameDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.NAME)))
-                addProfileToList(idDBProfile, nameDBProfile)
-            }
         }
         vvDB.close()
+        profiles.close()
 
         // if a profile exists, go to latest
         val vvDB2 = DBHelper(this, null) // get DBHelper
         val settingsCursor = vvDB2.getSettings()
-        if(settingsCursor.moveToFirst()){
-            val rebootFromSettingsForThemeChange = (settingsCursor.getString(settingsCursor.getColumnIndex(DBHelper.RFSFTC))).toInt()
-            val latestProfileId = (settingsCursor.getString(settingsCursor.getColumnIndex(DBHelper.LSPI))).toInt()
-            if(rebootFromSettingsForThemeChange == 1){
-                navController.navigate(R.id.nav_settings)
-            }
-            else
-            {
-                if(latestProfileId != -1) {
-                    val menu = findViewById<NavigationView>(R.id.nav_view).menu
-                    val menuItem = menu.findItem(latestProfileId)
-                    val bundle = bundleOf("id" to menuItem.toString())
-                    navController.navigate(R.id.nav_volumemanager, bundle)
-                }
+        val rebootFromSettingsForThemeChange = (settingsCursor.getString(settingsCursor.getColumnIndex(DBHelper.RFSFTC))).toInt()
+        val latestProfileId = (settingsCursor.getString(settingsCursor.getColumnIndex(DBHelper.LSPI))).toInt()
+        if(rebootFromSettingsForThemeChange == 1){
+            navController.navigate(R.id.nav_settings)
+        }
+        else
+        {
+            if(latestProfileId != -1) {
+                val menu = findViewById<NavigationView>(R.id.nav_view).menu
+                val menuItem = menu.findItem(latestProfileId)
+                val bundle = bundleOf("id" to menuItem.toString())
+                navController.navigate(R.id.nav_volumemanager, bundle)
             }
         }
         vvDB2.close()
+        settingsCursor.close()
     }
 
     private fun addProfileToList(id: Int, name: String) {
