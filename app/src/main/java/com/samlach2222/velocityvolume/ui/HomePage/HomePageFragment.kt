@@ -17,12 +17,17 @@ import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentHomepageBinding
 
-
+/**
+ * Class who manage the first Fragment, shown when the is no profiles in the application
+ */
 class HomePageFragment : Fragment() {
 
     private var _binding: FragmentHomepageBinding? = null
     private val binding get() = _binding!!
 
+    /**
+     * function called when the view is created
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,11 +40,18 @@ class HomePageFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * function called when the view is destroyed
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    /**
+     * function called when the view is totally created
+     * Initialize the text color and content of the fragment
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -66,6 +78,10 @@ class HomePageFragment : Fragment() {
         view.findViewById<TextView>(R.id.welcome_message).text = TextUtils.concat(txtPart1," " , spannable2, txtPart3, " ", spannable4)
     }
 
+    /**
+     * function who allow to change the activity title with [title]
+     * @param[title] the new title of the Fragment
+     */
     private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
     }
