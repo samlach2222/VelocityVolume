@@ -127,7 +127,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
         // moving the cursor to first position and
         // appending value in the text view
 
-        if(profiles!!.moveToFirst()){
+        if(profiles.moveToFirst()){
             var idDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.ID))).toInt()
             var nameDBProfile = (profiles.getString(profiles.getColumnIndex(DBHelper.NAME)))
             addProfileToList(idDBProfile, nameDBProfile)

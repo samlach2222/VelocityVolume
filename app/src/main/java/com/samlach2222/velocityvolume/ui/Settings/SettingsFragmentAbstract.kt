@@ -125,8 +125,63 @@ abstract class SettingsFragmentAbstract : Fragment() {
                     val outputStreamWriter = os!!.writer()
 
                     outputStreamWriter.use { osw ->
-                        // TODO : Write the content of VELOCITY_VOLUME_DB.db in the file
-                        osw.append("test")
+                        // SETTINGS
+                        val settingsOSW = db.getSettings()
+                        // Unit of measurement
+                        osw.append(settingsOSW.getString(settingsOSW.getColumnIndex(DBHelper.UOM)))
+                        osw.append(',')
+
+                        // Night mode
+                        osw.append(settingsOSW.getString(settingsOSW.getColumnIndex(DBHelper.NM)))
+                        osw.append(',')
+
+                        // GPS sensibility
+                        osw.append(settingsOSW.getInt(settingsOSW.getColumnIndex(DBHelper.GPSD)).toString())
+                        osw.append(',')
+
+                        // Latest Selected Profile Id
+                        osw.append(settingsOSW.getInt(settingsOSW.getColumnIndex(DBHelper.LSPI)).toString())
+
+                        settingsOSW.close()
+
+                        // PROFILES
+                        val profiles = db.getProfilesNameAndId()
+                        while (profiles.moveToNext()) {
+                            osw.append('\n')  // New line between settings/profiles and for each profile
+
+                            // ID
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.ID)).toString())
+                            osw.append(',')
+                            // Name
+                            osw.append(profiles.getString(profiles.getColumnIndex(DBHelper.NAME)))
+                            osw.append(',')
+                            // Switch (window closed/opened)
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.SWITCH)).toString())
+                            osw.append(',')
+                            // Interval 1 open
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.I1O)).toString())
+                            osw.append(',')
+                            // Interval 1 close
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.I1C)).toString())
+                            osw.append(',')
+                            // Interval 2 open etc....
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.I2O)).toString())
+                            osw.append(',')
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.I2C)).toString())
+                            osw.append(',')
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.I3O)).toString())
+                            osw.append(',')
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.I3C)).toString())
+                            osw.append(',')
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.I4O)).toString())
+                            osw.append(',')
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.I4C)).toString())
+                            osw.append(',')
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.I5O)).toString())
+                            osw.append(',')
+                            osw.append(profiles.getInt(profiles.getColumnIndex(DBHelper.I5C)).toString())
+                        }
+                        profiles.close()
                     }
                 }
             }

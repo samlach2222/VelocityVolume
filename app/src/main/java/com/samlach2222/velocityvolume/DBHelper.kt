@@ -128,7 +128,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         return db.rawQuery("SELECT * FROM Profile WHERE $NAME = ?", arrayOf(profileName))
     }
 
-    fun getProfilesNameAndId(): Cursor? {
+    fun getProfilesNameAndId(): Cursor {
         // here we are creating a readable variable of our database as we want to read value from it
         val db = this.readableDatabase
         // below code returns a cursor to read data from the database
