@@ -23,6 +23,8 @@ import com.samlach2222.velocityvolume.DBHelper
 import com.samlach2222.velocityvolume.ProfileDrawerActivity
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 /**
  * Interface for the Settings fragment class which manages the interactivity of the Settings ui
@@ -32,6 +34,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private lateinit var db: DBHelper
     private lateinit var createFileResult: ActivityResultLauncher<Intent>
+    private lateinit var openFileResult: ActivityResultLauncher<Intent>
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -111,6 +114,68 @@ abstract class SettingsFragmentAbstract : Fragment() {
         importSettingsLayout.setOnClickListener {
             importSettings()
         }
+        openFileResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uri = result.data!!.data!!
+                val inputStream = requireContext().contentResolver.openInputStream(uri)
+                var importSuccessful = true
+
+                // Settings variables
+                var unit: String = ""
+                var nightMode: String = ""
+                var gpsSensibility: Int? = null
+                var lastSelectedProfileId: Int? = null
+
+                // Profiles variable
+                data class Profile(val ID: Int, val NAME: String, val SWITCH: Int, val I1O: Int, val I1C: Int, val I2O: Int, val I2C: Int, val I3O: Int, val I3C: Int, val I4O: Int, val I4C: Int, val I5O: Int, val I5C: Int,)
+                val profiles: MutableList<Profile> = mutableListOf()
+
+                inputStream.use { istream ->
+                    val inputStreamReader = BufferedReader(InputStreamReader(istream))
+
+                    inputStreamReader.use { isr ->
+                        // SETTINGS
+                        val settingsISR = isr.readLine()?.split(',')
+                        if (settingsISR != null && settingsISR.size == 4) {
+                            unit = settingsISR[0]
+                            nightMode = settingsISR[1]
+                            gpsSensibility = settingsISR[2].toIntOrNull()
+                            lastSelectedProfileId = settingsISR[3].toIntOrNull()
+
+                            if (gpsSensibility == null || lastSelectedProfileId == null) {
+                                importSuccessful = false
+                            }
+                        } else {
+                            importSuccessful = false
+                        }
+
+                        // PROFILES
+                        if (importSuccessful) {
+                            // TODO : Import all the profiles
+                        }
+                    }
+                }
+
+                if (importSuccessful) {
+                    // We update the database only after checking the whole file
+                    db.updateUnitOfMeasurement(unit)
+                    db.updateNightMode(nightMode)
+                    db.updateGPSDifference(gpsSensibility!!)
+                    db.updateLatestSelectedProfileId(lastSelectedProfileId!!)
+                    for (profile in profiles) {
+                        // TODO : Update the database with the profiles
+                    }
+
+                    val importSuccessfulString = resources.getString(R.string.data_import_successful, getFilename(uri))
+                    Toast.makeText(this.context, importSuccessfulString, Toast.LENGTH_SHORT).show()
+
+                    requireActivity().recreate()  // Import done, we can restart the app
+                } else {
+                    val importFailedString = resources.getString(R.string.data_import_failed, getFilename(uri))
+                    Toast.makeText(this.context, importFailedString, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
         // Export settings
         val exportSettingsLayout: ConstraintLayout = binding.clExportSettings
@@ -185,6 +250,9 @@ abstract class SettingsFragmentAbstract : Fragment() {
                         profiles.close()
                     }
                 }
+
+                val exportString = resources.getString(R.string.data_exported, getFilename(uri))
+                Toast.makeText(this.context, exportString, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -276,6 +344,15 @@ abstract class SettingsFragmentAbstract : Fragment() {
      */
     protected fun DEBUGToastSelectedValue(selectedValue: Any) {
         Toast.makeText(this.context, "Selected value : $selectedValue", Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * Get the filename from an uri
+     * @param[uri] uri to get the filename from
+     */
+    private fun getFilename(uri: Uri): String {
+        val lastPathSegment = uri.lastPathSegment!!
+        return lastPathSegment.substring(lastPathSegment.lastIndexOf('/') + 1)
     }
 
     /**
@@ -394,7 +471,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Apply the gps sensibility selected
-     * @param[seekBar] the seekbar from we take the value
+     * @param[seekBar] the seekbar from which we take the value
      */
     private fun onSeekbarGPSSensibilityStopTrackingTouch(seekBar: SeekBar) {
         val selectedValue = seekBar.progress - 10
@@ -406,8 +483,12 @@ abstract class SettingsFragmentAbstract : Fragment() {
      * Import the settings from a file
      */
     private fun importSettings() {
-        // TODO : Implement import settings
-        DEBUGToast("importSettings isn't implemented")
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+        }
+
+        openFileResult.launch(intent)
     }
 
     /**
@@ -441,7 +522,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Overridable function to initialise the layout for rating the app
-     * @param[binding] this fragment
+     * @param[binding] views of this fragment
      */
     protected open fun initialiseRateAppLayout(binding: FragmentSettingsBinding) {
 
