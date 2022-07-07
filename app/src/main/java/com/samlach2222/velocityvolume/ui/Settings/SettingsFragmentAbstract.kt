@@ -60,7 +60,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
         // GENERAL SETTINGS
 
-        // Units of measurements
+        // Unit of measurement
         when (settings.getString(settings.getColumnIndex(DBHelper.UOM))) {
             kilometersString -> binding.tvUnitValue.text = resources.getString(R.string.kilometers)
             milesString -> binding.tvUnitValue.text = resources.getString(R.string.miles)
@@ -102,6 +102,8 @@ abstract class SettingsFragmentAbstract : Fragment() {
                 onSeekbarGPSSensibilityStopTrackingTouch(seekBar)
             }
         })
+
+        settings.close()  // We can close the cursor
 
         // SAVING
 
@@ -287,6 +289,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
             milesString -> 1
             else -> 0
         }
+        settings.close()
 
         dialogBuilder.setSingleChoiceItems(
             items, checkedItem
@@ -331,6 +334,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
             offString -> 2
             else -> 0
         }
+        settings.close()
 
         dialogBuilder.setSingleChoiceItems(
             items, checkedItem
