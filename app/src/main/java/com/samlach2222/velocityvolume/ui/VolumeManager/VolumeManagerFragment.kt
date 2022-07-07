@@ -356,14 +356,14 @@ class VolumeManagerFragment : Fragment() , LocationListener {
 
             // moving the cursor to first position
             if(profile!!.moveToFirst()){
-                val switchDBProfile = (profile.getString(profile.getColumnIndex(DBHelper.SWITCH))).toBoolean()
+                val switchDBProfile = (profile.getInt(profile.getColumnIndex(DBHelper.SWITCH)))
                 val percentage1 : TextView = view.findViewById(R.id.percentage_1)
                 val percentage2 : TextView = view.findViewById(R.id.percentage_2)
                 val percentage3 : TextView = view.findViewById(R.id.percentage_3)
                 val percentage4 : TextView = view.findViewById(R.id.percentage_4)
                 val percentage5 : TextView = view.findViewById(R.id.percentage_5)
 
-                if(!switchDBProfile) { // if windows closed
+                if(switchDBProfile == 0) { // if windows closed
                     windowSwitch.isChecked = false
                     slider1.progress = (profile.getString(profile.getColumnIndex(DBHelper.I1C))).toInt()
                     slider2.progress = (profile.getString(profile.getColumnIndex(DBHelper.I2C))).toInt()
