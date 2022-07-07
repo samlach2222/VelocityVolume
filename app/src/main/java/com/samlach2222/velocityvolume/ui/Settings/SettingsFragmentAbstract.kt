@@ -214,6 +214,10 @@ abstract class SettingsFragmentAbstract : Fragment() {
         return root
     }
 
+    /**
+     * function each time the settings fragment will be shown to the user
+     * Change a value in database to stop redirect reboot to settings when we don't change the theme of the application
+     */
     override fun onStart() {
         super.onStart()
         // get if reboot from settings
@@ -254,6 +258,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Change the title of the activity
+     * @param[title] new title of the activity
      */
     private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
@@ -304,6 +309,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Apply the unit selected
+     * @param[selectedValue] selected value of the user (can be "km" or "miles")
      */
     private fun unitChange(selectedValue: String) {
         // Update subtext with the selected unit
@@ -350,6 +356,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Apply the night mode selected
+     * @param[selectedValue] selected value of the user (can be "system", "on" or "off")
      */
     private fun nightModeChange(selectedValue: String) {
         // Update subtext with the selected night mode and change the setOnClickListener to make it restart the app
@@ -387,6 +394,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Apply the gps sensibility selected
+     * @param[seekBar] the seekbar from we take the value
      */
     private fun onSeekbarGPSSensibilityStopTrackingTouch(seekBar: SeekBar) {
         val selectedValue = seekBar.progress - 10
@@ -433,6 +441,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
     /**
      * Overridable function to initialise the layout for rating the app
+     * @param[binding] this fragment
      */
     protected open fun initialiseRateAppLayout(binding: FragmentSettingsBinding) {
 
