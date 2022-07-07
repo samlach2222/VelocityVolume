@@ -37,6 +37,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 UOM + " TEXT CHECK( " + UOM + " IN ('km','miles') )   NOT NULL DEFAULT 'km', " +
                 NM + " TEXT CHECK( " + NM + " IN ('system','on','off') )   NOT NULL DEFAULT 'system', " +
                 GPSD + " INTEGER DEFAULT 0," +
+                RFSFTC + " INTEGER NOT NULL DEFAULT 0," +
                 LSPI + " INTEGER DEFAULT -1" +
         ")")
         db.execSQL(querySettings)
@@ -170,6 +171,15 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.update("Settings", values, null, null)
     }
 
+    fun updateRebootFromSettingsForThemeChange(RebootFromSettingsForThemeChange : Int){
+        val values = ContentValues()
+        // we are inserting our values in the form of key-value pair
+        values.put(RFSFTC, RebootFromSettingsForThemeChange)
+        // here we are creating a writable variable of our database as we want to insert value in our database
+        val db = this.writableDatabase
+        db.update("Settings", values, null, null)
+    }
+
     fun updateLatestSelectedProfileId(latestSelectedProfileId : Int) {
         val values = ContentValues()
         // we are inserting our values in the form of key-value pair
@@ -217,6 +227,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         const val UOM = "UnitOfMeasurement"
         const val NM = "NightMode"
         const val GPSD = "GPSDifference"
+        const val RFSFTC = "RebootFromSettingsForThemeChange"
         const val LSPI = "LatestSelectedProfileId"
     }
 }

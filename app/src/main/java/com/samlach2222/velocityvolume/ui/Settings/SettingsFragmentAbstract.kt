@@ -1,6 +1,7 @@
 package com.samlach2222.velocityvolume.ui.settings
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -156,6 +158,35 @@ abstract class SettingsFragmentAbstract : Fragment() {
         return root
     }
 
+    override fun onStart() {
+        super.onStart()
+        // get if reboot from settings
+        val vvDB1 = DBHelper(this.requireContext(), null) // get DBHelper
+        var needToChangeTo2 = false
+        var needToChangeTo0 = false
+        val settings = vvDB1.getSettings()
+        if(settings.moveToFirst()){
+            val rebootFromSettingsForThemeChange = (settings.getString(settings.getColumnIndex(DBHelper.RFSFTC))).toInt()
+            if(rebootFromSettingsForThemeChange == 1) {
+                needToChangeTo2 = true
+            }
+            else if(rebootFromSettingsForThemeChange == 2) {
+                needToChangeTo0 = true
+            }
+        }
+
+        if(needToChangeTo2){
+            val vvDB = DBHelper(this.requireContext(), null) // get DBHelper
+            vvDB.updateRebootFromSettingsForThemeChange(2)
+            vvDB.close()
+        }
+        else if(needToChangeTo0){
+            val vvDB = DBHelper(this.requireContext(), null) // get DBHelper
+            vvDB.updateRebootFromSettingsForThemeChange(0)
+            vvDB.close()
+        }
+    }
+
     /**
      * Called when the view is being destroyed
      */
@@ -266,27 +297,34 @@ abstract class SettingsFragmentAbstract : Fragment() {
     private fun nightModeChange(selectedValue: String) {
         // Update subtext with the selected night mode and change the setOnClickListener to make it restart the app
         val textViewNightModeCurrentValue = this.requireView().findViewById<TextView>(R.id.tv_nightModeValue)
-        val restartNeededString = resources.getString(R.string.restart_needed)
         when (selectedValue) {
             systemString -> {
-                textViewNightModeCurrentValue.text = resources.getString(R.string.system) + ' ' + restartNeededString
+                textViewNightModeCurrentValue.text = resources.getString(R.string.system)
             }
             onString -> {
-                textViewNightModeCurrentValue.text = resources.getString(R.string.on) + ' ' + restartNeededString
+                textViewNightModeCurrentValue.text = resources.getString(R.string.on)
             }
             offString -> {
-                textViewNightModeCurrentValue.text = resources.getString(R.string.off) + ' ' + restartNeededString
+                textViewNightModeCurrentValue.text = resources.getString(R.string.off)
             }
         }
-
+        db.updateRebootFromSettingsForThemeChange(1)
         db.updateNightMode(selectedValue)
 
-        // TODO : Restart the app automatically and add a value in the db to redirect to the settings immediately after laoding the last profile
-        val nightModeLayout = requireView().findViewById<ConstraintLayout>(R.id.cl_nightMode)
-        nightModeLayout.setOnClickListener {
-            requireActivity().recreate()
+        // change value in DB
+
+        // Set the night mode
+        val settings = db.getSettings()
+        when(settings.getString(settings.getColumnIndex(DBHelper.NM))) {
+            systemString -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            onString -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES)
+            offString -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO)
         }
 
+        requireActivity().recreate()
         DEBUGToastSelectedValue(selectedValue)
     }
 
@@ -297,7 +335,6 @@ abstract class SettingsFragmentAbstract : Fragment() {
         val selectedValue = seekBar.progress - 10
 
         db.updateGPSDifference(selectedValue)
-        DEBUGToastSelectedValue(selectedValue)
     }
 
     /**

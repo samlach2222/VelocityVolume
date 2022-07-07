@@ -7,6 +7,7 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
@@ -119,6 +120,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
             SettingsFragmentAbstract.offString -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
+
         // get profiles from DB
         val profiles = vvDB.getProfilesNameAndId()
 
@@ -142,15 +144,21 @@ class ProfileDrawerActivity : AppCompatActivity() {
 
         // if a profile exists, go to latest
         val vvDB2 = DBHelper(this, null) // get DBHelper
-        val settingsCursor = vvDB.getSettings()
+        val settingsCursor = vvDB2.getSettings()
         if(settingsCursor.moveToFirst()){
-            val latestProfileId = (settings.getString(settings.getColumnIndex(DBHelper.LSPI))).toInt()
-            if(latestProfileId != -1){
-                val menu = findViewById<NavigationView>(R.id.nav_view).menu
-                val menuItem = menu.findItem(latestProfileId)
-                val bundle = bundleOf("id" to menuItem.toString())
-                val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
-                navController.navigate(R.id.nav_volumemanager, bundle)
+            val rebootFromSettingsForThemeChange = (settingsCursor.getString(settingsCursor.getColumnIndex(DBHelper.RFSFTC))).toInt()
+            val latestProfileId = (settingsCursor.getString(settingsCursor.getColumnIndex(DBHelper.LSPI))).toInt()
+            if(rebootFromSettingsForThemeChange == 1){
+                navController.navigate(R.id.nav_settings)
+            }
+            else
+            {
+                if(latestProfileId != -1) {
+                    val menu = findViewById<NavigationView>(R.id.nav_view).menu
+                    val menuItem = menu.findItem(latestProfileId)
+                    val bundle = bundleOf("id" to menuItem.toString())
+                    navController.navigate(R.id.nav_volumemanager, bundle)
+                }
             }
         }
         vvDB2.close()
