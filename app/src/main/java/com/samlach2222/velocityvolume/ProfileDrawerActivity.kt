@@ -106,6 +106,9 @@ class ProfileDrawerActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * function called when the activity creation is finished
+     */
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
@@ -154,6 +157,11 @@ class ProfileDrawerActivity : AppCompatActivity() {
         settingsCursor.close()
     }
 
+    /**
+     * function to add a new profile in the hamburger menu list
+     * @param[id] identifier of the new profile
+     * @param[name] name of the new profile
+     */
     private fun addProfileToList(id: Int, name: String) {
         val menu = findViewById<NavigationView>(R.id.nav_view).menu
 
@@ -240,6 +248,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
 
     /**
      * function linked with the hamburger button
+     * @return true if selected, false if not
      */
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_profile_drawer)
@@ -318,6 +327,7 @@ class ProfileDrawerActivity : AppCompatActivity() {
 
     /**
      * function to block the drawer menu using [lockMode]
+     * @param[lockMode] integer who allow to lock the drawer layout
      */
     fun lockDrawerLayout(lockMode: Int){
         drawerLayout.setDrawerLockMode(lockMode)
