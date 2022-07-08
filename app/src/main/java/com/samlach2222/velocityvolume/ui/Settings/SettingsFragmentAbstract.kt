@@ -124,8 +124,8 @@ abstract class SettingsFragmentAbstract : Fragment() {
                 var importSuccessful = true
 
                 // Settings variables
-                var unit: String = ""
-                var nightMode: String = ""
+                var unit = ""
+                var nightMode = ""
                 var gpsSensibility: Int? = null
                 var lastSelectedProfileId: Int? = null
 
@@ -341,22 +341,6 @@ abstract class SettingsFragmentAbstract : Fragment() {
     }
 
     /**
-     * DEBUG method to display [message]
-     * @author mahtwo
-     */
-    protected fun DEBUGToast(message: Any) {
-        Toast.makeText(this.context, "$message", Toast.LENGTH_SHORT).show()
-    }
-
-    /**
-     * DEBUG method to display the value of [selectedValue]
-     * @author mahtwo
-     */
-    protected fun DEBUGToastSelectedValue(selectedValue: Any) {
-        Toast.makeText(this.context, "Selected value : $selectedValue", Toast.LENGTH_SHORT).show()
-    }
-
-    /**
      * Get the filename from an uri
      * @param[uri] uri to get the filename from
      */
@@ -409,7 +393,6 @@ abstract class SettingsFragmentAbstract : Fragment() {
         }
 
         db.updateUnitOfMeasurement(selectedValue)
-        DEBUGToastSelectedValue(selectedValue)
     }
 
     /**
@@ -481,7 +464,6 @@ abstract class SettingsFragmentAbstract : Fragment() {
         }
 
         requireActivity().recreate()
-        DEBUGToastSelectedValue(selectedValue)
     }
 
     /**

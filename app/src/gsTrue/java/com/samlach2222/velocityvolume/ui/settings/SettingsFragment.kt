@@ -18,6 +18,8 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
 
+private const val TAG = "SettingsFragment"
+
 /**
  * The Settings fragment class manages the interactivity of the Settings ui
  */
@@ -49,7 +51,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
      * Show a dialog to rate the app on the google play store
      */
     private fun rateApp() {
-        DEBUGToast("rateApp called")
+        Log.d(TAG,"rateApp called")
 
         val manager = ReviewManagerFactory.create(this.requireContext())
 
@@ -60,7 +62,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
                 val reviewInfo = task.result
                 val flow = reviewInfo?.let { manager.launchReviewFlow(requireActivity(), it) }
                 flow?.addOnCompleteListener { _ ->
-                    DEBUGToast("App rated")
+                    Log.d(TAG,"App rated")
                 }
             }
         }
@@ -71,7 +73,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
      */
     override fun updateApp() {
         if (!updateInProgress) {
-            DEBUGToast("updateApp called")
+            Log.d(TAG,"updateApp called")
 
             updateInProgress = true
 
@@ -105,7 +107,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
                     // An update is available, request the update
                     appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE, this, APP_UPDATE_REQUEST_CODE)  // Maybe this.requireActivity() instead of this
 
-                    DEBUGToast("update requested")
+                    Log.d(TAG,"update requested")
                 }
                 else {
                     // No update available
@@ -135,7 +137,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
                 val updateFailedString = resources.getString(R.string.update_failed)
 
                 Toast.makeText(this.context, updateFailedString, Toast.LENGTH_SHORT).show()
-                //DEBUGToast("$updateFailedString Result code: $resultCode")  //Show the result code in the toast
+                Log.d(TAG,"Result code: $resultCode")
 
                 resetUpdateEnvironment()
             }
