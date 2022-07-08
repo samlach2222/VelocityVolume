@@ -130,7 +130,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
                 var lastSelectedProfileId: Int? = null
 
                 // Profiles variable
-                data class Profile(val ID: Int, val NAME: String, val SWITCH: Int, val I1O: Int, val I1C: Int, val I2O: Int, val I2C: Int, val I3O: Int, val I3C: Int, val I4O: Int, val I4C: Int, val I5O: Int, val I5C: Int,)
+                data class Profile(val ID: Int, val NAME: String, val SWITCH: Int, val I1O: Int, val I1C: Int, val I2O: Int, val I2C: Int, val I3O: Int, val I3C: Int, val I4O: Int, val I4C: Int, val I5O: Int, val I5C: Int)
                 val profiles: MutableList<Profile> = mutableListOf()
 
                 inputStream.use { istream ->
