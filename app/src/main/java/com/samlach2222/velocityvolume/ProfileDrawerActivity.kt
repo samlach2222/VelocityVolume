@@ -29,7 +29,7 @@ import com.samlach2222.velocityvolume.ui.settings.SettingsFragmentAbstract
  * @author samlach2222
  * @author mahtwo
  */
-class ProfileDrawerActivity : AppCompatActivity() {
+class  ProfileDrawerActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityProfileDrawerBinding
@@ -356,7 +356,6 @@ class ProfileDrawerActivity : AppCompatActivity() {
     override fun onBackPressed() {
         // Don't quit if the current fragment is the settings
         if (supportFragmentManager.fragments.last().childFragmentManager.fragments.last() !is SettingsFragment) {
-            // TODO : Maybe check if nothing is being done in the background (GPS, settings saved etc.) before quitting and wait until those are done
             finish()
         } else {
             super.onBackPressed()
