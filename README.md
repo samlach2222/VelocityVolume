@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/44367571/178023571-eab036f8-083e-43a7-bdd4-c95f0ca5c7f5.png" width="40%">
+  <img src="Resources/icon_full_rounded.svg" width="40%">
 </p>
 
 <h1 align="center">Velocity Volume</h1>
