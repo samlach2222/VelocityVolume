@@ -300,16 +300,15 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/getLocation"
             android:layout_width="52dp"
-            android:layout_centerVertical="true"
             android:layout_height="52dp"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/fab_margin"
-            android:backgroundTint="?attr/colorPrimary"
             android:contentDescription="@string/play_pause_button"
-            android:iconTint="@color/white"
             android:src="@android:drawable/ic_media_play"
-            app:backgroundTint="#4000FF00"
-            app:rippleColor="@android:color/white" />
+            app:tint="?attr/colorOnPrimary"
+            android:backgroundTint="?attr/colorPrimary"
+            app:borderWidth="0dp"/>
     </RelativeLayout>
 
 </RelativeLayout>
