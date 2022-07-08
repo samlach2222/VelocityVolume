@@ -113,6 +113,48 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
     /**
+     * function to add a new profile in the database
+     * @param[id] The id of the created profile
+     * @param[name] The name of the created profile
+     * @param[switch] The switch of the created profile
+     * @param[i1o] The first interval with the window open of the created profile
+     * @param[i1c] The first interval with the window close of the created profile
+     * @param[i2o] The second interval with the window open of the created profile
+     * @param[i2c] The second interval with the window close of the created profile
+     * @param[i3o] The third interval with the window open of the created profile
+     * @param[i3c] The third interval with the window close of the created profile
+     * @param[i4o] The fourth interval with the window open of the created profile
+     * @param[i4c] The fourth interval with the window close of the created profile
+     * @param[i5o] The fifth interval with the window open of the created profile
+     * @param[i5c] The fifth interval with the window close of the created profile
+     * @author mahtwo
+     */
+    fun addProfile(id: Int, name: String, switch: Boolean, i1o: Int, i1c: Int, i2o: Int, i2c: Int, i3o: Int, i3c: Int, i4o: Int, i4c: Int, i5o: Int, i5c: Int){
+        // below we are creating  content values variable
+        val values = ContentValues()
+        // we are inserting our values in the form of key-value pair
+        values.put(ID, id)
+        values.put(NAME, name)
+        values.put(SWITCH, switch)
+        values.put(I1O, i1o)
+        values.put(I1C, i1c)
+        values.put(I2O, i2o)
+        values.put(I2C, i2c)
+        values.put(I3O, i3o)
+        values.put(I3C, i3c)
+        values.put(I4O, i4o)
+        values.put(I4C, i4c)
+        values.put(I5O, i5o)
+        values.put(I5C, i5c)
+        // here we are creating a writable variable of our database as we want to insert value in our database
+        val db = this.writableDatabase
+        // all values are inserted into database
+        db.insert("Profile", null, values)
+        // at last we are closing our database
+        db.close()
+    }
+
+    /**
      * function to update sliders values in the database when the switch is open
      * @param[profileName] Name of the profile we modify
      * @param[I1O] Percentage of the 1st volume slider when switch is open
@@ -208,6 +250,15 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun deleteProfile(id : Int) {
         val db = this.readableDatabase
         db.delete("Profile", "$ID = ?", arrayOf(id.toString()))
+    }
+
+    /**
+     * function to delete all profiles from the database
+     * @author mahtwo
+     */
+    fun deleteProfiles() {
+        val db = this.readableDatabase
+        db.delete("Profile", null, null)
     }
 
     /* **************************************** */

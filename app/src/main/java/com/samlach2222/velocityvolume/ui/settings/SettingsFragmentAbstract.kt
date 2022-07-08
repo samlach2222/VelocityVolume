@@ -130,7 +130,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
                 var lastSelectedProfileId: Int? = null
 
                 // Profiles variable
-                data class Profile(val ID: Int, val NAME: String, val SWITCH: Int, val I1O: Int, val I1C: Int, val I2O: Int, val I2C: Int, val I3O: Int, val I3C: Int, val I4O: Int, val I4C: Int, val I5O: Int, val I5C: Int)
+                data class Profile(val ID: Int, val NAME: String, val SWITCH: Boolean, val I1O: Int, val I1C: Int, val I2O: Int, val I2C: Int, val I3O: Int, val I3C: Int, val I4O: Int, val I4C: Int, val I5O: Int, val I5C: Int)
                 val profiles: MutableList<Profile> = mutableListOf()
 
                 inputStream.use { istream ->
@@ -154,19 +154,59 @@ abstract class SettingsFragmentAbstract : Fragment() {
 
                         // PROFILES
                         if (importSuccessful) {
-                            // TODO : Import all the profiles
+                            // We could use forEachLine, however it doesn't allow to exit without reading all the lines
+                            var profile = isr.readLine()?.split(',')
+                            while (profile != null && profile.size == 13) {
+                                val id = profile[0].toIntOrNull()
+                                val name = profile[1]
+                                val switch: Boolean? = when(profile[2]) {
+                                    "0" -> false
+                                    "1" -> true
+                                    else -> null
+                                }
+                                val i1o = profile[3].toIntOrNull()
+                                val i1c = profile[4].toIntOrNull()
+                                val i2o = profile[5].toIntOrNull()
+                                val i2c = profile[6].toIntOrNull()
+                                val i3o = profile[7].toIntOrNull()
+                                val i3c = profile[8].toIntOrNull()
+                                val i4o = profile[9].toIntOrNull()
+                                val i4c = profile[10].toIntOrNull()
+                                val i5o = profile[11].toIntOrNull()
+                                val i5c = profile[12].toIntOrNull()
+
+                                if (id != null && name.length <= 30 && switch != null && i1o != null && i1c != null && i2o != null && i2c != null && i3o != null && i3c != null && i4o != null && i4c != null && i5o != null && i5c != null) {
+                                    // Everything is okay, we can add this profile to the list and read the next line
+                                    profiles.add(Profile(id, name, switch, i1o, i1c, i2o, i2c, i3o, i3c, i4o, i4c, i5o, i5c))
+                                } else {
+                                    // Bad profile, we don't read the remaining lines
+                                    importSuccessful = false
+                                    break
+                                }
+                                profile = isr.readLine()?.split(',')
+                            }
+                            
+                            if (importSuccessful && profile != null) {
+                                // The last read profile didn't have 13 values
+                                importSuccessful = false
+                            }
                         }
                     }
                 }
 
                 if (importSuccessful) {
                     // We update the database only after checking the whole file
+
+                    // SETTINGS
                     db.updateUnitOfMeasurement(unit)
                     db.updateNightMode(nightMode)
                     db.updateGPSDifference(gpsSensibility!!)
                     db.updateLatestSelectedProfileId(lastSelectedProfileId!!)
+
+                    // PROFILES
+                    db.deleteProfiles()  // Delete all the previous profiles
                     for (profile in profiles) {
-                        // TODO : Update the database with the profiles
+                        db.addProfile(profile.ID, profile.NAME, profile.SWITCH, profile.I1O, profile.I1C, profile.I2O, profile.I2C, profile.I3O, profile.I3C, profile.I4O, profile.I4C, profile.I5O, profile.I5C)
                     }
 
                     val importSuccessfulString = resources.getString(R.string.data_import_successful, getFilename(uri))
@@ -343,6 +383,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
     /**
      * Get the filename from an uri
      * @param[uri] uri to get the filename from
+     * @author mahtwo
      */
     private fun getFilename(uri: Uri): String {
         val lastPathSegment = uri.lastPathSegment!!
