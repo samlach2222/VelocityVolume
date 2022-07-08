@@ -2,6 +2,7 @@ package com.samlach2222.velocityvolume.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -22,6 +23,7 @@ private const val TAG = "SettingsFragment"
 
 /**
  * The Settings fragment class manages the interactivity of the Settings ui
+ * @author mahtwo
  */
 class SettingsFragment : SettingsFragmentAbstract() {
     private lateinit var pbUpdate: ProgressBar
@@ -29,7 +31,11 @@ class SettingsFragment : SettingsFragmentAbstract() {
     private var updateListener: InstallStateUpdatedListener? = null
 
     /**
+     * function called after the view is created.
      * Set the variable pbUpdate
+     * @param[view] The current view
+     * @param[savedInstanceState] bundle of passed args
+     * @author mahtwo
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,7 +44,9 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * Initialise the layout for rating the app by adding an onClickListener
+     * function who initialise the layout for rating the app by adding an onClickListener
+     * @param[binding] all elements of layout
+     * @author mahtwo
      */
     override fun initialiseRateAppLayout(binding: FragmentSettingsBinding) {
         val rateAppLayout: ConstraintLayout = binding.clRateApplication
@@ -48,7 +56,8 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * Show a dialog to rate the app on the google play store
+     * function who show a dialog to rate the app on the google play store
+     * @author mahtwo
      */
     private fun rateApp() {
         Log.d(TAG,"rateApp called")
@@ -69,7 +78,8 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * Check if there's an update and starts downloading it
+     * function who check if there's an update and starts downloading it
+     * @author mahtwo
      */
     override fun updateApp() {
         if (!updateInProgress) {
@@ -128,7 +138,8 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * Show a toast if the update failed
+     * function who show a toast if the update failed
+     * @author mahtwo
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == APP_UPDATE_REQUEST_CODE) {
@@ -145,7 +156,9 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * Reset the various variables for updating and tell the user the update is downloaded
+     * function who reset the various variables for updating and tell the user the update is downloaded
+     * @param[appUpdateManager] manage app update
+     * @author mahtwo
      */
     private fun onUpdateDownloaded(appUpdateManager: AppUpdateManager) {
         // Unregister the listener
@@ -167,7 +180,8 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * Reset the update progress bar and allows to start a new update
+     * function who reset the update progress bar and allows to start a new update
+     * @author mahtwo
      */
     private fun resetUpdateEnvironment() {
         updateInProgress = false
@@ -175,6 +189,10 @@ class SettingsFragment : SettingsFragmentAbstract() {
         pbUpdate.progress = 0
     }
 
+    /**
+     * app update request code
+     * @author mahtwo
+     */
     private companion object {
         const val APP_UPDATE_REQUEST_CODE = 484  // v*v = 22*22 = 484
     }
