@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="100mm" height="100mm" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-	<g transform="translate(-41.271 -53.286)">
-		<rect x="41.271" y="53.286" width="100" height="100" fill="#333" stroke-width=".26158"/>
-		<path d="m95.271 53.286h46v46l-53.6 54h-46.4v-46z" fill="#2a2a2a" stroke-width=".23696"/>
-		<path d="m66.871 153.29h9l56-100h-15.4z" fill="#4e005e" stroke-width=".22639"/>
-		<path d="m63.871 53.286h13.8l2.06 21 6.11 61.2 1.63 17.8h-10.8z" fill="#c9f" stroke-width=".59763"/>
-		<path d="m66.561 74.286h13.17l4.41 44.18 21.91-44.18h14.06l-34.27 61.2h-11.45z" fill="#fff" stroke-width=".24188"/>
-	</g>
+	<rect x="-9.1553e-8" y="-7.019e-7" width="100" height="100" fill="#333" stroke-width=".26158"/>
+	<path d="m54 0h46v46l-53.6 54h-46.4v-46z" fill="#2a2a2a" stroke-width=".23696"/>
+	<path d="m25.6 100h9l56-100h-15.4z" fill="#4e005e" stroke-width=".22639"/>
+	<path d="m22.6 0h13.8l2.06 21 6.11 61.2 1.63 17.8h-10.8z" fill="#c9f" stroke-width=".59763"/>
+	<path d="m25.29 21h13.17l4.41 44.18 21.91-44.18h14.06l-34.27 61.2h-11.45z" fill="#fff" stroke-width=".24188"/>
 </svg>
