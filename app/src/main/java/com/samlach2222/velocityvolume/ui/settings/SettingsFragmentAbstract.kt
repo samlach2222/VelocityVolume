@@ -145,7 +145,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
                             gpsSensibility = settingsISR[2].toIntOrNull()
                             lastSelectedProfileId = settingsISR[3].toIntOrNull()
 
-                            if (gpsSensibility == null || lastSelectedProfileId == null) {
+                            if (gpsSensibility == null || lastSelectedProfileId == null || gpsSensibility !in -10..10) { // Check if gpsSensibility is not <= 10 and not >= -10
                                 importSuccessful = false
                             }
                         } else {
@@ -175,9 +175,11 @@ abstract class SettingsFragmentAbstract : Fragment() {
                                 val i5o = profile[11].toIntOrNull()
                                 val i5c = profile[12].toIntOrNull()
 
-                                if (id != null && name.length <= 30 && switch != null && i1o != null && i1c != null && i2o != null && i2c != null && i3o != null && i3c != null && i4o != null && i4c != null && i5o != null && i5c != null) {
-                                    // Everything is okay, we can add this profile to the list and read the next line
-                                    profiles.add(Profile(id, name, switch, i1o, i1c, i2o, i2c, i3o, i3c, i4o, i4c, i5o, i5c))
+                                if (id != null && name.length <= 30 && switch != null && i1o != null && i1c != null && i2o != null && i2c != null && i3o != null && i3c != null && i4o != null && i4c != null && i5o != null && i5c != null) { // check values not null
+                                    if(i1o in 0..100 && i1o in 0..100 && i2o in 0..100 && i2c in 0..100 && i3o in 0..100 && i3c in 0..100 && i4o in 0..100 && i4c in 0..100 && i5o in 0..100 && i5c in 0..100) { // check values >= 0 AND <= 100
+                                        // Everything is okay, we can add this profile to the list and read the next line
+                                        profiles.add(Profile(id, name, switch, i1o, i1c, i2o, i2c, i3o, i3c, i4o, i4c, i5o, i5c))
+                                    }
                                 } else {
                                     // Bad profile, we don't read the remaining lines
                                     importSuccessful = false
