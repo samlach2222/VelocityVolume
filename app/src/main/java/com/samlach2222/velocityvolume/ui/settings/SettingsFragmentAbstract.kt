@@ -386,6 +386,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
      * Get the filename from an uri
      * @param[uri] uri to get the filename from
      * @author mahtwo
+     * TODO : Remove this function (doesn't work with files on cloud services)
      */
     private fun getFilename(uri: Uri): String {
         val lastPathSegment = uri.lastPathSegment!!

@@ -1,6 +1,7 @@
 <resources>
     <!-- App title -->
-    <string name="app_name" translatable="false">Velocity Volume</string>
+    <!-- TODO : Uncomment this app_name and remove the flavors app_name when app ready for release -->
+    <!--<string name="app_name" translatable="false">Velocity Volume</string>-->
     <string name="nav_header_title" translatable="false">Velocity Volume</string>
 
     <!-- Side bar -->

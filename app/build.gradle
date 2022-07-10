@@ -38,14 +38,17 @@ android {
         viewBinding true
     }
 
+    // TODO : Remove the flavor dimension and rename the flavors with the store name
     flavorDimensions "googleServices"
     productFlavors {
         gsTrue {
+            resValue "string", "app_name", "Velocity Volume (Play Store)"
             dimension "googleServices"
             applicationIdSuffix ".gs"
             versionNameSuffix "-gs"
         }
         gsFalse {
+            resValue "string", "app_name", "Velocity Volume"
             dimension "googleServices"
         }
     }
@@ -53,6 +56,7 @@ android {
 
 dependencies {
 
+    // TODO : Remove unused implementations
     gsTrueImplementation 'com.google.android.play:review:2.0.0'
     gsTrueImplementation 'com.google.android.play:review-ktx:2.0.0'
     gsTrueImplementation 'com.google.android.play:app-update:2.0.0'
