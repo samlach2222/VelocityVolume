@@ -93,3 +93,5 @@ lint/tmp/
 
 .idea/codeStyles/codeStyleConfig.xml
 .idea/inspectionProfiles/Project_Default.xml
+
+app/agconnect-services.json
