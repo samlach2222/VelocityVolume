@@ -53,6 +53,11 @@ android {
             applicationIdSuffix ".huawei"
             versionNameSuffix "-huawei"
         }
+        galaxyStore {
+            resValue "string", "app_name", "Velocity Volume (Galaxy Store)"
+            applicationIdSuffix ".samsung"
+            versionNameSuffix "-samsung"
+        }
     }
 }
 
