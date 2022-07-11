@@ -212,12 +212,12 @@ abstract class SettingsFragmentAbstract : Fragment() {
                         db.addProfile(profile.ID, profile.NAME, profile.SWITCH, profile.I1O, profile.I1C, profile.I2O, profile.I2C, profile.I3O, profile.I3C, profile.I4O, profile.I4C, profile.I5O, profile.I5C)
                     }
 
-                    val importSuccessfulString = resources.getString(R.string.data_import_successful, getFilename(uri))
+                    val importSuccessfulString = resources.getString(R.string.data_import_successful)
                     Toast.makeText(this.context, importSuccessfulString, Toast.LENGTH_SHORT).show()
 
                     requireActivity().recreate()  // Import done, we can restart the app
                 } else {
-                    val importFailedString = resources.getString(R.string.data_import_failed, getFilename(uri))
+                    val importFailedString = resources.getString(R.string.data_import_failed)
                     Toast.makeText(this.context, importFailedString, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -297,8 +297,8 @@ abstract class SettingsFragmentAbstract : Fragment() {
                     }
                 }
 
-                val exportString = resources.getString(R.string.data_exported, getFilename(uri))
-                Toast.makeText(this.context, exportString, Toast.LENGTH_SHORT).show()
+                val exportSuccessfulString = resources.getString(R.string.data_export_successful)
+                Toast.makeText(this.context, exportSuccessfulString, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -381,17 +381,6 @@ abstract class SettingsFragmentAbstract : Fragment() {
      */
     private fun Fragment.setActivityTitle(title: String) {
         (activity as AppCompatActivity?)?.supportActionBar?.title = title
-    }
-
-    /**
-     * Get the filename from an uri
-     * @param[uri] uri to get the filename from
-     * @author mahtwo
-     * TODO : Remove this function (doesn't work with files on cloud services)
-     */
-    private fun getFilename(uri: Uri): String {
-        val lastPathSegment = uri.lastPathSegment!!
-        return lastPathSegment.substring(lastPathSegment.lastIndexOf('/') + 1)
     }
 
     /**

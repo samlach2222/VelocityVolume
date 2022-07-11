@@ -38,10 +38,10 @@
     <string name="gps_car_speed_difference">Différence entre la vitesse GPS et voiture</string>
     <string name="saving">Sauvegarde</string>
     <string name="import_data">Importer les données</string>
-    <string name="data_import_successful">Données importées depuis %1$s</string>
-    <string name="data_import_failed">ERREUR : Les données n\'ont pas pu être importées depuis %1$s</string>
+    <string name="data_import_successful">Données importées avec succès</string>
+    <string name="data_import_failed">ERREUR : Les données n\'ont pas pu être importées</string>
     <string name="export_data">Exporter les données</string>
-    <string name="data_exported">Données exportées dans %1$s</string>
+    <string name="data_export_successful">Données exportées avec succès</string>
     <string name="about">À propos</string>
     <string name="report_a_bug">Signaler un bug</string>
     <string name="rate_this_app">Noter l\'application</string>

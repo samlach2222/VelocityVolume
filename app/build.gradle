@@ -38,7 +38,6 @@ android {
         viewBinding true
     }
 
-    // TODO : Remove the flavor dimension and rename the flavors with the store name
     flavorDimensions "Store"
     productFlavors {
         playStore {
