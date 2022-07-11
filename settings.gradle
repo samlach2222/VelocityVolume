@@ -1,7 +1,9 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
 pluginManagement {
     repositories {
-        gradlePluginPortal()
         google()
+        gradlePluginPortal()
         mavenCentral()
     }
 }
@@ -10,7 +12,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://developer.huawei.com/repo/' }
     }
 }
+
 rootProject.name = "VelocityVolume"
 include ':app'
