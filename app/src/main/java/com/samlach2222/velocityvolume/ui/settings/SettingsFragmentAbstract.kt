@@ -46,6 +46,7 @@ abstract class SettingsFragmentAbstract : Fragment() {
      * Called when the view is being created
      * Initialize some texts with the current settings values and interactivity of the interactable elements
      * @author mahtwo
+     * @author samlach2222
      */
     override fun onCreateView(
         inflater: LayoutInflater,
