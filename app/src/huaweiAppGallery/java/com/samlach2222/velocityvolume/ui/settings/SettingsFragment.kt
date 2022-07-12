@@ -18,6 +18,11 @@ import com.huawei.updatesdk.service.otaupdate.UpdateKey
  * The Settings fragment class manages the interactivity of the Settings ui
  */
 class SettingsFragment : SettingsFragmentAbstract() {
+
+    /**
+     * Checks if an update is available
+     * @author samlach2222
+     */
     override fun updateApp() {
         // Check Update
         val client = JosApps.getAppUpdateClient(requireContext())
@@ -30,6 +35,12 @@ class SettingsFragment : SettingsFragmentAbstract() {
         }
     }
 
+    /**
+     * Checks if Huawei Mobile Services are available
+     * @param[context] Context for this function
+     * @return true if HMS are available, otherwise false
+     * @author samlach2222
+     */
     private fun isHmsAvailable(context: Context?): Boolean {
         var isAvailable = false
         if (null != context) {
@@ -42,8 +53,20 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 }
 
+/**
+ * Class for handling the response after checking if an update is available
+ * @param[context] Context for this function
+ * @return handler for the response after checking if an update is available
+ * @author samlach2222
+ */
 private class UpdateCallBack(private var context: Context) : CheckUpdateCallBack {
     val client: AppUpdateClient = JosApps.getAppUpdateClient(context)
+
+    /**
+     * function for starting the update
+     * @param[intent] Intent used by the update
+     * @author samlach2222
+     */
     override fun onUpdateInfo(intent: Intent?) {
         intent?.let {
             // Get the status
