@@ -566,11 +566,11 @@ abstract class SettingsFragmentAbstract : Fragment() {
     }
 
     /**
-     * Overridable function to update the app, if not overridden redirects to the f-droid page of this app
+     * Overridable function to update the app, if not overridden redirects to the github latest release page
      * @author mahtwo
      */
     protected open fun updateApp() {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://f-droid.org/packages/com.samlach2222.velocityvolume/"))
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/samlach2222/VelocityVolume/releases/latest"))
         startActivity(browserIntent)
     }
 

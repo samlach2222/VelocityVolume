@@ -19,8 +19,6 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.samlach2222.velocityvolume.R
 import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
 
-private const val TAG = "SettingsFragment"
-
 /**
  * The Settings fragment class manages the interactivity of the Settings ui
  * @author mahtwo
@@ -195,5 +193,6 @@ class SettingsFragment : SettingsFragmentAbstract() {
      */
     private companion object {
         const val APP_UPDATE_REQUEST_CODE = 484  // v*v = 22*22 = 484
+        const val TAG = "SettingsFragment"
     }
 }
