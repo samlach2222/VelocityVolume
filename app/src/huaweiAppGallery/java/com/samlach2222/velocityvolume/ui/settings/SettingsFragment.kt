@@ -34,7 +34,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
         var isAvailable = false
         if (null != context) {
             val result =
-                HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(context)
+                HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(context) // documentation : https://developer.huawei.com/consumer/en/doc/development/hmscore-common-References/huaweiapiavailability-0000001050121134
             isAvailable = ConnectionResult.SUCCESS == result
         }
         Log.i(TAG, "isHmsAvailable: $isAvailable")
