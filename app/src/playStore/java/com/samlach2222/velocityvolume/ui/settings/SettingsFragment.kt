@@ -148,6 +148,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
 
     /**
      * function that shows a toast if the update failed
+     * @deprecated appUpdateManager.startUpdateFlowForResult doesn't support registerForActivityResult yet
      * @author mahtwo
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
