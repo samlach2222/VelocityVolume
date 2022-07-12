@@ -8,6 +8,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.InstallStateUpdatedListener
@@ -24,6 +25,7 @@ import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
  * @author mahtwo
  */
 class SettingsFragment : SettingsFragmentAbstract() {
+    private var googleServicesAvailable: Boolean = false
     private lateinit var pbUpdate: ProgressBar
     private var updateInProgress: Boolean = false
     private var updateListener: InstallStateUpdatedListener? = null
@@ -38,6 +40,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        googleServicesAvailable = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(requireContext()) == com.google.android.gms.common.ConnectionResult.SUCCESS
         pbUpdate = requireView().findViewById(R.id.pb_update)
     }
 
@@ -58,18 +61,18 @@ class SettingsFragment : SettingsFragmentAbstract() {
      * @author mahtwo
      */
     private fun rateApp() {
-        Log.d(TAG,"rateApp called")
+        if (googleServicesAvailable) {
+            val manager = ReviewManagerFactory.create(this.requireContext())
 
-        val manager = ReviewManagerFactory.create(this.requireContext())
-
-        val request = manager.requestReviewFlow()
-        request.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                // We got the ReviewInfo object
-                val reviewInfo = task.result
-                val flow = reviewInfo?.let { manager.launchReviewFlow(requireActivity(), it) }
-                flow?.addOnCompleteListener { _ ->
-                    Log.d(TAG,"App rated")
+            val request = manager.requestReviewFlow()
+            request.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // We got the ReviewInfo object
+                    val reviewInfo = task.result
+                    val flow = reviewInfo?.let { manager.launchReviewFlow(requireActivity(), it) }
+                    flow?.addOnCompleteListener { _ ->
+                        Log.d(TAG,"App rated")
+                    }
                 }
             }
         }
@@ -80,57 +83,58 @@ class SettingsFragment : SettingsFragmentAbstract() {
      * @author mahtwo
      */
     override fun updateApp() {
-        if (!updateInProgress) {
-            Log.d(TAG,"updateApp called")
+        if (googleServicesAvailable) {
+            if (!updateInProgress) {
 
-            updateInProgress = true
+                updateInProgress = true
 
-            val appUpdateManager = AppUpdateManagerFactory.create(requireContext())
-            val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+                val appUpdateManager = AppUpdateManagerFactory.create(requireContext())
+                val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
-            // Update available
-            appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE  && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-                    // Unhide the download progress bar in the constraint layout for the update
-                    pbUpdate.visibility = ProgressBar.VISIBLE
+                // Update available
+                appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE  && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                        // Unhide the download progress bar in the constraint layout for the update
+                        pbUpdate.visibility = ProgressBar.VISIBLE
 
-                    // Create a listener to update the progress bar and change the setOnClickListener of the constraint layout when the update has been downloaded
-                    updateListener = InstallStateUpdatedListener { state ->
-                        // When the update is being downloaded
-                        if (state.installStatus() == InstallStatus.DOWNLOADING) {
-                            val bytesDownloaded = state.bytesDownloaded()
-                            val totalBytesToDownload = state.totalBytesToDownload()
+                        // Create a listener to update the progress bar and change the setOnClickListener of the constraint layout when the update has been downloaded
+                        updateListener = InstallStateUpdatedListener { state ->
+                            // When the update is being downloaded
+                            if (state.installStatus() == InstallStatus.DOWNLOADING) {
+                                val bytesDownloaded = state.bytesDownloaded()
+                                val totalBytesToDownload = state.totalBytesToDownload()
 
-                            pbUpdate.progress = (bytesDownloaded / totalBytesToDownload).toInt()
+                                pbUpdate.progress = (bytesDownloaded / totalBytesToDownload).toInt()
+                            }
+
+                            // When the update has been downloaded
+                            if (state.installStatus() == InstallStatus.DOWNLOADED) {
+                                onUpdateDownloaded(appUpdateManager)
+                            }
                         }
 
-                        // When the update has been downloaded
-                        if (state.installStatus() == InstallStatus.DOWNLOADED) {
-                            onUpdateDownloaded(appUpdateManager)
-                        }
+                        appUpdateManager.registerListener(updateListener!!)
+
+                        // An update is available, request the update
+                        appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE, this, APP_UPDATE_REQUEST_CODE)  // Maybe this.requireActivity() instead of this
+
+                        Log.d(TAG,"update requested")
                     }
-
-                    appUpdateManager.registerListener(updateListener!!)
-
-                    // An update is available, request the update
-                    appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE, this, APP_UPDATE_REQUEST_CODE)  // Maybe this.requireActivity() instead of this
-
-                    Log.d(TAG,"update requested")
+                    else {
+                        // No update available
+                        resetUpdateEnvironment()
+                    }
                 }
-                else {
-                    // No update available
+
+                // Update canceled
+                appUpdateInfoTask.addOnCanceledListener {
                     resetUpdateEnvironment()
                 }
-            }
 
-            // Update canceled
-            appUpdateInfoTask.addOnCanceledListener {
-                resetUpdateEnvironment()
-            }
-
-            // Update failed
-            appUpdateInfoTask.addOnFailureListener {
-                resetUpdateEnvironment()
+                // Update failed
+                appUpdateInfoTask.addOnFailureListener {
+                    resetUpdateEnvironment()
+                }
             }
         }
     }
