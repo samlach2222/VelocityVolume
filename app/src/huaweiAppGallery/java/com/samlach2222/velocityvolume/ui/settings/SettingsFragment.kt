@@ -3,8 +3,10 @@ package com.samlach2222.velocityvolume.ui.settings
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.huawei.hms.api.ConnectionResult
 import com.huawei.hms.api.HuaweiApiAvailability
 import com.huawei.hms.jos.AppUpdateClient
@@ -12,7 +14,6 @@ import com.huawei.hms.jos.JosApps
 import com.huawei.updatesdk.service.appmgr.bean.ApkUpgradeInfo
 import com.huawei.updatesdk.service.otaupdate.CheckUpdateCallBack
 import com.huawei.updatesdk.service.otaupdate.UpdateKey
-
 
 /**
  * The Settings fragment class manages the interactivity of the Settings ui
@@ -27,11 +28,18 @@ class SettingsFragment : SettingsFragmentAbstract() {
         // Check Update
         val client = JosApps.getAppUpdateClient(requireContext())
 
-        if(isHmsAvailable(requireContext())){ // Check if Huawei Mobile Services available
-            client.checkAppUpdate(requireContext(), UpdateCallBack(requireContext()))
+        if((getPhoneBrand()?.lowercase() ?: String) == "huawei" || (getPhoneBrand()?.lowercase() ?: String) == "honor") { // Check if phone brand is Huawei or Honor
+            if(isHmsAvailable(requireContext())){ // Check if Huawei Mobile Services available
+                // TODO : Check if AppGallery Version is the latest
+                client.checkAppUpdate(requireContext(), UpdateCallBack(requireContext()))
+            }
+            else {
+                // TODO : Update HMS https://stackoverflow.com/questions/63935152/how-to-manually-update-the-hms-core
+                Toast.makeText(requireContext(), "HMS not available", Toast.LENGTH_SHORT).show()
+            }
         }
         else {
-            Toast.makeText(requireContext(), "HMS not available", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "You are not using a Huawei or Honor phone, please install other version", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -85,6 +93,9 @@ private class UpdateCallBack(private var context: Context) : CheckUpdateCallBack
                 //Show update dialog with force update type (true/false)
                 client.showUpdateDialog(context, info, false)
             }
+            else {
+                Toast.makeText(this.context, "No updates available", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -100,3 +111,9 @@ private class UpdateCallBack(private var context: Context) : CheckUpdateCallBack
 
     }
 }
+
+private fun getPhoneBrand(): String? {
+    return Build.BRAND
+}
+
+// TODO : Add Strings to strings.xml
