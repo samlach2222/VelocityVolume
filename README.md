@@ -49,6 +49,8 @@ You can create as many profiles as you want, with each one having its own settin
 ## Privacy and License
 <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/samlach2222/VelocityVolume">Velocity Volume</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/samlach2222">samlach2222</a> & <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/mahtwo">mahtwo</a> is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
 
+you can find the license [here](https://github.com/samlach2222/VelocityVolume/blob/main/LICENSE.md).
+
 There are no ads, trackers or analytics of any kind. All your data are stored completely on and never leave your device.  
 You can find the privacy policy [here](https://github.com/samlach2222/VelocityVolume/blob/main/PrivacyPolicy.md).
 
