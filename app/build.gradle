@@ -45,7 +45,12 @@ android {
             applicationIdSuffix ".google"
             versionNameSuffix "-google"
         }
-        fDroidAndGithub {
+        fDroid {
+            resValue "string", "app_name", "Velocity Volume (fDroid)"
+			applicationIdSuffix ".fdroid"
+            versionNameSuffix "-fdroid"
+        }
+        github {
             resValue "string", "app_name", "Velocity Volume"
         }
         huaweiAppGallery {

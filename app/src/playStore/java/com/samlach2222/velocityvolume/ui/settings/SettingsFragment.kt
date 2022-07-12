@@ -44,7 +44,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * function who initialise the layout for rating the app by adding an onClickListener
+     * function that initialises the layout for rating the app by adding an onClickListener
      * @param[binding] all elements of layout
      * @author mahtwo
      */
@@ -56,7 +56,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * function who show a dialog to rate the app on the google play store
+     * function that shows a dialog to rate the app on the google play store
      * @author mahtwo
      */
     private fun rateApp() {
@@ -78,7 +78,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * function who check if there's an update and starts downloading it
+     * function that checks if there's an update and starts downloading it
      * @author mahtwo
      */
     override fun updateApp() {
@@ -138,7 +138,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * function who show a toast if the update failed
+     * function that shows a toast if the update failed
      * @author mahtwo
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -156,7 +156,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * function who reset the various variables for updating and tell the user the update is downloaded
+     * function that resets the various variables for updating and tells the user the update is downloaded
      * @param[appUpdateManager] manage app update
      * @author mahtwo
      */
@@ -180,7 +180,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
-     * function who reset the update progress bar and allows to start a new update
+     * function that resets the update progress bar and allows to start a new update
      * @author mahtwo
      */
     private fun resetUpdateEnvironment() {
