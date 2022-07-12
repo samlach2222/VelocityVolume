@@ -25,7 +25,6 @@ import com.samlach2222.velocityvolume.databinding.FragmentSettingsBinding
  * @author mahtwo
  */
 class SettingsFragment : SettingsFragmentAbstract() {
-    private var googleServicesAvailable: Boolean = false
     private lateinit var pbUpdate: ProgressBar
     private var updateInProgress: Boolean = false
     private var updateListener: InstallStateUpdatedListener? = null
@@ -40,7 +39,6 @@ class SettingsFragment : SettingsFragmentAbstract() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        googleServicesAvailable = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(requireContext()) == com.google.android.gms.common.ConnectionResult.SUCCESS
         pbUpdate = requireView().findViewById(R.id.pb_update)
     }
 
@@ -57,11 +55,20 @@ class SettingsFragment : SettingsFragmentAbstract() {
     }
 
     /**
+     * Checks if Google Play Services are available
+     * @return true if Google Play Services are available, otherwise false
+     * @author mahtwo
+     */
+    private fun isGooglePlayServicesAvailable(): Boolean {
+        return GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(requireContext()) == com.google.android.gms.common.ConnectionResult.SUCCESS
+    }
+
+    /**
      * function that shows a dialog to rate the app on the google play store
      * @author mahtwo
      */
     private fun rateApp() {
-        if (googleServicesAvailable) {
+        if (isGooglePlayServicesAvailable()) {
             val manager = ReviewManagerFactory.create(this.requireContext())
 
             val request = manager.requestReviewFlow()
@@ -83,7 +90,7 @@ class SettingsFragment : SettingsFragmentAbstract() {
      * @author mahtwo
      */
     override fun updateApp() {
-        if (googleServicesAvailable) {
+        if (isGooglePlayServicesAvailable()) {
             if (!updateInProgress) {
 
                 updateInProgress = true
