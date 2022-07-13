@@ -88,11 +88,10 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
 .idea/deploymentTargetDropDown.xml
-
 .idea/codeStyles/Project.xml
-
 .idea/codeStyles/codeStyleConfig.xml
 .idea/inspectionProfiles/Project_Default.xml
-
 app/agconnect-services.json
+.idea/compiler.xml
