@@ -16,5 +16,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "VelocityVolume"
+rootProject.name = "Velocity Volume"
 include ':app'
