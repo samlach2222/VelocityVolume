@@ -57,4 +57,9 @@
     <string name="Allow_GPS_unactivated">Veuillez activer la géolocalisation dans les paramètres d\'Android</string>
     <string name="Profile_already_exist_part_1">Un profil nommé</string>
     <string name="Profile_already_exist_part_3">existe déjà</string>
+
+    <!-- Huawei App Gallery-->
+    <string name="HMS_Not_Available">Les HMS ne sont pas disponibles</string>
+    <string name="Phone_Brand_Is_Not_Huawei">La marque du smartphone est autre que Huawei ou Honor, veuillez installer une autre version</string>
+    <string name="No_Updates_available">Pas de mise à jour disponible</string>
 </resources>

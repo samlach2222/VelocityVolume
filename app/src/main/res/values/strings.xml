@@ -80,4 +80,9 @@
     <string name="Allow_GPS_unactivated">Please active geolocation on Android parameters</string>
     <string name="Profile_already_exist_part_1">A profile named</string>
     <string name="Profile_already_exist_part_3">already exist</string>
+
+    <!-- Huawei App Gallery-->
+    <string name="HMS_Not_Available">HMS not available</string>
+    <string name="Phone_Brand_Is_Not_Huawei">You are not using a Huawei or Honor phone, please install other version</string>
+    <string name="No_Updates_available">No updates available</string>
 </resources>

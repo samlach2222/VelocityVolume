@@ -11,6 +11,7 @@ import com.huawei.updatesdk.service.appmgr.bean.ApkUpgradeInfo
 import com.huawei.updatesdk.service.otaupdate.CheckUpdateCallBack
 import com.huawei.updatesdk.service.otaupdate.UpdateKey
 import com.samlach2222.velocityvolume.HmsUpdateUtil.isHmsAvailable
+import com.samlach2222.velocityvolume.R
 
 /**
  * The Settings fragment class manages the interactivity of the Settings ui
@@ -27,15 +28,14 @@ class SettingsFragment : SettingsFragmentAbstract() {
 
         if((getPhoneBrand()?.lowercase() ?: String) == "huawei" || (getPhoneBrand()?.lowercase() ?: String) == "honor") { // Check if phone brand is Huawei or Honor
             if(isHmsAvailable(requireContext()) == 0){ // Check if Huawei Mobile Services available (0 for available) --> Update HMS Core if not available
-                // TODO : Check if AppGallery Version is the latest
                 client.checkAppUpdate(requireContext(), UpdateCallBack(requireContext()))
             }
             else {
-                Toast.makeText(requireContext(), "HMS not available", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.HMS_Not_Available), Toast.LENGTH_SHORT).show()
             }
         }
         else {
-            Toast.makeText(requireContext(), "You are not using a Huawei or Honor phone, please install other version", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), getString(R.string.Phone_Brand_Is_Not_Huawei), Toast.LENGTH_LONG).show()
         }
     }
 }
@@ -73,7 +73,7 @@ private class UpdateCallBack(private var context: Context) : CheckUpdateCallBack
                 client.showUpdateDialog(context, info, false)
             }
             else {
-                Toast.makeText(this.context, "No updates available", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.context, context.getString(R.string.No_Updates_available), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -94,5 +94,3 @@ private class UpdateCallBack(private var context: Context) : CheckUpdateCallBack
 private fun getPhoneBrand(): String? {
     return Build.BRAND
 }
-
-// TODO : Add Strings to strings.xml
