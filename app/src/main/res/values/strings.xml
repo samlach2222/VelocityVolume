@@ -38,7 +38,7 @@
     <string name="current_media_volume" translatable="false" />
     <string name="current_media_volume_prefix">Volume:</string>
     <string name="settingsActionBar">Settings</string>
-    <string name="play_pause_button">Play/Pause button</string>
+    <string name="play_pause_button">Play/Pause</string>
 
     <!-- Settings -->
     <string name="settings_scroll_contentDescription">Settings of Velocity Volume</string>

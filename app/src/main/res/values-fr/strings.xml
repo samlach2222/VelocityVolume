@@ -18,7 +18,7 @@
     <!-- Volume Manager -->
     <string name="window_mode">Fenêtre ouverte</string>
     <string name="settingsActionBar">Paramètres</string>
-    <string name="play_pause_button">Bouton marche/arrêt</string>
+    <string name="play_pause_button">Marche/Arrêt</string>
 
     <!-- Settings -->
     <string name="settings_scroll_contentDescription">Paramètres de Velocity Volume</string>
