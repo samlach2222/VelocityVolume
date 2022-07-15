@@ -18,7 +18,7 @@
     <string name="create_a_profile">Create a profile</string>
     <string name="home_message_part_1">Welcome to</string>
     <string name="home_message_part_2" translatable="false">Velocity Volume</string>
-    <string name="home_message_part_3">. \n\n This application is used to change the volume of your phone according to your driving speed. \n\n To use this application, you must first</string>
+    <string name="home_message_part_3">.\n\nThis application is used to change the volume of your phone according to your driving speed.\n\nTo use this application, you must first</string>
     <string name="home_message_part_4">create a profile</string>
 
     <!-- Volume Manager -->

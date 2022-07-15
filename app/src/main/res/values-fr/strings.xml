@@ -12,7 +12,7 @@
     <!-- Home Page -->
     <string name="create_a_profile">Créer un profil</string>
     <string name="home_message_part_1">Bienvenue sur</string>
-    <string name="home_message_part_3">. \n\n Cette application sert à changer le volume de votre télépone en fonction de votre vitesse de conduite. \n\n Pour utiliser cette application, vous devez d\'abord</string>
+    <string name="home_message_part_3">.\n\nCette application sert à changer le volume de votre télépone en fonction de votre vitesse de conduite.\n\nPour utiliser cette application, vous devez d\'abord</string>
     <string name="home_message_part_4">créer un profil</string>
 
     <!-- Volume Manager -->
