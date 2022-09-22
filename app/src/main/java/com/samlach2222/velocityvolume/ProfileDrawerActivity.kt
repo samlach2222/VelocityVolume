@@ -1,5 +1,6 @@
 package com.samlach2222.velocityvolume
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Spannable
@@ -115,6 +116,7 @@ class  ProfileDrawerActivity : AppCompatActivity() {
      * @author samlach2222
      * @author mahtwo
      */
+    @SuppressLint("Range")
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
