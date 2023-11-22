@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.samlach2222.velocityvolume'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.samlach2222.velocityvolume"
         minSdk 22
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -38,27 +38,32 @@ android {
         viewBinding true
     }
 
-    flavorDimensions "Store"
+    flavorDimensions = ["store"] // Change because depreciated
     productFlavors {
         playStore {
+            dimension "store"
             resValue "string", "app_name", "Velocity Volume (Play Store)"
             applicationIdSuffix ".google"
             versionNameSuffix "-google"
         }
         fDroid {
+            dimension "store"
             resValue "string", "app_name", "Velocity Volume (fDroid)"
 			applicationIdSuffix ".fdroid"
             versionNameSuffix "-fdroid"
         }
         github {
+            dimension "store"
             resValue "string", "app_name", "Velocity Volume"
         }
         huaweiAppGallery {
+            dimension "store"
             resValue "string", "app_name", "Velocity Volume (App Gallery)"
             applicationIdSuffix ".huawei"
             versionNameSuffix "-huawei"
         }
         galaxyStore {
+            dimension "store"
             resValue "string", "app_name", "Velocity Volume (Galaxy Store)"
             applicationIdSuffix ".samsung"
             versionNameSuffix "-samsung"
@@ -68,28 +73,28 @@ android {
 
 dependencies {
     // Google Part
-    playStoreImplementation 'com.google.android.play:review:2.0.0'
-    playStoreImplementation 'com.google.android.play:review-ktx:2.0.0'
-    playStoreImplementation 'com.google.android.play:app-update:2.0.0'
-    playStoreImplementation 'com.google.android.play:app-update-ktx:2.0.0'
-    playStoreImplementation 'com.google.android.gms:play-services-base:18.1.0'
+    playStoreImplementation 'com.google.android.play:review:2.0.1'
+    playStoreImplementation 'com.google.android.play:review-ktx:2.0.1'
+    playStoreImplementation 'com.google.android.play:app-update:2.1.0'
+    playStoreImplementation 'com.google.android.play:app-update-ktx:2.1.0'
+    playStoreImplementation 'com.google.android.gms:play-services-base:18.2.0'
     // Huawei Part
     huaweiAppGalleryImplementation 'com.huawei.agconnect:agconnect-core:1.6.0.300'
     huaweiAppGalleryImplementation 'com.huawei.hms:appservice:5.0.4.303'
-    huaweiAppGalleryImplementation 'androidx.work:work-runtime-ktx:2.7.1'
+    huaweiAppGalleryImplementation 'androidx.work:work-runtime-ktx:2.8.1'
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'
 
 }
 
-
-if (!getGradle().getStartParameter().getTaskRequests().toString().contains("HuaweiAppGallery")){ // TODO : Depreciated, find better way to only activate in HuaweiAppGallery flavor
-    apply plugin: 'com.huawei.agconnect'
-}
+// DEPRECIATED OR REMOVED
+//if (!getGradle().getStartParameter().getTaskRequests().toString().contains("HuaweiAppGallery")){ // TODO : Depreciated, find better way to only activate in HuaweiAppGallery flavor
+//    apply plugin: 'com.huawei.agconnect'
+//}
